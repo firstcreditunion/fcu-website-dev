@@ -1,0 +1,151 @@
+---
+description: Framer Motion animation patterns
+globs: ["**/*.tsx"]
+alwaysApply: false
+---
+
+# Framer Motion Animation Standards
+
+## Basic Animation Pattern
+```typescript
+'use client'
+import { motion } from 'framer-motion'
+
+// Wrap Shadcn components with motion
+const MotionCard = motion(Card)
+
+export function AnimatedCard({ children }) {
+  return (
+    <MotionCard
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      {children}
+    </MotionCard>
+  )
+}
+```
+
+## Page Transitions
+```typescript
+// components/animations/PageTransition.tsx
+'use client'
+import { motion, AnimatePresence } from 'framer-motion'
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  enter: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 }
+}
+
+export function PageTransition({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial="initial"
+      animate="enter"
+      exit="exit"
+      variants={pageVariants}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+```
+
+## Staggered Lists
+```typescript
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+}
+
+<motion.ul variants={containerVariants} initial="hidden" animate="show">
+  {items.map(item => (
+    <motion.li key={item.id} variants={itemVariants}>
+      {item.content}
+    </motion.li>
+  ))}
+</motion.ul>
+```
+
+## Scroll Animations
+```typescript
+import { useInView } from 'framer-motion'
+import { useRef } from 'react'
+
+function AnimateOnScroll({ children }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5 }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+```
+
+## Performance Guidelines
+- Use `layout` prop for layout animations
+- Use `useReducedMotion` for accessibility
+- Avoid animating layout properties (width, height) - use transforms
+- Keep animations under 300ms for UI feedback
+- Use `will-change` sparingly
+
+## Accessibility
+```typescript
+import { useReducedMotion } from 'framer-motion'
+
+function AccessibleAnimation({ children }) {
+  const shouldReduceMotion = useReducedMotion()
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ 
+        duration: shouldReduceMotion ? 0 : 0.3 
+      }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+```
+
+## Common Animation Presets
+```typescript
+// lib/animations.ts
+export const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.3 }
+}
+
+export const fadeIn = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.2 }
+}
+
+export const scaleIn = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.2 }
+}
+```

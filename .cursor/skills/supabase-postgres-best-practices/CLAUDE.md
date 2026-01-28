@@ -1,0 +1,1 @@
+C:/Users/ivicliph/AppData/Local/Temp/skills-VEzjfu/skills/supabase-postgres-best-practices/AGENTS.md

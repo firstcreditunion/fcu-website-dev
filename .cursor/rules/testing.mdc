@@ -1,0 +1,208 @@
+---
+description: Testing patterns for FCU website
+globs: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "e2e/**"]
+alwaysApply: false
+---
+
+# Testing Standards for FCU
+
+## Testing Stack
+- Jest + React Testing Library (unit/integration)
+- Playwright (E2E)
+- axe-core (accessibility)
+
+## Component Testing
+```typescript
+// __tests__/components/LoanCalculator.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { LoanCalculator } from '@/components/calculators/LoanCalculator'
+
+describe('LoanCalculator', () => {
+  it('calculates monthly payment correctly', async () => {
+    const user = userEvent.setup()
+    render(<LoanCalculator />)
+    
+    const amountInput = screen.getByLabelText(/loan amount/i)
+    const termSelect = screen.getByLabelText(/loan term/i)
+    
+    await user.clear(amountInput)
+    await user.type(amountInput, '10000')
+    await user.selectOptions(termSelect, '36')
+    
+    expect(screen.getByText(/monthly payment/i)).toBeInTheDocument()
+  })
+  
+  it('shows error for amount below minimum', async () => {
+    const user = userEvent.setup()
+    render(<LoanCalculator />)
+    
+    const amountInput = screen.getByLabelText(/loan amount/i)
+    await user.clear(amountInput)
+    await user.type(amountInput, '500')
+    await user.tab() // Trigger blur validation
+    
+    expect(screen.getByRole('alert')).toHaveTextContent(/minimum/i)
+  })
+})
+```
+
+## Accessibility Testing
+```typescript
+import { render } from '@testing-library/react'
+import { axe, toHaveNoViolations } from 'jest-axe'
+
+expect.extend(toHaveNoViolations)
+
+describe('Accessibility', () => {
+  it('ContactForm has no accessibility violations', async () => {
+    const { container } = render(<ContactForm />)
+    const results = await axe(container)
+    expect(results).toHaveNoViolations()
+  })
+  
+  it('ProductCard has no accessibility violations', async () => {
+    const { container } = render(
+      <ProductCard 
+        title="Home Loan"
+        interestRate={6.5}
+        description="Low rate home loans"
+        href="/products/home-loan"
+      />
+    )
+    const results = await axe(container)
+    expect(results).toHaveNoViolations()
+  })
+})
+```
+
+## E2E Testing with Playwright
+```typescript
+// e2e/loan-application.spec.ts
+import { test, expect } from '@playwright/test'
+
+test.describe('Loan Application Flow', () => {
+  test('completes multi-step application', async ({ page }) => {
+    await page.goto('/apply/personal-loan')
+    
+    // Step 1: Personal Details
+    await page.getByLabel('First Name').fill('John')
+    await page.getByLabel('Last Name').fill('Smith')
+    await page.getByLabel('Email').fill('john@example.com')
+    await page.getByLabel('Phone').fill('021 123 4567')
+    await page.getByRole('button', { name: /next/i }).click()
+    
+    // Step 2: Employment
+    await expect(page.getByRole('heading', { name: /employment/i })).toBeVisible()
+    await page.getByLabel('Employment Status').selectOption('full-time')
+    await page.getByLabel('Employer').fill('Example Company')
+    await page.getByRole('button', { name: /next/i }).click()
+    
+    // Step 3: Financial
+    await expect(page.getByRole('heading', { name: /financial/i })).toBeVisible()
+    await page.getByLabel('Annual Income').fill('75000')
+    await page.getByRole('button', { name: /next/i }).click()
+    
+    // Step 4: Loan Details
+    await page.getByLabel('Loan Amount').fill('15000')
+    await page.getByLabel('Loan Purpose').selectOption('car')
+    await page.getByRole('button', { name: /next/i }).click()
+    
+    // Step 5: Review & Submit
+    await expect(page.getByText('John Smith')).toBeVisible()
+    await page.getByRole('button', { name: /submit/i }).click()
+    
+    // Confirmation
+    await expect(page.getByRole('status')).toContainText(/submitted/i)
+  })
+  
+  test('validates required fields', async ({ page }) => {
+    await page.goto('/apply/personal-loan')
+    await page.getByRole('button', { name: /next/i }).click()
+    
+    // Should show validation errors
+    await expect(page.getByRole('alert')).toBeVisible()
+    await expect(page.getByText(/first name is required/i)).toBeVisible()
+  })
+  
+  test('is keyboard accessible', async ({ page }) => {
+    await page.goto('/apply/personal-loan')
+    
+    // Tab through form
+    await page.keyboard.press('Tab')
+    await expect(page.getByLabel('First Name')).toBeFocused()
+    
+    await page.keyboard.press('Tab')
+    await expect(page.getByLabel('Last Name')).toBeFocused()
+  })
+})
+
+// e2e/accessibility.spec.ts
+import { test, expect } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+
+test.describe('Accessibility', () => {
+  test('homepage has no accessibility violations', async ({ page }) => {
+    await page.goto('/')
+    
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa'])
+      .analyze()
+    
+    expect(results.violations).toEqual([])
+  })
+  
+  test('product pages have no accessibility violations', async ({ page }) => {
+    await page.goto('/products/home-loans')
+    
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa'])
+      .analyze()
+    
+    expect(results.violations).toEqual([])
+  })
+})
+```
+
+## API Route Testing
+```typescript
+// __tests__/api/contact.test.ts
+import { POST } from '@/app/api/contact/route'
+import { NextRequest } from 'next/server'
+
+describe('POST /api/contact', () => {
+  it('returns 400 for invalid data', async () => {
+    const request = new NextRequest('http://localhost/api/contact', {
+      method: 'POST',
+      body: JSON.stringify({ name: '' }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    
+    const response = await POST(request)
+    expect(response.status).toBe(400)
+  })
+  
+  it('returns 200 for valid submission', async () => {
+    const request = new NextRequest('http://localhost/api/contact', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'John Smith',
+        email: 'john@example.com',
+        phone: '021 123 4567',
+        message: 'Test message with enough content'
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    
+    const response = await POST(request)
+    expect(response.status).toBe(200)
+  })
+})
+```
+
+## Test Coverage Requirements
+- Critical user paths: 80%+ coverage
+- Form validations: 100% coverage
+- Accessibility: All public pages pass WCAG 2.1 AA
+- E2E: All major user journeys covered
+- Unit tests: All utility functions and calculations

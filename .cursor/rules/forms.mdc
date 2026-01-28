@@ -1,0 +1,233 @@
+---
+description: Form handling with React Hook Form and Zod
+globs: ["**/forms/**", "**/Form*.tsx", "**/*form*.tsx"]
+alwaysApply: false
+---
+
+# Form Standards for FCU
+
+## Tech Stack
+- React Hook Form for state management
+- Zod for validation
+- Shadcn Form components
+- Server Actions for submission
+
+## Basic Form Pattern
+```typescript
+'use client'
+
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { 
+  Form, FormField, FormItem, FormLabel, 
+  FormControl, FormMessage, FormDescription 
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
+
+const contactSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().regex(/^(\+64|0)[2-9]\d{7,9}$/, 'Invalid NZ phone number'),
+  message: z.string().min(10, 'Message must be at least 10 characters')
+})
+
+type ContactFormData = z.infer<typeof contactSchema>
+
+export function ContactForm() {
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: { name: '', email: '', phone: '', message: '' }
+  })
+  
+  async function onSubmit(data: ContactFormData) {
+    const result = await submitContactForm(data)
+    if (result.success) {
+      toast.success('Message sent successfully')
+      form.reset()
+    } else {
+      toast.error(result.error)
+    }
+  }
+  
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Name</FormLabel>
+              <FormControl>
+                <Input placeholder="John Smith" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* More fields... */}
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? 'Sending...' : 'Send Message'}
+        </Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+## Multi-Step Loan Application
+```typescript
+// components/forms/LoanApplicationForm.tsx
+'use client'
+
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+
+const steps = [
+  { id: 'personal', title: 'Personal Details' },
+  { id: 'employment', title: 'Employment' },
+  { id: 'financial', title: 'Financial Details' },
+  { id: 'loan', title: 'Loan Details' },
+  { id: 'review', title: 'Review & Submit' }
+]
+
+export function LoanApplicationForm() {
+  const [currentStep, setCurrentStep] = useState(0)
+  const [formData, setFormData] = useState({})
+  
+  return (
+    <div>
+      {/* Progress indicator with aria-label */}
+      <nav aria-label="Application progress">
+        <ol className="flex" role="list">
+          {steps.map((step, index) => (
+            <li 
+              key={step.id} 
+              aria-current={index === currentStep ? 'step' : undefined}
+            >
+              {step.title}
+            </li>
+          ))}
+        </ol>
+      </nav>
+      
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+        >
+          {/* Step content */}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  )
+}
+```
+
+## Validation Schemas for Financial Data
+```typescript
+// lib/validations/loan.ts
+import { z } from 'zod'
+
+export const loanApplicationSchema = z.object({
+  // Personal
+  firstName: z.string().min(2).max(50),
+  lastName: z.string().min(2).max(50),
+  dateOfBirth: z.string().refine(val => {
+    const age = calculateAge(new Date(val))
+    return age >= 18 && age <= 100
+  }, 'Must be 18 years or older'),
+  
+  // Financial - NZD amounts
+  annualIncome: z.number()
+    .min(1, 'Income required')
+    .max(10000000, 'Please contact us directly'),
+  
+  // Loan
+  loanAmount: z.number()
+    .min(1000, 'Minimum loan amount is $1,000')
+    .max(500000, 'Maximum loan amount is $500,000'),
+  loanPurpose: z.enum(['home', 'car', 'personal', 'debt-consolidation', 'other']),
+  loanTerm: z.number().min(6).max(360), // months
+})
+
+// NZ Phone validation
+export const nzPhoneSchema = z.string().regex(
+  /^(\+64|0)(2[0-9]|[3-9])\d{6,8}$/,
+  'Enter a valid NZ phone number'
+)
+
+// NZ IRD number validation
+export const irdNumberSchema = z.string().regex(
+  /^\d{8,9}$/,
+  'Enter a valid IRD number (8-9 digits)'
+)
+```
+
+## Server Action for Submission
+```typescript
+// app/actions/loan-application.ts
+'use server'
+
+import { createClient } from '@/lib/supabase/server'
+import { loanApplicationSchema } from '@/lib/validations/loan'
+import { revalidatePath } from 'next/cache'
+
+export async function submitLoanApplication(data: unknown) {
+  // Validate server-side
+  const parsed = loanApplicationSchema.safeParse(data)
+  if (!parsed.success) {
+    return { success: false, errors: parsed.error.flatten() }
+  }
+  
+  // Get authenticated user
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  // Insert application
+  const { data: application, error } = await supabase
+    .from('loan_applications')
+    .insert({
+      member_id: user?.id,
+      data: parsed.data,
+      status: 'pending'
+    })
+    .select()
+    .single()
+  
+  if (error) {
+    console.error('Application submission error:', error)
+    return { success: false, error: 'Failed to submit application. Please try again.' }
+  }
+  
+  // Send confirmation email
+  await sendApplicationConfirmation({
+    email: parsed.data.email,
+    applicationId: application.id
+  })
+  
+  revalidatePath('/member/applications')
+  
+  return { success: true, applicationId: application.id }
+}
+```
+
+## Currency Formatting (NZD)
+```typescript
+// lib/format.ts
+export function formatNZD(amount: number): string {
+  return new Intl.NumberFormat('en-NZ', {
+    style: 'currency',
+    currency: 'NZD',
+    minimumFractionDigits: 2
+  }).format(amount)
+}
+
+// Usage in form display
+<span>{formatNZD(loanAmount)}</span>
+```

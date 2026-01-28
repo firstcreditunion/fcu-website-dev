@@ -1,0 +1,119 @@
+---
+description: React component patterns with Shadcn, Magic UI, React Bits
+globs: ["components/**/*.tsx", "app/**/*.tsx"]
+alwaysApply: false
+---
+
+# Component Development Standards
+
+## Component Library Priority
+1. **Shadcn/ui** - Primary choice for forms, dialogs, buttons, etc.
+2. **Magic UI** - Animated components for hero sections, effects
+3. **React Bits** - Additional utilities and components
+
+## Component Structure
+```typescript
+// components/products/LoanCard.tsx
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { motion } from 'framer-motion'
+
+interface LoanCardProps {
+  title: string
+  interestRate: number
+  description: string
+  href: string
+}
+
+export function LoanCard({ title, interestRate, description, href }: LoanCardProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Card className="h-full hover:shadow-lg transition-shadow">
+        <CardHeader>
+          <CardTitle>{title}</CardTitle>
+          <p className="text-2xl font-bold text-primary">
+            {interestRate.toFixed(2)}% p.a.
+          </p>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground mb-4">{description}</p>
+          <Button asChild>
+            <Link href={href}>Learn More</Link>
+          </Button>
+        </CardContent>
+      </Card>
+    </motion.div>
+  )
+}
+```
+
+## Shadcn Installation
+```bash
+# Add components as needed
+npx shadcn@latest add button card dialog form input
+npx shadcn@latest add accordion tabs navigation-menu
+npx shadcn@latest add toast sonner
+```
+
+## Magic UI Usage
+```typescript
+// For hero sections and landing page effects
+import { SparklesText } from '@/components/magicui/sparkles-text'
+import { AnimatedBeam } from '@/components/magicui/animated-beam'
+
+// Install via CLI
+npx shadcn@latest add "https://magicui.design/r/sparkles-text"
+```
+
+## Server vs Client Components
+```typescript
+// Server Component (default) - Data fetching
+async function ProductList({ category }: { category: string }) {
+  const products = await getProducts(category)
+  return (
+    <div className="grid gap-6 md:grid-cols-3">
+      {products.map(product => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  )
+}
+
+// Client Component - Interactivity needed
+'use client'
+function InterestCalculator() {
+  const [amount, setAmount] = useState(10000)
+  // Interactive logic
+}
+```
+
+## Folder Structure
+```
+components/
+├── ui/                    # Shadcn components (auto-generated)
+├── magicui/              # Magic UI components
+├── layout/
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   ├── MobileNav.tsx
+│   └── Breadcrumbs.tsx
+├── products/
+│   ├── LoanCard.tsx
+│   ├── RateTable.tsx
+│   └── ProductHero.tsx
+├── forms/
+│   ├── ContactForm.tsx
+│   ├── LoanApplicationForm.tsx
+│   └── MembershipForm.tsx
+├── calculators/
+│   ├── LoanCalculator.tsx
+│   └── SavingsCalculator.tsx
+└── blocks/
+    ├── HeroSection.tsx
+    ├── FeatureGrid.tsx
+    └── Testimonials.tsx
+```

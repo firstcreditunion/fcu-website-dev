@@ -1,0 +1,86 @@
+---
+description: Next.js 16 App Router patterns for FCU
+globs: ["app/**/*.ts", "app/**/*.tsx"]
+alwaysApply: false
+---
+
+# Next.js 16 App Router Patterns
+
+## Server Components (Default)
+- All components are Server Components by default
+- Fetch data directly in Server Components
+- Use async/await at component level
+- Pass data down as props to Client Components
+
+## Client Components
+Only use 'use client' when you need:
+- Event handlers (onClick, onChange, etc.)
+- Browser APIs (localStorage, window)
+- React hooks (useState, useEffect, useReducer)
+- Framer Motion animations
+
+## Route Structure
+```
+app/
+├── (marketing)/           # Public pages
+│   ├── page.tsx          # Homepage
+│   ├── about/
+│   ├── products/
+│   │   ├── loans/
+│   │   ├── savings/
+│   │   └── credit-cards/
+│   ├── branches/
+│   └── contact/
+├── (member)/             # Authenticated routes
+│   ├── layout.tsx        # Auth check
+│   ├── dashboard/
+│   └── applications/
+├── blog/
+│   ├── page.tsx
+│   └── [slug]/page.tsx
+└── api/
+    ├── contact/route.ts
+    └── applications/route.ts
+```
+
+## Data Fetching
+```typescript
+// Server Component - direct fetch
+async function ProductPage({ params }: { params: { slug: string } }) {
+  const product = await sanityClient.fetch(productQuery, { slug: params.slug })
+  return <ProductDetails product={product} />
+}
+```
+
+## Server Actions
+Use Server Actions for mutations:
+```typescript
+'use server'
+
+export async function submitLoanApplication(formData: FormData) {
+  // Validate with zod
+  // Insert to Supabase
+  // Return result
+}
+```
+
+## ISR with Sanity
+```typescript
+// Enable ISR with on-demand revalidation
+export const revalidate = 3600 // 1 hour default
+
+// Revalidate via Sanity webhook
+// POST /api/revalidate?secret=xxx&tag=products
+```
+
+## Metadata
+```typescript
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const page = await getPage(params.slug)
+  return {
+    title: `${page.title} | First Credit Union`,
+    description: page.seoDescription,
+    openGraph: { ... }
+  }
+}
+```

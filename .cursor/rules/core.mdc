@@ -1,0 +1,57 @@
+---
+description: Core development standards for FCU Website Rebuild
+alwaysApply: true
+---
+
+# First Credit Union Website - Core Standards
+
+## Project Context
+A complete website rebuild for First Credit Union, Hamilton NZ. This is a financial services website requiring high security, accessibility compliance, and professional presentation.
+
+## Tech Stack
+- Next.js 16 (App Router, Server Components, Server Actions)
+- React 19.2 (Server Components, use() hook, Actions)
+- TypeScript 5.x (strict mode enabled)
+- Tailwind CSS v4 (new @theme directive, CSS-first config)
+- Framer Motion (animations, page transitions)
+- Supabase Pro (PostgreSQL, Auth, Edge Functions, Storage)
+- Sanity CMS v3 (content management, GROQ queries)
+- Vercel Pro (deployment, ISR, Edge Functions, Analytics)
+
+## UI Component Libraries (Priority Order)
+1. Shadcn/ui - Primary components (https://ui.shadcn.com/)
+2. Magic UI - Animated effects (https://magicui.design/)
+3. React Bits - Additional components (https://www.reactbits.dev/)
+
+## Critical Requirements
+- WCAG 2.1 AA accessibility compliance (mandatory)
+- Mobile-first responsive design
+- Core Web Vitals optimization (LCP, FID, CLS)
+- SEO with financial services schema markup
+- PCI-DSS awareness for any form handling
+
+## Code Standards
+- TypeScript strict mode - no `any` without documented justification
+- Prefer Server Components; use 'use client' only when necessary
+- Named exports over default exports (except page.tsx, layout.tsx)
+- Functions under 50 lines; extract helpers when larger
+- Meaningful variable names reflecting financial domain
+
+## File Naming
+- Components: PascalCase (e.g., `LoanCalculator.tsx`)
+- Utilities: camelCase (e.g., `formatInterestRate.ts`)
+- API routes: kebab-case (e.g., `loan-application/route.ts`)
+- Sanity schemas: camelCase (e.g., `loanProduct.ts`)
+
+## Before Writing Code
+1. Confirm understanding of requirements
+2. Check existing patterns in codebase first
+3. Consider accessibility implications
+4. Plan error states and loading states
+5. Don't auto-agree - challenge approach if better options exist
+
+## NZ Financial Context
+- Use NZD ($) for all currency displays
+- Interest rates as percentages with 2 decimal places
+- Date format: DD/MM/YYYY (NZ standard)
+- Phone format: +64 or 0X XXX XXXX

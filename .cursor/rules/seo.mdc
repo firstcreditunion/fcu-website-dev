@@ -1,0 +1,197 @@
+---
+description: SEO and schema markup for financial services
+globs: ["app/**/*.tsx", "app/**/*.ts"]
+alwaysApply: false
+---
+
+# SEO Standards for FCU Website
+
+## Metadata Pattern
+```typescript
+// app/products/loans/[slug]/page.tsx
+import { Metadata } from 'next'
+
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const product = await getProduct(params.slug)
+  
+  return {
+    title: `${product.title} | First Credit Union`,
+    description: product.seoDescription,
+    keywords: ['credit union', 'loans', 'hamilton', product.type],
+    openGraph: {
+      title: product.title,
+      description: product.seoDescription,
+      type: 'website',
+      locale: 'en_NZ',
+      siteName: 'First Credit Union',
+      images: [{
+        url: product.ogImage,
+        width: 1200,
+        height: 630,
+        alt: product.title
+      }]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: product.title,
+      description: product.seoDescription
+    }
+  }
+}
+```
+
+## Financial Services Schema Markup
+
+### Organization Schema
+```typescript
+// components/schema/OrganizationSchema.tsx
+export function OrganizationSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CreditUnion',
+    name: 'First Credit Union',
+    alternateName: 'FCU',
+    url: 'https://www.firstcu.co.nz',
+    logo: 'https://www.firstcu.co.nz/logo.png',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '123 Victoria Street',
+      addressLocality: 'Hamilton',
+      addressRegion: 'Waikato',
+      postalCode: '3204',
+      addressCountry: 'NZ'
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+64-7-XXX-XXXX',
+      contactType: 'customer service'
+    },
+    sameAs: [
+      'https://www.facebook.com/firstcreditunion',
+      'https://www.linkedin.com/company/first-credit-union'
+    ]
+  }
+  
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+```
+
+### Product Schema (Loans)
+```typescript
+export function LoanProductSchema({ product }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FinancialProduct',
+    name: product.title,
+    description: product.description,
+    provider: {
+      '@type': 'CreditUnion',
+      name: 'First Credit Union'
+    },
+    interestRate: {
+      '@type': 'QuantitativeValue',
+      value: product.interestRate,
+      unitText: 'PERCENT'
+    },
+    category: 'Loan',
+    feesAndCommissionsSpecification: product.fees
+  }
+  
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+```
+
+### Branch Location Schema
+```typescript
+export function BranchSchema({ branch }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FinancialService',
+    name: `First Credit Union - ${branch.name}`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: branch.address,
+      addressLocality: branch.city,
+      postalCode: branch.postcode,
+      addressCountry: 'NZ'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: branch.lat,
+      longitude: branch.lng
+    },
+    openingHoursSpecification: branch.hours.map(h => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: h.day,
+      opens: h.opens,
+      closes: h.closes
+    }))
+  }
+  
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+```
+
+## Sitemap Generation
+```typescript
+// app/sitemap.ts
+import { MetadataRoute } from 'next'
+
+export default async function sitemap(): MetadataRoute.Sitemap {
+  const products = await getAllProducts()
+  const posts = await getAllBlogPosts()
+  const branches = await getAllBranches()
+  
+  return [
+    { url: 'https://www.firstcu.co.nz', lastModified: new Date(), priority: 1.0 },
+    { url: 'https://www.firstcu.co.nz/about', lastModified: new Date(), priority: 0.8 },
+    ...products.map(p => ({
+      url: `https://www.firstcu.co.nz/products/${p.slug}`,
+      lastModified: p.updatedAt,
+      priority: 0.9
+    })),
+    ...posts.map(p => ({
+      url: `https://www.firstcu.co.nz/blog/${p.slug}`,
+      lastModified: p.publishedAt,
+      priority: 0.7
+    })),
+    ...branches.map(b => ({
+      url: `https://www.firstcu.co.nz/branches/${b.slug}`,
+      lastModified: b.updatedAt,
+      priority: 0.6
+    }))
+  ]
+}
+```
+
+## Robots.txt
+```typescript
+// app/robots.ts
+import { MetadataRoute } from 'next'
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/api/', '/member/', '/admin/', '/studio/']
+    },
+    sitemap: 'https://www.firstcu.co.nz/sitemap.xml'
+  }
+}
+```

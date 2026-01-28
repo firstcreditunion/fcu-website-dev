@@ -1,0 +1,153 @@
+---
+description: WCAG 2.1 AA accessibility compliance standards
+globs: ["**/*.tsx", "**/*.ts"]
+alwaysApply: false
+---
+
+# WCAG 2.1 AA Accessibility Standards
+
+## This is MANDATORY for FCU Website
+Financial services websites must be accessible to all users.
+
+## Core Requirements
+
+### 1. Semantic HTML
+```typescript
+// ✅ Correct - semantic structure
+<main>
+  <article>
+    <h1>Home Loans</h1>
+    <section aria-labelledby="rates-heading">
+      <h2 id="rates-heading">Current Rates</h2>
+      ...
+    </section>
+  </article>
+</main>
+
+// ❌ Wrong - div soup
+<div className="main">
+  <div className="content">
+    <div className="title">Home Loans</div>
+```
+
+### 2. Keyboard Navigation
+- All interactive elements focusable via Tab
+- Visible focus indicators (never remove outline without replacement)
+- Logical tab order
+- Skip links for navigation
+
+```typescript
+// Skip link component
+export function SkipLink() {
+  return (
+    <a 
+      href="#main-content"
+      className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded"
+    >
+      Skip to main content
+    </a>
+  )
+}
+```
+
+### 3. Color Contrast
+- Normal text: minimum 4.5:1 ratio
+- Large text (18px+ bold or 24px+): minimum 3:1 ratio
+- Use Tailwind's accessible color palette
+
+### 4. Form Accessibility
+```typescript
+<div className="space-y-2">
+  <Label htmlFor="loan-amount">
+    Loan Amount
+    <span className="text-destructive" aria-hidden="true">*</span>
+  </Label>
+  <Input 
+    id="loan-amount"
+    type="number"
+    aria-required="true"
+    aria-describedby="loan-amount-hint loan-amount-error"
+  />
+  <p id="loan-amount-hint" className="text-sm text-muted-foreground">
+    Enter amount between $1,000 and $500,000
+  </p>
+  {error && (
+    <p id="loan-amount-error" className="text-sm text-destructive" role="alert">
+      {error}
+    </p>
+  )}
+</div>
+```
+
+### 5. Images
+```typescript
+// Informative images - descriptive alt
+<Image 
+  src="/branch-hamilton.jpg" 
+  alt="First Credit Union Hamilton branch exterior showing glass entrance and parking"
+/>
+
+// Decorative images - empty alt
+<Image src="/pattern.svg" alt="" aria-hidden="true" />
+```
+
+### 6. ARIA Labels
+```typescript
+// Navigation landmarks
+<nav aria-label="Main navigation">
+<nav aria-label="Footer navigation">
+
+// Buttons with icons only
+<Button aria-label="Open menu">
+  <MenuIcon aria-hidden="true" />
+</Button>
+
+// Loading states
+<Button disabled aria-busy="true">
+  <Spinner aria-hidden="true" />
+  <span className="sr-only">Submitting application...</span>
+  Processing...
+</Button>
+```
+
+### 7. Focus Management
+```typescript
+// Modal focus trap (Shadcn Dialog handles this)
+// But for custom modals:
+import { FocusTrap } from '@radix-ui/react-focus-trap'
+
+// Announce dynamic content
+<div role="status" aria-live="polite">
+  {successMessage}
+</div>
+
+<div role="alert" aria-live="assertive">
+  {errorMessage}
+</div>
+```
+
+### 8. Reduced Motion
+```typescript
+// Respect user preferences
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Or in Framer Motion
+import { useReducedMotion } from 'framer-motion'
+```
+
+### 9. Testing Checklist
+- [ ] axe DevTools shows no violations
+- [ ] Keyboard-only navigation works
+- [ ] Screen reader (NVDA/VoiceOver) announces correctly
+- [ ] Colour contrast passes (use WebAIM checker)
+- [ ] Focus visible on all interactive elements
+- [ ] Forms have proper labels and error messages
+- [ ] Reduced motion respected
+- [ ] Heading hierarchy is logical (h1 → h2 → h3)
+- [ ] Links are descriptive (not "click here")
+- [ ] Tables have proper headers
