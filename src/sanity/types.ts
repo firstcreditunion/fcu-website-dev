@@ -13,6 +13,18 @@
  */
 
 // Source: src\sanity\extract.json
+export type HomePage = {
+  _id: string;
+  _type: "homePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+};
+
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
   background?: string;
@@ -133,6 +145,7 @@ export type Slug = {
 };
 
 export type AllSanitySchemaTypes =
+  | HomePage
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -152,3 +165,29 @@ type ArrayOf<T> = Array<
     _key: string;
   }
 >;
+
+// Source: src\sanity\lib\queries.ts
+// Variable: HOMEPAGE_QUERY
+// Query: *[_id == "homePage"][0] {    title,    subtitle,    ctaText,    ctaLink  }
+export type HOMEPAGE_QUERY_RESULT =
+  | {
+      title: string | null;
+      subtitle: null;
+      ctaText: null;
+      ctaLink: null;
+    }
+  | {
+      title: string;
+      subtitle: string | null;
+      ctaText: string | null;
+      ctaLink: string | null;
+    }
+  | null;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    '\n  *[_id == "homePage"][0] {\n    title,\n    subtitle,\n    ctaText,\n    ctaLink\n  }\n': HOMEPAGE_QUERY_RESULT;
+  }
+}
