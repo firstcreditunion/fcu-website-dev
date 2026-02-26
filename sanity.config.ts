@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { presentationTool } from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
+import { assist } from '@sanity/assist'
 
 import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schemaTypes'
@@ -27,5 +28,13 @@ export default defineConfig({
       },
     }),
     visionTool({ defaultApiVersion: apiVersion }),
+    assist({
+      //Showing defaults
+      assist: {
+        localeSettings: () => Intl.DateTimeFormat().resolvedOptions(),
+        maxPathDepth: 4,
+        temperature: 0.3,
+      },
+    }),
   ],
 })

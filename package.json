@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@react-three/fiber": "^9.5.0",
+    "@sanity/assist": "^5.0.4",
     "@sanity/client": "^7.16.0",
     "@sanity/image-url": "^2.0.3",
     "@sanity/vision": "^5.12.0",
