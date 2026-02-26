@@ -396,10 +396,63 @@ export type HEADER_NAVIGATION_QUERY_RESULT =
     }
   | null;
 
+// Source: src/sanity/lib/queries.ts
+// Variable: SITE_SETTINGS_QUERY
+// Query: *[_id == "siteSettings"][0] {    siteName,    siteTagline,    siteDescription,    siteUrl,    logo,    logoAlt,    titleTemplate,    defaultSeoTitle,    defaultSeoDescription,    defaultOgImage,    twitterHandle,    twitterCardType,    googleSiteVerification,    bingSiteVerification,    noIndexSite,    enableJsonLd,    enableAnalytics,    googleAnalyticsId,    googleTagManagerId,    socialLinks[] { _key, platform, url, label },    primaryPhone,    tollFreePhone,    primaryEmail,    headOfficeAddress,    postalAddress,    businessHours[] { _key, day, openTime, closeTime, isClosed },    holidayNotice,    announcementBar,    registeredName,    nzbn,    fspNumber,    copyrightNotice,    disputeResolutionScheme,    regulatoryBody,    privacyPolicyUrl,    termsUrl,    disclosureStatementUrl,    complaintsUrl,    accessibilityStatementUrl,    cookieConsentEnabled,    cookieConsentMessage,    locale,    maintenanceMode,    maintenanceMessage,    headerStyle,    footerStyle  }
+export type SITE_SETTINGS_QUERY_RESULT = {
+  siteName: null;
+  siteTagline: null;
+  siteDescription: null;
+  siteUrl: null;
+  logo: null;
+  logoAlt: null;
+  titleTemplate: null;
+  defaultSeoTitle: null;
+  defaultSeoDescription: null;
+  defaultOgImage: null;
+  twitterHandle: null;
+  twitterCardType: null;
+  googleSiteVerification: null;
+  bingSiteVerification: null;
+  noIndexSite: null;
+  enableJsonLd: null;
+  enableAnalytics: null;
+  googleAnalyticsId: null;
+  googleTagManagerId: null;
+  socialLinks: null;
+  primaryPhone: null;
+  tollFreePhone: null;
+  primaryEmail: null;
+  headOfficeAddress: null;
+  postalAddress: null;
+  businessHours: null;
+  holidayNotice: null;
+  announcementBar: null;
+  registeredName: null;
+  nzbn: null;
+  fspNumber: null;
+  copyrightNotice: null;
+  disputeResolutionScheme: null;
+  regulatoryBody: null;
+  privacyPolicyUrl: null;
+  termsUrl: null;
+  disclosureStatementUrl: null;
+  complaintsUrl: null;
+  accessibilityStatementUrl: null;
+  cookieConsentEnabled: null;
+  cookieConsentMessage: null;
+  locale: null;
+  maintenanceMode: null;
+  maintenanceMessage: null;
+  headerStyle: null;
+  footerStyle: null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      megaMenu[] {\n        _key,\n        title,\n        items[] {\n          _key,\n          label,\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
+    '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
   }
 }

@@ -1,7 +1,7 @@
 import type { StructureResolver } from 'sanity/structure'
-import { MenuIcon } from '@sanity/icons'
+import { CogIcon, MenuIcon } from '@sanity/icons'
 
-const SINGLETONS = ['headerNavigation']
+const SINGLETONS = ['siteSettings', 'headerNavigation']
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -31,4 +31,16 @@ export const structure: StructureResolver = (S) =>
       ...S.documentTypeListItems().filter(
         (item) => !SINGLETONS.includes(item.getId() as string),
       ),
+
+      S.divider(),
+
+      S.listItem()
+        .title('Site Settings')
+        .icon(CogIcon)
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
+            .title('Site Settings'),
+        ),
     ])
