@@ -1,19 +1,12 @@
 import type { StructureResolver } from 'sanity/structure'
-import { HomeIcon, MenuIcon } from '@sanity/icons'
+import { MenuIcon } from '@sanity/icons'
 
-const SINGLETONS = ['homePage', 'headerNavigation']
+const SINGLETONS = ['headerNavigation']
 
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
     .items([
-      S.listItem()
-        .title('Homepage')
-        .icon(HomeIcon)
-        .child(S.document().schemaType('homePage').documentId('homePage')),
-
-      S.divider(),
-
       S.listItem()
         .title('Navigation')
         .icon(MenuIcon)

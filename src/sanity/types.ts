@@ -68,18 +68,6 @@ export type HeaderNavigation = {
   };
 };
 
-export type HomePage = {
-  _id: string;
-  _type: "homePage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  subtitle?: string;
-  ctaText?: string;
-  ctaLink?: string;
-};
-
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
   background?: string;
@@ -204,7 +192,6 @@ export type AllSanitySchemaTypes =
   | NavGroup
   | Link
   | HeaderNavigation
-  | HomePage
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -218,24 +205,6 @@ export type AllSanitySchemaTypes =
   | Slug;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
-
-// Source: src/sanity/lib/queries.ts
-// Variable: HOMEPAGE_QUERY
-// Query: *[_id == "homePage"][0] {    title,    subtitle,    ctaText,    ctaLink  }
-export type HOMEPAGE_QUERY_RESULT =
-  | {
-      title: string | null;
-      subtitle: null;
-      ctaText: null;
-      ctaLink: null;
-    }
-  | {
-      title: string;
-      subtitle: string | null;
-      ctaText: string | null;
-      ctaLink: string | null;
-    }
-  | null;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: HEADER_NAVIGATION_QUERY
@@ -281,7 +250,6 @@ export type HEADER_NAVIGATION_QUERY_RESULT =
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_id == "homePage"][0] {\n    title,\n    subtitle,\n    ctaText,\n    ctaLink\n  }\n': HOMEPAGE_QUERY_RESULT;
     '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      megaMenu[] {\n        _key,\n        title,\n        items[] {\n          _key,\n          label,\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
   }
 }
