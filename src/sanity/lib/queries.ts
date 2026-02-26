@@ -1,21 +1,43 @@
-/**
- * PLACEHOLDER QUERIES - Delete and replace with production queries
- *
- * All queries should use defineQuery() for TypeGen support.
- * Query names determine generated type names (e.g., HOMEPAGE_QUERY → HOMEPAGE_QUERYResult)
- */
-
 import { defineQuery } from 'next-sanity'
 
-/**
- * Homepage query - fetches the singleton homepage document by fixed ID
- * Using _id query is more efficient than _type for singletons
- */
 export const HOMEPAGE_QUERY = defineQuery(/* groq */ `
   *[_id == "homePage"][0] {
     title,
     subtitle,
     ctaText,
     ctaLink
+  }
+`)
+
+export const HEADER_NAVIGATION_QUERY = defineQuery(/* groq */ `
+  *[_id == "headerNavigation"][0] {
+    mainNav[] {
+      _key,
+      label,
+      url,
+      megaMenu[] {
+        _key,
+        title,
+        items[] {
+          _key,
+          label,
+          linkType,
+          url,
+          externalUrl,
+          openInNewTab
+        }
+      }
+    },
+    utilityNav {
+      primaryAction {
+        label,
+        url
+      },
+      secondaryAction {
+        label,
+        url
+      },
+      showSearch
+    }
   }
 `)

@@ -12,7 +12,62 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: src\sanity\extract.json
+// Source: src/sanity/extract.json
+export type MainNavItem = {
+  _type: "mainNavItem";
+  label: string;
+  url: string;
+  megaMenu?: Array<
+    {
+      _key: string;
+    } & NavGroup
+  >;
+};
+
+export type NavGroup = {
+  _type: "navGroup";
+  title: string;
+  items?: Array<
+    {
+      _key: string;
+    } & Link
+  >;
+};
+
+export type Link = {
+  _type: "link";
+  label: string;
+  linkType: "internal" | "external";
+  url?: string;
+  externalUrl?: string;
+  openInNewTab?: boolean;
+};
+
+export type HeaderNavigation = {
+  _id: string;
+  _type: "headerNavigation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  mainNav?: Array<
+    {
+      _key: string;
+    } & MainNavItem
+  >;
+  utilityNav?: {
+    primaryAction?: {
+      label: string;
+      url: string;
+    };
+    secondaryAction?: {
+      label: string;
+      url?: string;
+    };
+    showSearch?: boolean;
+  };
+};
+
 export type HomePage = {
   _id: string;
   _type: "homePage";
@@ -145,6 +200,10 @@ export type Slug = {
 };
 
 export type AllSanitySchemaTypes =
+  | MainNavItem
+  | NavGroup
+  | Link
+  | HeaderNavigation
   | HomePage
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -160,13 +219,7 @@ export type AllSanitySchemaTypes =
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
-type ArrayOf<T> = Array<
-  T & {
-    _key: string;
-  }
->;
-
-// Source: src\sanity\lib\queries.ts
+// Source: src/sanity/lib/queries.ts
 // Variable: HOMEPAGE_QUERY
 // Query: *[_id == "homePage"][0] {    title,    subtitle,    ctaText,    ctaLink  }
 export type HOMEPAGE_QUERY_RESULT =
@@ -184,10 +237,51 @@ export type HOMEPAGE_QUERY_RESULT =
     }
   | null;
 
+// Source: src/sanity/lib/queries.ts
+// Variable: HEADER_NAVIGATION_QUERY
+// Query: *[_id == "headerNavigation"][0] {    mainNav[] {      _key,      label,      url,      megaMenu[] {        _key,        title,        items[] {          _key,          label,          linkType,          url,          externalUrl,          openInNewTab        }      }    },    utilityNav {      primaryAction {        label,        url      },      secondaryAction {        label,        url      },      showSearch    }  }
+export type HEADER_NAVIGATION_QUERY_RESULT =
+  | {
+      mainNav: null;
+      utilityNav: null;
+    }
+  | {
+      mainNav: Array<{
+        _key: string;
+        label: string;
+        url: string;
+        megaMenu: Array<{
+          _key: string;
+          title: string;
+          items: Array<{
+            _key: string;
+            label: string;
+            linkType: "external" | "internal";
+            url: string | null;
+            externalUrl: string | null;
+            openInNewTab: boolean | null;
+          }> | null;
+        }> | null;
+      }> | null;
+      utilityNav: {
+        primaryAction: {
+          label: string;
+          url: string;
+        } | null;
+        secondaryAction: {
+          label: string;
+          url: string | null;
+        } | null;
+        showSearch: boolean | null;
+      } | null;
+    }
+  | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_id == "homePage"][0] {\n    title,\n    subtitle,\n    ctaText,\n    ctaLink\n  }\n': HOMEPAGE_QUERY_RESULT;
+    '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      megaMenu[] {\n        _key,\n        title,\n        items[] {\n          _key,\n          label,\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
   }
 }

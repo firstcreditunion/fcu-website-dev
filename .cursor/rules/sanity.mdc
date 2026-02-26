@@ -1,0 +1,45 @@
+---
+description: Sanity CMS development rules — enforces documentation and best practice checks before writing any Sanity-related code
+globs: src/sanity/**/*,sanity.config.*,sanity.cli.*,**/sanity/**/*,**/*sanity*
+alwaysApply: false
+---
+
+# Sanity CMS — Mandatory Pre-Work
+
+Before writing ANY Sanity-related code (schemas, queries, client config, Studio config, image handling, Portable Text, Visual Editing, live content, or anything that imports from `sanity`, `next-sanity`, or `@sanity/*`):
+
+## 1. Check Latest Documentation (Required)
+
+Use the **Sanity MCP server** tools in this order:
+
+1. Call `list_sanity_rules` to see available rules
+2. Call `get_sanity_rules` with the rules relevant to your task (e.g. `["sanity-schema", "sanity-groq", "sanity-nextjs"]`)
+3. If unsure about an API or pattern, call `search_docs` and `read_docs` to verify against the latest official docs
+
+Common rule combinations by task:
+- **Schema work**: `sanity-schema`
+- **GROQ queries**: `sanity-groq`
+- **Data fetching / Live Content**: `sanity-nextjs`
+- **Visual Editing / Presentation Tool**: `sanity-visual-editing`, `sanity-nextjs`
+- **Page Builder**: `sanity-page-builder`, `sanity-schema`
+- **Images**: `sanity-image`
+- **Portable Text**: `sanity-portable-text`
+- **Studio structure**: `sanity-studio-structure`
+- **TypeGen**: `sanity-typegen`
+- **SEO metadata**: `sanity-seo`
+
+## 2. Read Best Practice Skills (Required)
+
+Read the relevant skill files before implementing:
+- `sanity-best-practices` skill for comprehensive patterns
+- `content-modeling-best-practices` skill for schema design decisions
+
+## 3. Key Project Conventions
+
+- This project uses **embedded Studio** at `/studio` with route groups `(frontend)` and `studio`
+- `<SanityLive />` and `<VisualEditing />` render in `(frontend)/layout.tsx` only — never in root or studio layouts
+- All GROQ queries must use `defineQuery()` for TypeGen support
+- Run `npm run typegen` after any schema or query changes
+- Always use `defineType`, `defineField`, `defineArrayMember` for schemas
+- Use `stegaClean()` when comparing string values that may contain stega encoding
+- Set `stega: false` for metadata/SEO fetches

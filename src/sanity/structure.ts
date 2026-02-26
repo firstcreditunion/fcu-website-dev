@@ -1,28 +1,40 @@
 import type { StructureResolver } from 'sanity/structure'
-import { HomeIcon } from '@sanity/icons'
+import { HomeIcon, MenuIcon } from '@sanity/icons'
 
-/**
- * PLACEHOLDER STRUCTURE - Update when adding more document types
- *
- * Singletons use fixed documentId to ensure only one document exists.
- * Add new singletons to SINGLETONS array to filter from generic lists.
- */
-
-// Document types that should be singletons (not appear in generic lists)
-const SINGLETONS = ['homePage']
+const SINGLETONS = ['homePage', 'headerNavigation']
 
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
     .items([
-      // Homepage singleton with fixed ID
-      S.listItem().title('Homepage').icon(HomeIcon).child(
-        S.document().schemaType('homePage').documentId('homePage'), // Fixed ID = singleton
-      ),
+      S.listItem()
+        .title('Homepage')
+        .icon(HomeIcon)
+        .child(S.document().schemaType('homePage').documentId('homePage')),
 
       S.divider(),
 
-      // All other document types (filtered to exclude singletons)
+      S.listItem()
+        .title('Navigation')
+        .icon(MenuIcon)
+        .child(
+          S.list()
+            .title('Navigation')
+            .items([
+              S.listItem()
+                .title('Header Navigation')
+                .icon(MenuIcon)
+                .child(
+                  S.document()
+                    .schemaType('headerNavigation')
+                    .documentId('headerNavigation')
+                    .title('Header Navigation'),
+                ),
+            ]),
+        ),
+
+      S.divider(),
+
       ...S.documentTypeListItems().filter(
         (item) => !SINGLETONS.includes(item.getId() as string),
       ),
