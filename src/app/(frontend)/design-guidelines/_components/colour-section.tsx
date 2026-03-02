@@ -638,25 +638,41 @@ export function ColourSection() {
           {SEMANTIC_COLOURS.map((c) => (
             <div
               key={c.name}
-              className='flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3'
+              className='rounded-xl border border-border bg-card p-4'
             >
-              <div
-                className='size-8 rounded-lg border border-border'
-                style={{ backgroundColor: c.value }}
-                title={c.name}
-              />
-              <div className='min-w-0 flex-1'>
-                <div className='flex items-center gap-2'>
-                  <p className='text-xs font-semibold text-foreground'>
-                    {c.name}
-                  </p>
-                  <CopyButton value={`var(${c.cssVar})`} />
-                  <CopyButton value={toHex(c.value)} label={`${c.name} hex`} />
+              <div className='flex items-start gap-3'>
+                <div
+                  className='mt-0.5 size-8 shrink-0 rounded-lg border border-border'
+                  style={{ backgroundColor: c.value }}
+                  title={c.name}
+                />
+                <div className='min-w-0 flex-1'>
+                  <div className='mb-1 flex items-center justify-between gap-2'>
+                    <p className='text-sm font-semibold text-foreground'>
+                      {c.name}
+                    </p>
+                    <CopyButton value={toHex(c.value)} label={`${c.name} hex`} />
+                  </div>
+                  <p className='text-xs text-muted-foreground'>{c.usage}</p>
                 </div>
-                <p className='text-[10px] text-muted-foreground'>
-                  {toHex(c.value)} · {toRgbString(c.value)}
-                </p>
-                <p className='text-[10px] text-muted-foreground'>{c.usage}</p>
+              </div>
+
+              <div className='mt-3 grid gap-1.5 text-[10px]'>
+                <div className='flex items-center justify-between rounded-md bg-muted px-2 py-1'>
+                  <span className='font-medium text-muted-foreground'>HEX</span>
+                  <code className='font-mono text-foreground'>{toHex(c.value)}</code>
+                </div>
+                <div className='flex items-center justify-between rounded-md bg-muted px-2 py-1'>
+                  <span className='font-medium text-muted-foreground'>RGB</span>
+                  <code className='font-mono text-foreground'>{toRgbString(c.value)}</code>
+                </div>
+                <div className='flex items-center justify-between rounded-md bg-muted px-2 py-1'>
+                  <span className='font-medium text-muted-foreground'>Token</span>
+                  <span className='flex items-center gap-1'>
+                    <code className='font-mono text-foreground'>{c.cssVar}</code>
+                    <CopyButton value={`var(${c.cssVar})`} label={`${c.name} token`} />
+                  </span>
+                </div>
               </div>
             </div>
           ))}
