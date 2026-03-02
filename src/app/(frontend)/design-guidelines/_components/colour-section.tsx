@@ -4,8 +4,8 @@ import * as React from 'react'
 import { SectionWrapper, Subsection } from './section-wrapper'
 import { CopyButton } from './code-block'
 import { Badge } from '@/components/ui/badge'
-import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
+import { converter, formatHex } from 'culori'
 import {
   Select,
   SelectContent,
@@ -20,6 +20,8 @@ interface ColourStop {
   cssVar: string
   tailwind: string
 }
+
+const rgbConverter = converter('rgb')
 
 const PRIMARY_PALETTE: ColourStop[] = [
   {
@@ -367,6 +369,21 @@ function getContrastRatio(l1: number, l2: number): number {
   return (lighter + 0.05) / (darker + 0.05)
 }
 
+function toHex(oklch: string): string {
+  return formatHex(oklch) ?? '#000000'
+}
+
+function toRgbString(oklch: string): string {
+  const rgb = rgbConverter(oklch)
+  if (!rgb) return 'rgb(0, 0, 0)'
+
+  const r = Math.round((rgb.r ?? 0) * 255)
+  const g = Math.round((rgb.g ?? 0) * 255)
+  const b = Math.round((rgb.b ?? 0) * 255)
+
+  return `rgb(${r}, ${g}, ${b})`
+}
+
 function ColourSwatch({
   stop,
   prefix,
@@ -376,17 +393,11 @@ function ColourSwatch({
 }) {
   const lightness = oklchToRelativeLightness(stop.oklch)
   const isLight = lightness > 0.65
-
-  function handleClick() {
-    navigator.clipboard.writeText(stop.tailwind)
-    toast.success(`Copied: ${stop.tailwind}`)
-  }
+  const hex = toHex(stop.oklch)
+  const rgb = toRgbString(stop.oklch)
 
   return (
-    <button
-      onClick={handleClick}
-      className='group relative flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
-    >
+    <div className='group relative flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10'>
       <div className='pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
         <div className='h-full w-full bg-linear-to-tr from-transparent via-white/25 to-transparent' />
       </div>
@@ -420,19 +431,19 @@ function ColourSwatch({
         <p className='text-[11px] font-semibold text-foreground'>
           {stop.tailwind}
         </p>
-        <p className='mt-0.5 text-[10px] text-muted-foreground'>
+        <p className='mt-0.5 text-[10px] text-muted-foreground'>{hex}</p>
+        <p className='mt-0.5 text-[10px] text-muted-foreground'>{rgb}</p>
+        <p className='mt-0.5 text-[9px] text-muted-foreground'>
           {stop.cssVar}
         </p>
-        <p className='mt-0.5 text-[9px] text-muted-foreground'>
-          {stop.oklch.replace('oklch(', '').replace(')', '')}
-        </p>
       </div>
-      <div className='border-t border-border/50 px-3 py-1.5'>
-        <p className='text-[9px] font-medium uppercase tracking-wider text-muted-foreground'>
-          Click to copy class
-        </p>
+      <div className='flex items-center justify-between gap-2 border-t border-border/50 px-3 py-1.5'>
+        <span className='text-[9px] font-medium uppercase tracking-wider text-muted-foreground'>
+          From OKLCH
+        </span>
+        <CopyButton value={hex} label={`${stop.tailwind} hex`} />
       </div>
-    </button>
+    </div>
   )
 }
 
@@ -505,48 +516,41 @@ export function ColourSection() {
             <div className='flex items-center gap-3'>
               <span
                 className='size-8 rounded-lg border border-border'
-                style={{ backgroundColor: 'oklch(0.921 0.081 103.26)' }}
+                style={{ backgroundColor: '#eee8a9' }}
                 aria-hidden='true'
               />
               <div>
                 <p className='text-xs font-semibold text-foreground'>
                   Green Faded 500
                 </p>
-                <p className='text-[10px] text-muted-foreground'>
-                  --color-fcu-green-faded-500
-                </p>
+                <p className='text-[10px] text-muted-foreground'>#eee8a9</p>
               </div>
             </div>
-            <CopyButton
-              value='--color-fcu-green-faded-500'
-              label='Green faded token'
-            />
+            <CopyButton value='#eee8a9' label='Green faded 500 hex' />
           </div>
 
           <div className='flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3'>
             <div className='flex items-center gap-3'>
               <span
                 className='size-8 rounded-lg border border-border'
-                style={{ backgroundColor: 'oklch(0.835 0.074 170.42)' }}
+                style={{ backgroundColor: '#eee8a9' }}
                 aria-hidden='true'
               />
               <div>
                 <p className='text-xs font-semibold text-foreground'>
                   Mint 500
                 </p>
-                <p className='text-[10px] text-muted-foreground'>
-                  --color-fcu-mint-500
-                </p>
+                <p className='text-[10px] text-muted-foreground'>#eee8a9</p>
               </div>
             </div>
-            <CopyButton value='--color-fcu-mint-500' label='Mint token' />
+            <CopyButton value='#eee8a9' label='Mint 500 hex' />
           </div>
         </div>
       </Subsection>
 
       <Subsection
         title='FCU Primary — Blue'
-        description='11 shades from lightest tint to deepest near-black. Hue range: 220–227. Click any swatch to copy its Tailwind class.'
+        description='11 shades from lightest tint to deepest near-black. Hue range: 220–227. HEX and RGB are converted from OKLCH, with copyable HEX.'
       >
         <div className='rounded-3xl border border-fcu-primary-900/10 bg-linear-to-br from-fcu-primary-50/40 to-background p-4 sm:p-5'>
           <div className='mb-4 flex items-center justify-between'>
@@ -567,7 +571,7 @@ export function ColourSection() {
 
       <Subsection
         title='FCU Secondary — Green/Yellow'
-        description='11 shades with consistent hue at 109.7. High chroma values create a vivid, energetic accent. Click to copy.'
+        description='11 shades with consistent hue at 109.7. HEX and RGB are converted from OKLCH, with copyable HEX.'
       >
         <div className='rounded-3xl border border-fcu-secondary-500/20 p-4 sm:p-5'>
           <div className='mb-4 flex items-center justify-between'>
@@ -588,7 +592,7 @@ export function ColourSection() {
 
       <Subsection
         title='FCU Green Faded'
-        description='Soft green palette for subtle highlights and low-contrast support surfaces.'
+        description='Soft green palette for subtle highlights and low-contrast support surfaces. HEX and RGB are converted from OKLCH.'
       >
         <div className='rounded-3xl border border-border bg-muted/20 p-4 sm:p-5'>
           <div className='mb-4 flex items-center justify-between'>
@@ -609,7 +613,7 @@ export function ColourSection() {
 
       <Subsection
         title='FCU Mint'
-        description='Fresh mint palette for supportive UI accents and soft visual contrast.'
+        description='Fresh mint palette for supportive UI accents and soft visual contrast. HEX and RGB are converted from OKLCH.'
       >
         <div className='rounded-3xl border border-border bg-muted/20 p-4 sm:p-5'>
           <div className='mb-4 flex items-center justify-between'>
@@ -647,7 +651,11 @@ export function ColourSection() {
                     {c.name}
                   </p>
                   <CopyButton value={`var(${c.cssVar})`} />
+                  <CopyButton value={toHex(c.value)} label={`${c.name} hex`} />
                 </div>
+                <p className='text-[10px] text-muted-foreground'>
+                  {toHex(c.value)} · {toRgbString(c.value)}
+                </p>
                 <p className='text-[10px] text-muted-foreground'>{c.usage}</p>
               </div>
             </div>
