@@ -363,7 +363,29 @@ function oklchToRelativeLightness(oklch: string): number {
   return val > 1 ? val / 100 : val
 }
 
-function getContrastRatio(l1: number, l2: number): number {
+function toRelativeLuminance(color: string): number {
+  const rgb = rgbConverter(color)
+  if (!rgb) return 0
+
+  // Clamp to valid sRGB range before luminance math.
+  const clamp = (v: number) => Math.min(1, Math.max(0, v))
+  const r = clamp(rgb.r ?? 0)
+  const g = clamp(rgb.g ?? 0)
+  const b = clamp(rgb.b ?? 0)
+
+  const toLinear = (channel: number) =>
+    channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4
+
+  const rLin = toLinear(r)
+  const gLin = toLinear(g)
+  const bLin = toLinear(b)
+
+  return 0.2126 * rLin + 0.7152 * gLin + 0.0722 * bLin
+}
+
+function getContrastRatio(foreground: string, background: string): number {
+  const l1 = toRelativeLuminance(foreground)
+  const l2 = toRelativeLuminance(background)
   const lighter = Math.max(l1, l2)
   const darker = Math.min(l1, l2)
   return (lighter + 0.05) / (darker + 0.05)
@@ -433,9 +455,7 @@ function ColourSwatch({
         </p>
         <p className='mt-0.5 text-[10px] text-muted-foreground'>{hex}</p>
         <p className='mt-0.5 text-[10px] text-muted-foreground'>{rgb}</p>
-        <p className='mt-0.5 text-[9px] text-muted-foreground'>
-          {stop.cssVar}
-        </p>
+        <p className='mt-0.5 text-[9px] text-muted-foreground'>{stop.cssVar}</p>
       </div>
       <div className='flex items-center justify-between gap-2 border-t border-border/50 px-3 py-1.5'>
         <span className='text-[9px] font-medium uppercase tracking-wider text-muted-foreground'>
@@ -454,15 +474,17 @@ export function ColourSection() {
   const allColours = [
     ...PRIMARY_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
     ...SECONDARY_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
+    ...GREEN_FADED_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
+    ...MINT_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
   ]
 
   const fgColour = allColours.find((c) => c.id === contrastFg)
   const bgColour = allColours.find((c) => c.id === contrastBg)
 
-  const fgLightness = fgColour ? oklchToRelativeLightness(fgColour.oklch) : 0.1
-  const bgLightness = bgColour ? oklchToRelativeLightness(bgColour.oklch) : 0.95
-
-  const ratio = getContrastRatio(fgLightness, bgLightness)
+  const ratio = getContrastRatio(
+    fgColour?.oklch ?? 'oklch(0.145 0 0)',
+    bgColour?.oklch ?? 'oklch(1 0 0)',
+  )
   const passAA = ratio >= 4.5
   const passAALarge = ratio >= 3
   const passAAA = ratio >= 7
@@ -651,7 +673,10 @@ export function ColourSection() {
                     <p className='text-sm font-semibold text-foreground'>
                       {c.name}
                     </p>
-                    <CopyButton value={toHex(c.value)} label={`${c.name} hex`} />
+                    <CopyButton
+                      value={toHex(c.value)}
+                      label={`${c.name} hex`}
+                    />
                   </div>
                   <p className='text-xs text-muted-foreground'>{c.usage}</p>
                 </div>
@@ -660,17 +685,28 @@ export function ColourSection() {
               <div className='mt-3 grid gap-1.5 text-[10px]'>
                 <div className='flex items-center justify-between rounded-md bg-muted px-2 py-1'>
                   <span className='font-medium text-muted-foreground'>HEX</span>
-                  <code className='font-mono text-foreground'>{toHex(c.value)}</code>
+                  <code className='font-mono text-foreground'>
+                    {toHex(c.value)}
+                  </code>
                 </div>
                 <div className='flex items-center justify-between rounded-md bg-muted px-2 py-1'>
                   <span className='font-medium text-muted-foreground'>RGB</span>
-                  <code className='font-mono text-foreground'>{toRgbString(c.value)}</code>
+                  <code className='font-mono text-foreground'>
+                    {toRgbString(c.value)}
+                  </code>
                 </div>
                 <div className='flex items-center justify-between rounded-md bg-muted px-2 py-1'>
-                  <span className='font-medium text-muted-foreground'>Token</span>
+                  <span className='font-medium text-muted-foreground'>
+                    Token
+                  </span>
                   <span className='flex items-center gap-1'>
-                    <code className='font-mono text-foreground'>{c.cssVar}</code>
-                    <CopyButton value={`var(${c.cssVar})`} label={`${c.name} token`} />
+                    <code className='font-mono text-foreground'>
+                      {c.cssVar}
+                    </code>
+                    <CopyButton
+                      value={`var(${c.cssVar})`}
+                      label={`${c.name} token`}
+                    />
                   </span>
                 </div>
               </div>
@@ -785,9 +821,8 @@ export function ColourSection() {
           </div>
 
           <p className='mt-3 text-[10px] text-muted-foreground'>
-            Note: This uses OKLCH lightness as an approximation. For precise
-            results use a dedicated tool like Stark or the Chrome DevTools
-            contrast checker.
+            Contrast is calculated from Culori RGB conversion using WCAG
+            relative luminance formula.
           </p>
         </div>
       </Subsection>
