@@ -533,17 +533,17 @@ export function ColourSection() {
             <div className='flex items-center gap-3'>
               <span
                 className='size-8 rounded-lg border border-border'
-                style={{ backgroundColor: '#eee8a9' }}
+                style={{ backgroundColor: '#98d9c2' }}
                 aria-hidden='true'
               />
               <div>
                 <p className='text-xs font-semibold text-foreground'>
                   Mint 500
                 </p>
-                <p className='text-[10px] text-muted-foreground'>#eee8a9</p>
+                <p className='text-[10px] text-muted-foreground'>#98d9c2</p>
               </div>
             </div>
-            <CopyButton value='#eee8a9' label='Mint 500 hex' />
+            <CopyButton value='#98d9c2' label='Mint 500 hex' />
           </div>
         </div>
       </Subsection>
