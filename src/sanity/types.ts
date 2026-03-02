@@ -13,6 +13,104 @@
  */
 
 // Source: src/sanity/extract.json
+export type DisputeResolutionScheme = {
+  _type: "disputeResolutionScheme";
+  schemeName: string;
+  schemeUrl?: string;
+  memberNumber?: string;
+  description?: string;
+};
+
+export type AnnouncementBar = {
+  _type: "announcementBar";
+  enabled?: boolean;
+  message?: string;
+  linkText?: string;
+  linkUrl?: string;
+  style?: "info" | "warning" | "success" | "emergency";
+  dismissible?: boolean;
+  showOnPages?: "all" | "homepage-only";
+  startDate?: string;
+  endDate?: string;
+};
+
+export type DayHours = {
+  _type: "dayHours";
+  day:
+    | "Monday"
+    | "Tuesday"
+    | "Wednesday"
+    | "Thursday"
+    | "Friday"
+    | "Saturday"
+    | "Sunday"
+    | "Public Holidays";
+  openTime?: string;
+  closeTime?: string;
+  isClosed?: boolean;
+};
+
+export type Address = {
+  _type: "address";
+  street: string;
+  suburb?: string;
+  city: string;
+  postcode?: string;
+  region?: string;
+  country?: string;
+};
+
+export type SocialLink = {
+  _type: "socialLink";
+  platform:
+    | "facebook"
+    | "instagram"
+    | "linkedin"
+    | "youtube"
+    | "tiktok"
+    | "twitter"
+    | "threads";
+  url: string;
+  label?: string;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type Seo = {
+  _type: "seo";
+  title?: string;
+  description?: string;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
 export type MainNavItem = {
   _type: "mainNavItem";
   label: string;
@@ -41,6 +139,128 @@ export type Link = {
   url?: string;
   externalUrl?: string;
   openInNewTab?: boolean;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type SiteSettings = {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  siteName: string;
+  siteTagline?: string;
+  siteDescription: string;
+  siteUrl: string;
+  logo: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  logoAlt: string;
+  logoDark?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  favicon?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  appleTouchIcon?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  locale?: "en-NZ" | "mi-NZ";
+  currency?: string;
+  dateFormat?: "DD/MM/YYYY" | "MM/DD/YYYY" | "YYYY-MM-DD";
+  timezone?: string;
+  defaultSeoTitle?: string;
+  titleTemplate?: string;
+  defaultSeoDescription?: string;
+  defaultOgImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  twitterHandle?: string;
+  twitterCardType?: "summary" | "summary_large_image";
+  googleSiteVerification?: string;
+  bingSiteVerification?: string;
+  noIndexSite?: boolean;
+  robotsTxtOverride?: string;
+  enableJsonLd?: boolean;
+  socialLinks?: Array<
+    {
+      _key: string;
+    } & SocialLink
+  >;
+  primaryPhone: string;
+  tollFreePhone?: string;
+  primaryEmail: string;
+  headOfficeAddress?: Address;
+  postalAddress?: Address;
+  businessHours?: Array<
+    {
+      _key: string;
+    } & DayHours
+  >;
+  holidayNotice?: string;
+  announcementBar?: AnnouncementBar;
+  enableAnalytics?: boolean;
+  googleAnalyticsId?: string;
+  googleTagManagerId?: string;
+  hotjarId?: string;
+  metaPixelId?: string;
+  linkedinPartnerId?: string;
+  customHeadScripts?: string;
+  customBodyScripts?: string;
+  registeredName: string;
+  nzbn?: string;
+  fspNumber: string;
+  disputeResolutionScheme?: DisputeResolutionScheme;
+  regulatoryBody?: string;
+  copyrightNotice: string;
+  privacyPolicyUrl?: string;
+  termsUrl?: string;
+  disclosureStatementUrl?: string;
+  complaintsUrl?: string;
+  accessibilityStatementUrl?: string;
+  cookieConsentEnabled?: boolean;
+  cookieConsentMessage?: string;
+  enableDarkMode?: boolean;
+  headerStyle?: "transparent" | "solid" | "sticky";
+  footerStyle?: "standard" | "minimal" | "expanded";
+  customCss?: string;
+  fontPrimary?: string;
+  fontSecondary?: string;
+  maintenanceMode?: boolean;
+  maintenanceMessage?: string;
+  maintenanceAllowedIPs?: Array<string>;
+  custom404Title?: string;
+  custom404Description?: string;
+  custom500Title?: string;
+  custom500Description?: string;
+  enablePwa?: boolean;
+  pwaShortName?: string;
+  pwaThemeColor?: string;
+  pwaBackgroundColor?: string;
 };
 
 export type HeaderNavigation = {
@@ -243,22 +463,6 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
 export type SanityFileAsset = {
   _id: string;
   _type: "sanity.fileAsset";
@@ -325,9 +529,20 @@ export type Slug = {
 };
 
 export type AllSanitySchemaTypes =
+  | DisputeResolutionScheme
+  | AnnouncementBar
+  | DayHours
+  | Address
+  | SocialLink
+  | SanityImageAssetReference
+  | Seo
+  | SanityImageCrop
+  | SanityImageHotspot
   | MainNavItem
   | NavGroup
   | Link
+  | SanityFileAssetReference
+  | SiteSettings
   | HeaderNavigation
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
@@ -346,8 +561,6 @@ export type AllSanitySchemaTypes =
   | SanityImagePalette
   | SanityImageDimensions
   | SanityImageMetadata
-  | SanityImageHotspot
-  | SanityImageCrop
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
@@ -399,54 +612,142 @@ export type HEADER_NAVIGATION_QUERY_RESULT =
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
 // Query: *[_id == "siteSettings"][0] {    siteName,    siteTagline,    siteDescription,    siteUrl,    logo,    logoAlt,    titleTemplate,    defaultSeoTitle,    defaultSeoDescription,    defaultOgImage,    twitterHandle,    twitterCardType,    googleSiteVerification,    bingSiteVerification,    noIndexSite,    enableJsonLd,    enableAnalytics,    googleAnalyticsId,    googleTagManagerId,    socialLinks[] { _key, platform, url, label },    primaryPhone,    tollFreePhone,    primaryEmail,    headOfficeAddress,    postalAddress,    businessHours[] { _key, day, openTime, closeTime, isClosed },    holidayNotice,    announcementBar,    registeredName,    nzbn,    fspNumber,    copyrightNotice,    disputeResolutionScheme,    regulatoryBody,    privacyPolicyUrl,    termsUrl,    disclosureStatementUrl,    complaintsUrl,    accessibilityStatementUrl,    cookieConsentEnabled,    cookieConsentMessage,    locale,    maintenanceMode,    maintenanceMessage,    headerStyle,    footerStyle  }
-export type SITE_SETTINGS_QUERY_RESULT = {
-  siteName: null;
-  siteTagline: null;
-  siteDescription: null;
-  siteUrl: null;
-  logo: null;
-  logoAlt: null;
-  titleTemplate: null;
-  defaultSeoTitle: null;
-  defaultSeoDescription: null;
-  defaultOgImage: null;
-  twitterHandle: null;
-  twitterCardType: null;
-  googleSiteVerification: null;
-  bingSiteVerification: null;
-  noIndexSite: null;
-  enableJsonLd: null;
-  enableAnalytics: null;
-  googleAnalyticsId: null;
-  googleTagManagerId: null;
-  socialLinks: null;
-  primaryPhone: null;
-  tollFreePhone: null;
-  primaryEmail: null;
-  headOfficeAddress: null;
-  postalAddress: null;
-  businessHours: null;
-  holidayNotice: null;
-  announcementBar: null;
-  registeredName: null;
-  nzbn: null;
-  fspNumber: null;
-  copyrightNotice: null;
-  disputeResolutionScheme: null;
-  regulatoryBody: null;
-  privacyPolicyUrl: null;
-  termsUrl: null;
-  disclosureStatementUrl: null;
-  complaintsUrl: null;
-  accessibilityStatementUrl: null;
-  cookieConsentEnabled: null;
-  cookieConsentMessage: null;
-  locale: null;
-  maintenanceMode: null;
-  maintenanceMessage: null;
-  headerStyle: null;
-  footerStyle: null;
-} | null;
+export type SITE_SETTINGS_QUERY_RESULT =
+  | {
+      siteName: null;
+      siteTagline: null;
+      siteDescription: null;
+      siteUrl: null;
+      logo: null;
+      logoAlt: null;
+      titleTemplate: null;
+      defaultSeoTitle: null;
+      defaultSeoDescription: null;
+      defaultOgImage: null;
+      twitterHandle: null;
+      twitterCardType: null;
+      googleSiteVerification: null;
+      bingSiteVerification: null;
+      noIndexSite: null;
+      enableJsonLd: null;
+      enableAnalytics: null;
+      googleAnalyticsId: null;
+      googleTagManagerId: null;
+      socialLinks: null;
+      primaryPhone: null;
+      tollFreePhone: null;
+      primaryEmail: null;
+      headOfficeAddress: null;
+      postalAddress: null;
+      businessHours: null;
+      holidayNotice: null;
+      announcementBar: null;
+      registeredName: null;
+      nzbn: null;
+      fspNumber: null;
+      copyrightNotice: null;
+      disputeResolutionScheme: null;
+      regulatoryBody: null;
+      privacyPolicyUrl: null;
+      termsUrl: null;
+      disclosureStatementUrl: null;
+      complaintsUrl: null;
+      accessibilityStatementUrl: null;
+      cookieConsentEnabled: null;
+      cookieConsentMessage: null;
+      locale: null;
+      maintenanceMode: null;
+      maintenanceMessage: null;
+      headerStyle: null;
+      footerStyle: null;
+    }
+  | {
+      siteName: string;
+      siteTagline: string | null;
+      siteDescription: string;
+      siteUrl: string;
+      logo: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      logoAlt: string;
+      titleTemplate: string | null;
+      defaultSeoTitle: string | null;
+      defaultSeoDescription: string | null;
+      defaultOgImage: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
+      twitterHandle: string | null;
+      twitterCardType: "summary_large_image" | "summary" | null;
+      googleSiteVerification: string | null;
+      bingSiteVerification: string | null;
+      noIndexSite: boolean | null;
+      enableJsonLd: boolean | null;
+      enableAnalytics: boolean | null;
+      googleAnalyticsId: string | null;
+      googleTagManagerId: string | null;
+      socialLinks: Array<{
+        _key: string;
+        platform:
+          | "facebook"
+          | "instagram"
+          | "linkedin"
+          | "threads"
+          | "tiktok"
+          | "twitter"
+          | "youtube";
+        url: string;
+        label: string | null;
+      }> | null;
+      primaryPhone: string;
+      tollFreePhone: string | null;
+      primaryEmail: string;
+      headOfficeAddress: Address | null;
+      postalAddress: Address | null;
+      businessHours: Array<{
+        _key: string;
+        day:
+          | "Friday"
+          | "Monday"
+          | "Public Holidays"
+          | "Saturday"
+          | "Sunday"
+          | "Thursday"
+          | "Tuesday"
+          | "Wednesday";
+        openTime: string | null;
+        closeTime: string | null;
+        isClosed: boolean | null;
+      }> | null;
+      holidayNotice: string | null;
+      announcementBar: AnnouncementBar | null;
+      registeredName: string;
+      nzbn: string | null;
+      fspNumber: string;
+      copyrightNotice: string;
+      disputeResolutionScheme: DisputeResolutionScheme | null;
+      regulatoryBody: string | null;
+      privacyPolicyUrl: string | null;
+      termsUrl: string | null;
+      disclosureStatementUrl: string | null;
+      complaintsUrl: string | null;
+      accessibilityStatementUrl: string | null;
+      cookieConsentEnabled: boolean | null;
+      cookieConsentMessage: string | null;
+      locale: "en-NZ" | "mi-NZ" | null;
+      maintenanceMode: boolean | null;
+      maintenanceMessage: string | null;
+      headerStyle: "solid" | "sticky" | "transparent" | null;
+      footerStyle: "expanded" | "minimal" | "standard" | null;
+    }
+  | null;
 
 // Query TypeMap
 import "@sanity/client";

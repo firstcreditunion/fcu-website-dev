@@ -6,6 +6,8 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { JsonLd, generateOrganizationSchema } from '@/lib/json-ld'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { Toaster } from '@/components/ui/sonner'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
@@ -39,9 +41,11 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(settings.siteUrl || siteUrl),
     title: {
       template: titleTemplate,
-      default: settings.defaultSeoTitle || settings.siteName || 'First Credit Union',
+      default:
+        settings.defaultSeoTitle || settings.siteName || 'First Credit Union',
     },
-    description: settings.defaultSeoDescription || settings.siteDescription || undefined,
+    description:
+      settings.defaultSeoDescription || settings.siteDescription || undefined,
   }
 
   if (settings.defaultOgImage) {
@@ -58,7 +62,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
   if (settings.twitterHandle || settings.twitterCardType) {
     metadata.twitter = {
-      card: settings.twitterCardType === 'summary' ? 'summary' : 'summary_large_image',
+      card:
+        settings.twitterCardType === 'summary'
+          ? 'summary'
+          : 'summary_large_image',
       site: settings.twitterHandle || undefined,
     }
   }
@@ -97,7 +104,8 @@ export default async function RootLayout({
         {settings?.enableJsonLd && (
           <JsonLd data={generateOrganizationSchema(settings)} />
         )}
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
+        <Toaster />
       </body>
     </html>
   )

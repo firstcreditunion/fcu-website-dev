@@ -16,21 +16,21 @@ export function DotDistortionShaderDemo() {
       />
       <div className="relative z-10 mx-auto flex h-full flex-col items-start justify-center px-4">
         <div className="relative z-10 mx-auto flex h-full max-w-2xl flex-col items-start justify-center px-8">
-          <p className="mb-2 text-sm text-neutral-500 dark:text-neutral-400">
+          <p className="mb-2 text-sm text-neutral-500">
             New components and templates every month
           </p>
-          <h1 className="mb-6 text-5xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h1 className="mb-6 text-5xl font-medium tracking-tight text-neutral-900">
             Build your next project in minutes, not hours.
           </h1>
-          <p className="mb-8 text-xl text-neutral-600 dark:text-neutral-300">
+          <p className="mb-8 text-xl text-neutral-600">
             We are a team of developers who are passionate about creating web
             apps that make you feel like you&apos;re in the future.
           </p>
           <div className="flex flex-col gap-4 md:flex-row">
-            <button className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+            <button className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700">
               Get started →
             </button>
-            <button className="rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700">
+            <button className="rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50">
               <span className="mr-2">G</span> Sign up with Google
             </button>
           </div>
@@ -229,12 +229,9 @@ export const DotDistortionShader: React.FC<DotDistortionShaderProps> = ({
     window.addEventListener("mousemove", handleMouseMove);
 
     // Handle visibility change to prevent jump when returning to tab
-    let isTabVisible = true;
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        isTabVisible = false;
       } else {
-        isTabVisible = true;
         // Reset timestamp to prevent large dt jump
         timeRef.current = 0;
         // Reset mouse velocity
