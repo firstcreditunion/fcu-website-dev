@@ -299,6 +299,81 @@ const MINT_PALETTE: ColourStop[] = [
   },
 ]
 
+const NEUTRAL_PALETTE: ColourStop[] = [
+  {
+    shade: 'white',
+    oklch: '#ffffff',
+    cssVar: '--color-white',
+    tailwind: 'white',
+  },
+  {
+    shade: '50',
+    oklch: '#fafafa',
+    cssVar: '--color-neutral-50',
+    tailwind: 'neutral-50',
+  },
+  {
+    shade: '100',
+    oklch: '#f5f5f5',
+    cssVar: '--color-neutral-100',
+    tailwind: 'neutral-100',
+  },
+  {
+    shade: '200',
+    oklch: '#e5e5e5',
+    cssVar: '--color-neutral-200',
+    tailwind: 'neutral-200',
+  },
+  {
+    shade: '300',
+    oklch: '#d4d4d4',
+    cssVar: '--color-neutral-300',
+    tailwind: 'neutral-300',
+  },
+  {
+    shade: '400',
+    oklch: '#a3a3a3',
+    cssVar: '--color-neutral-400',
+    tailwind: 'neutral-400',
+  },
+  {
+    shade: '500',
+    oklch: '#737373',
+    cssVar: '--color-neutral-500',
+    tailwind: 'neutral-500',
+  },
+  {
+    shade: '600',
+    oklch: '#525252',
+    cssVar: '--color-neutral-600',
+    tailwind: 'neutral-600',
+  },
+  {
+    shade: '700',
+    oklch: '#404040',
+    cssVar: '--color-neutral-700',
+    tailwind: 'neutral-700',
+  },
+  {
+    shade: '800',
+    oklch: '#262626',
+    cssVar: '--color-neutral-800',
+    tailwind: 'neutral-800',
+  },
+  {
+    shade: '900',
+    oklch: '#171717',
+    cssVar: '--color-neutral-900',
+    tailwind: 'neutral-900',
+  },
+  {
+    shade: '950',
+    oklch: '#0a0a0a',
+    cssVar: '--color-neutral-950',
+    tailwind: 'neutral-950',
+  },
+]
+
 const SEMANTIC_COLOURS = [
   {
     name: 'background',
@@ -472,6 +547,7 @@ export function ColourSection() {
   const [contrastBg, setContrastBg] = React.useState('fcu-primary-50')
 
   const allColours = [
+    ...NEUTRAL_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
     ...PRIMARY_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
     ...SECONDARY_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
     ...GREEN_FADED_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
@@ -766,6 +842,42 @@ export function ColourSection() {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+          </div>
+
+          {/* Selected hex values */}
+          <div className='mb-4 flex flex-wrap gap-3'>
+            <div className='flex items-center gap-2 rounded-lg bg-muted px-3 py-2'>
+              <span
+                className='size-4 shrink-0 rounded border border-border'
+                style={{ backgroundColor: fgColour?.oklch ?? '#000000' }}
+              />
+              <span className='text-[10px] font-medium text-muted-foreground'>
+                FG:
+              </span>
+              <code className='text-xs font-semibold text-foreground'>
+                {toHex(fgColour?.oklch ?? '#000000')}
+              </code>
+              <CopyButton
+                value={toHex(fgColour?.oklch ?? '#000000')}
+                label='Foreground hex'
+              />
+            </div>
+            <div className='flex items-center gap-2 rounded-lg bg-muted px-3 py-2'>
+              <span
+                className='size-4 shrink-0 rounded border border-border'
+                style={{ backgroundColor: bgColour?.oklch ?? '#ffffff' }}
+              />
+              <span className='text-[10px] font-medium text-muted-foreground'>
+                BG:
+              </span>
+              <code className='text-xs font-semibold text-foreground'>
+                {toHex(bgColour?.oklch ?? '#ffffff')}
+              </code>
+              <CopyButton
+                value={toHex(bgColour?.oklch ?? '#ffffff')}
+                label='Background hex'
+              />
             </div>
           </div>
 
