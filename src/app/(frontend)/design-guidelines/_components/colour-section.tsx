@@ -932,9 +932,101 @@ export function ColourSection() {
             </Badge>
           </div>
 
+          {/* WCAG reference table */}
+          <div className='mt-6 rounded-xl border border-border bg-muted/40 p-4'>
+            <p className='mb-3 text-xs font-semibold text-foreground'>
+              WCAG Contrast Ratio Guide
+            </p>
+            <div className='overflow-x-auto'>
+              <table className='w-full text-left text-[11px]'>
+                <thead>
+                  <tr className='border-b border-border text-[10px] font-bold uppercase tracking-wider text-muted-foreground'>
+                    <th className='pb-2 pr-4'>Level</th>
+                    <th className='pb-2 pr-4'>Min Ratio</th>
+                    <th className='pb-2 pr-4'>Applies To</th>
+                    <th className='pb-2'>Rating</th>
+                  </tr>
+                </thead>
+                <tbody className='divide-y divide-border/50'>
+                  <tr>
+                    <td className='py-2 pr-4 font-medium text-foreground'>
+                      AA Large
+                    </td>
+                    <td className='py-2 pr-4 font-mono'>3:1</td>
+                    <td className='py-2 pr-4 text-muted-foreground'>
+                      Text &ge;18pt (or &ge;14pt bold), UI components &
+                      graphical objects
+                    </td>
+                    <td className='py-2'>
+                      <span className='rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700'>
+                        Minimum
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='py-2 pr-4 font-medium text-foreground'>
+                      AA Normal
+                    </td>
+                    <td className='py-2 pr-4 font-mono'>4.5:1</td>
+                    <td className='py-2 pr-4 text-muted-foreground'>
+                      Body text, labels, and all text &lt;18pt &mdash; the
+                      standard FCU must meet
+                    </td>
+                    <td className='py-2'>
+                      <span className='rounded-full bg-green-50 px-2 py-0.5 text-[10px] font-medium text-green-700'>
+                        Required
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='py-2 pr-4 font-medium text-foreground'>
+                      AAA Normal
+                    </td>
+                    <td className='py-2 pr-4 font-mono'>7:1</td>
+                    <td className='py-2 pr-4 text-muted-foreground'>
+                      Enhanced readability &mdash; ideal for long-form content
+                      and critical financial information
+                    </td>
+                    <td className='py-2'>
+                      <span className='rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700'>
+                        Excellent
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className='mt-3 space-y-1 text-[10px] text-muted-foreground'>
+              <p>
+                <strong className='text-foreground'>Below 3:1</strong> &mdash;
+                Fails all WCAG levels. Do not use for any text or meaningful UI
+                element.
+              </p>
+              <p>
+                <strong className='text-foreground'>3:1 &ndash; 4.49:1</strong>{' '}
+                &mdash; Acceptable only for large text (&ge;18pt / 24px) and
+                non-text UI components like icons and borders.
+              </p>
+              <p>
+                <strong className='text-foreground'>
+                  4.5:1 &ndash; 6.99:1
+                </strong>{' '}
+                &mdash; Meets AA for all text sizes. This is the baseline FCU
+                targets for WCAG 2.1 AA compliance.
+              </p>
+              <p>
+                <strong className='text-foreground'>7:1+</strong> &mdash; Meets
+                AAA. Best for body copy, financial disclosures, and any content
+                where maximum legibility matters.
+              </p>
+            </div>
+          </div>
+
           <p className='mt-3 text-[10px] text-muted-foreground'>
-            Contrast is calculated from Culori RGB conversion using WCAG
-            relative luminance formula.
+            Contrast is calculated from Culori RGB conversion using WCAG 2.1
+            relative luminance formula. Ratio = (L1 + 0.05) / (L2 + 0.05) where
+            L1 is the lighter colour.
           </p>
         </div>
       </Subsection>
