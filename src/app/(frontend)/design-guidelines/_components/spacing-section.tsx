@@ -48,15 +48,15 @@ export function SpacingSection() {
 
   return (
     <SectionWrapper
-      id="spacing"
-      title="Spacing"
+      id='spacing'
+      title='Spacing'
       description="A consistent spacing scale built on Tailwind's default 4px base unit. All spacing values are multiples of 4px for rhythmic alignment."
     >
       <Subsection
-        title="Spacing Scale"
-        description="Hover to highlight. Click the class name to copy. Bar widths are proportional (capped at 320px)."
+        title='Spacing Scale'
+        description='Hover to highlight. Click the class name to copy. Bar widths are proportional (capped at 320px).'
       >
-        <div className="space-y-0 divide-y divide-fcu-primary-50 rounded-2xl border border-fcu-primary-100 bg-white">
+        <div className='space-y-0 divide-y divide-border rounded-2xl border border-border bg-card'>
           {SPACING_SCALE.map((s, i) => {
             const barWidth = Math.min(s.px, MAX_BAR_WIDTH)
             const isHovered = hoveredIdx === i
@@ -66,31 +66,34 @@ export function SpacingSection() {
                 key={s.name}
                 className={cn(
                   'group flex items-center gap-4 px-5 py-2.5 transition-colors',
-                  isHovered && 'bg-fcu-primary-50/70'
+                  isHovered && 'bg-muted/50',
                 )}
                 onMouseEnter={() => setHoveredIdx(i)}
                 onMouseLeave={() => setHoveredIdx(null)}
               >
                 {/* Token info */}
-                <div className="flex w-24 shrink-0 items-center gap-2">
-                  <CopyButton value={`p-${s.tailwind}`} label={`p-${s.tailwind}`} />
+                <div className='flex w-24 shrink-0 items-center gap-2'>
+                  <CopyButton
+                    value={`p-${s.tailwind}`}
+                    label={`p-${s.tailwind}`}
+                  />
                 </div>
 
                 {/* Values */}
-                <div className="flex w-28 shrink-0 items-center gap-2 text-[10px] tabular-nums text-fcu-primary-400">
+                <div className='flex w-28 shrink-0 items-center gap-2 text-[10px] tabular-nums text-muted-foreground'>
                   <span>{s.px}px</span>
-                  <span className="text-fcu-primary-200">/</span>
+                  <span className='text-border'>/</span>
                   <span>{s.rem}</span>
                 </div>
 
                 {/* Visual bar */}
-                <div className="flex-1">
+                <div className='flex-1'>
                   <div
                     className={cn(
                       'h-4 rounded-sm transition-all duration-200',
                       isHovered
                         ? 'bg-fcu-secondary-500'
-                        : 'bg-fcu-primary-200/60'
+                        : 'bg-muted-foreground/25',
                     )}
                     style={{ width: barWidth === 0 ? 2 : barWidth }}
                   />
@@ -102,34 +105,34 @@ export function SpacingSection() {
       </Subsection>
 
       <Subsection
-        title="Responsive Breakpoints"
-        description="Mobile-first approach. Apply styles at these minimum viewport widths."
+        title='Responsive Breakpoints'
+        description='Mobile-first approach. Apply styles at these minimum viewport widths.'
       >
-        <div className="space-y-3">
+        <div className='space-y-3'>
           {BREAKPOINTS.map((bp) => {
             const barPct = (bp.px / 1536) * 100
 
             return (
               <div
                 key={bp.name}
-                className="group rounded-xl border border-fcu-primary-100 bg-white px-5 py-4 transition-colors hover:border-fcu-primary-200"
+                className='group rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:border-muted-foreground/40'
               >
-                <div className="mb-2 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <code className="rounded bg-fcu-primary-50 px-2 py-0.5 text-xs font-bold text-fcu-primary-800">
+                <div className='mb-2 flex items-center justify-between'>
+                  <div className='flex items-center gap-3'>
+                    <code className='rounded bg-muted px-2 py-0.5 text-xs font-bold text-foreground'>
                       {bp.name}:
                     </code>
-                    <span className="text-xs tabular-nums text-fcu-primary-500">
+                    <span className='text-xs tabular-nums text-foreground/80'>
                       ≥ {bp.px}px
                     </span>
                   </div>
-                  <span className="text-[10px] text-fcu-primary-400">
+                  <span className='text-[10px] text-muted-foreground'>
                     {bp.usage}
                   </span>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-fcu-primary-50">
+                <div className='h-2 w-full overflow-hidden rounded-full bg-muted'>
                   <div
-                    className="h-full rounded-full bg-fcu-primary-300 transition-all group-hover:bg-fcu-primary-500"
+                    className='h-full rounded-full bg-foreground/35 transition-all group-hover:bg-fcu-primary-900'
                     style={{ width: `${barPct}%` }}
                   />
                 </div>
@@ -140,30 +143,50 @@ export function SpacingSection() {
       </Subsection>
 
       <Subsection
-        title="Container Widths"
-        description="Named container sizes for consistent content width across the site."
+        title='Container Widths'
+        description='Named container sizes for consistent content width across the site.'
       >
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className='grid gap-3 sm:grid-cols-2'>
           {[
-            { name: 'prose', width: '65ch (~720px)', usage: 'Articles, long-form text', tailwind: 'max-w-prose' },
-            { name: 'default', width: '1280px', usage: 'Standard page content', tailwind: 'max-w-7xl' },
-            { name: 'wide', width: '1440px', usage: 'Extended layouts', tailwind: 'max-w-[1440px]' },
-            { name: 'full', width: '100%', usage: 'Edge-to-edge sections', tailwind: 'max-w-full' },
+            {
+              name: 'prose',
+              width: '65ch (~720px)',
+              usage: 'Articles, long-form text',
+              tailwind: 'max-w-prose',
+            },
+            {
+              name: 'default',
+              width: '1280px',
+              usage: 'Standard page content',
+              tailwind: 'max-w-7xl',
+            },
+            {
+              name: 'wide',
+              width: '1440px',
+              usage: 'Extended layouts',
+              tailwind: 'max-w-[1440px]',
+            },
+            {
+              name: 'full',
+              width: '100%',
+              usage: 'Edge-to-edge sections',
+              tailwind: 'max-w-full',
+            },
           ].map((c) => (
             <div
               key={c.name}
-              className="rounded-xl border border-fcu-primary-100 bg-white p-5"
+              className='rounded-xl border border-border bg-card p-5'
             >
-              <div className="flex items-center gap-2">
-                <p className="text-sm font-semibold text-fcu-primary-800">
+              <div className='flex items-center gap-2'>
+                <p className='text-sm font-semibold text-foreground'>
                   {c.name}
                 </p>
                 <CopyButton value={c.tailwind} />
               </div>
-              <p className="mt-1 text-xs tabular-nums text-fcu-secondary-600">
+              <p className='mt-1 text-xs tabular-nums text-fcu-secondary-500'>
                 {c.width}
               </p>
-              <p className="mt-0.5 text-[10px] text-fcu-primary-400">
+              <p className='mt-0.5 text-[10px] text-muted-foreground'>
                 {c.usage}
               </p>
             </div>

@@ -17,7 +17,7 @@
   --color-fcu-primary-600: oklch(64.66% 0.117 219.68);
   --color-fcu-primary-700: oklch(59.5% 0.108 219.87);
   --color-fcu-primary-800: oklch(53.58% 0.097 219.61);
-  --color-fcu-primary-900: oklch(47.85% 0.087 220.03);
+  --color-fcu-primary-900: oklch(47.85% 0.087 220.03); /* Brand Primary */
   --color-fcu-primary-950: oklch(30.48% 0.056 221.59);
 
   /* FCU Secondary — Green/Yellow */
@@ -26,7 +26,7 @@
   --color-fcu-secondary-200: oklch(89.87% 0.192 109.7);
   --color-fcu-secondary-300: oklch(85.44% 0.182 109.7);
   --color-fcu-secondary-400: oklch(81.26% 0.173 109.7);
-  --color-fcu-secondary-500: oklch(76.71% 0.164 109.7);
+  --color-fcu-secondary-500: oklch(76.71% 0.164 109.7); /* Brand Secondary */
   --color-fcu-secondary-600: oklch(64.23% 0.137 109.7);
   --color-fcu-secondary-700: oklch(51.45% 0.11 109.7);
   --color-fcu-secondary-800: oklch(38.54% 0.082 109.7);

@@ -24,17 +24,17 @@ export function CodeBlock({ code, label, className }: CodeBlockProps) {
   return (
     <div className={cn('group relative', className)}>
       {label && (
-        <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-fcu-primary-400">
+        <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
           {label}
         </p>
       )}
-      <div className="relative overflow-hidden rounded-lg border border-fcu-primary-100 bg-fcu-primary-950">
-        <pre className="overflow-x-auto p-4 text-xs leading-relaxed text-fcu-primary-200">
+      <div className="relative overflow-hidden rounded-lg border border-border bg-foreground">
+        <pre className="overflow-x-auto p-4 text-xs leading-relaxed text-background">
           <code>{code}</code>
         </pre>
         <button
           onClick={handleCopy}
-          className="absolute top-2.5 right-2.5 flex size-7 items-center justify-center rounded-md bg-fcu-primary-800 text-fcu-primary-300 opacity-0 transition-all hover:bg-fcu-primary-700 hover:text-white group-hover:opacity-100"
+          className="absolute top-2.5 right-2.5 flex size-7 items-center justify-center rounded-md bg-background/15 text-background/80 opacity-0 transition-all hover:bg-background/25 hover:text-background group-hover:opacity-100"
           aria-label="Copy code"
         >
           {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
@@ -66,13 +66,13 @@ export function CopyButton({
     <button
       onClick={handleCopy}
       className={cn(
-        'inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-fcu-primary-500 transition-colors hover:bg-fcu-primary-100 hover:text-fcu-primary-800',
+        'inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground transition-colors hover:bg-muted hover:text-foreground',
         className
       )}
       aria-label={`Copy ${label || value}`}
     >
       {copied ? (
-        <Check className="size-2.5 text-fcu-secondary-600" />
+        <Check className="size-2.5 text-fcu-secondary-500" />
       ) : (
         <Copy className="size-2.5" />
       )}

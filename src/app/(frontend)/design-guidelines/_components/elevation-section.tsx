@@ -89,7 +89,7 @@ export function ElevationSection() {
             return (
               <div
                 key={el.level}
-                className="group relative cursor-default rounded-2xl border border-fcu-primary-100 bg-white p-6 transition-all duration-200"
+                className="group relative cursor-default rounded-2xl border border-border bg-card p-6 transition-all duration-200"
                 style={{ boxShadow: displayShadow }}
                 onMouseEnter={() => setHoveredLevel(el.level)}
                 onMouseLeave={() => setHoveredLevel(null)}
@@ -101,25 +101,25 @@ export function ElevationSection() {
                         'flex size-7 items-center justify-center rounded-lg text-xs font-bold transition-colors',
                         isHovered
                           ? 'bg-fcu-secondary-500 text-white'
-                          : 'bg-fcu-primary-100 text-fcu-primary-600'
+                          : 'bg-muted text-foreground/80'
                       )}
                     >
                       {el.level}
                     </span>
-                    <span className="text-sm font-semibold text-fcu-primary-800">
+                    <span className="text-sm font-semibold text-foreground">
                       {el.name}
                     </span>
                   </div>
                   <CopyButton value={el.tailwind} />
                 </div>
 
-                <p className="mb-3 text-xs text-fcu-primary-500">{el.usage}</p>
+                <p className="mb-3 text-xs text-muted-foreground">{el.usage}</p>
 
                 <div className="flex flex-wrap gap-1.5">
                   {el.components.split(', ').map((comp) => (
                     <span
                       key={comp}
-                      className="rounded-md bg-fcu-primary-50 px-2 py-0.5 text-[10px] font-medium text-fcu-primary-600"
+                      className="rounded-md bg-muted px-2 py-0.5 text-[10px] font-medium text-foreground/80"
                     >
                       {comp}
                     </span>
@@ -155,13 +155,13 @@ export function ElevationSection() {
           ].map((g) => (
             <div
               key={g.state}
-              className="rounded-xl border border-fcu-primary-100 bg-white p-5"
+              className="rounded-xl border border-border bg-card p-5"
             >
-              <p className="text-sm font-semibold text-fcu-primary-800">
+              <p className="text-sm font-semibold text-foreground">
                 {g.state}
               </p>
-              <p className="mt-1 text-xs text-fcu-primary-500">{g.desc}</p>
-              <p className="mt-2 text-[10px] font-medium text-fcu-secondary-600">
+              <p className="mt-1 text-xs text-muted-foreground">{g.desc}</p>
+              <p className="mt-2 text-[10px] font-medium text-fcu-secondary-500">
                 {g.timing}
               </p>
             </div>

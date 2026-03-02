@@ -177,25 +177,25 @@ export function TypographySection() {
       description="Poppins is our sole typeface — a geometric sans-serif with rounded terminals that conveys approachability and modern professionalism. Loaded via next/font for optimal performance."
     >
       <Subsection title="Typeface">
-        <div className="rounded-2xl border border-fcu-primary-100 bg-white p-8">
+        <div className="rounded-2xl border border-border bg-card p-8">
           <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
-            <span className="text-7xl font-bold tracking-tight text-fcu-primary-950">
+            <span className="text-7xl font-bold tracking-tight text-foreground">
               Aa
             </span>
             <div>
-              <p className="text-lg font-semibold text-fcu-primary-800">
+              <p className="text-lg font-semibold text-foreground">
                 Poppins
               </p>
-              <p className="text-xs text-fcu-primary-400">
+              <p className="text-xs text-muted-foreground">
                 Geometric Sans-Serif &middot; Google Fonts &middot;{' '}
-                <code className="rounded bg-fcu-primary-50 px-1 py-0.5 text-[10px]">
+                <code className="rounded bg-muted px-1 py-0.5 text-[10px]">
                   next/font/google
                 </code>
               </p>
             </div>
           </div>
 
-          <div className="mt-6 text-sm leading-loose text-fcu-primary-600">
+          <div className="mt-6 text-sm leading-loose text-muted-foreground">
             <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
             <p>abcdefghijklmnopqrstuvwxyz</p>
             <p>0123456789 !@#$%^&*()_+-=</p>
@@ -227,26 +227,26 @@ export function TypographySection() {
             value={previewText}
             onChange={(e) => setPreviewText(e.target.value)}
             placeholder={DEFAULT_PREVIEW}
-            className="max-w-md border-fcu-primary-200 text-sm"
+            className="max-w-md border-border text-sm"
           />
         </div>
 
-        <div className="space-y-0 divide-y divide-fcu-primary-50 rounded-2xl border border-fcu-primary-100 bg-white">
+        <div className="space-y-0 divide-y divide-border rounded-2xl border border-border bg-card">
           {WEIGHTS.map((w) => (
             <div
               key={w.value}
-              className="group flex flex-col gap-1 px-6 py-4 transition-colors hover:bg-fcu-primary-50/50 sm:flex-row sm:items-center sm:gap-6"
+              className="group flex flex-col gap-1 px-6 py-4 transition-colors hover:bg-muted/40 sm:flex-row sm:items-center sm:gap-6"
             >
               <div className="flex w-28 shrink-0 items-center gap-2">
-                <span className="text-[10px] tabular-nums text-fcu-primary-400">
+                <span className="text-[10px] tabular-nums text-muted-foreground">
                   {w.value}
                 </span>
-                <span className="text-xs font-medium text-fcu-primary-600">
+                <span className="text-xs font-medium text-foreground">
                   {w.name}
                 </span>
               </div>
               <p
-                className={`min-w-0 flex-1 truncate text-xl text-fcu-primary-900 ${w.className}`}
+                className={`min-w-0 flex-1 truncate text-xl text-foreground ${w.className}`}
               >
                 {displayText}
               </p>
@@ -264,27 +264,27 @@ export function TypographySection() {
         title="Type Scale"
         description="The complete type hierarchy from Display through Helper. Each level specifies size, weight, line-height, and letter-spacing."
       >
-        <div className="space-y-0 divide-y divide-fcu-primary-50 rounded-2xl border border-fcu-primary-100 bg-white">
+        <div className="space-y-0 divide-y divide-border rounded-2xl border border-border bg-card">
           {TYPE_SCALE.map((t) => (
             <div
               key={t.name}
-              className="group px-6 py-5 transition-colors hover:bg-fcu-primary-50/50"
+              className="group px-6 py-5 transition-colors hover:bg-muted/40"
             >
               <div className="mb-2 flex flex-wrap items-center gap-2">
-                <span className="text-xs font-bold text-fcu-primary-800">
+                <span className="text-xs font-bold text-foreground">
                   {t.name}
                 </span>
-                <span className="text-[10px] text-fcu-primary-400">
+                <span className="text-[10px] text-muted-foreground">
                   {t.sizePx} / {t.size}
                 </span>
-                <span className="text-[10px] text-fcu-primary-300">
+                <span className="text-[10px] text-muted-foreground/80">
                   &middot; w{t.weight} &middot; lh {t.lineHeight} &middot; ls{' '}
                   {t.letterSpacing}
                 </span>
               </div>
 
               <p
-                className="text-fcu-primary-900"
+                className="text-foreground"
                 style={{
                   fontSize: t.size,
                   fontWeight: t.weight,
@@ -297,7 +297,7 @@ export function TypographySection() {
 
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <CopyButton value={t.tailwind} label="Tailwind classes" />
-                <span className="text-[10px] text-fcu-primary-300">
+                <span className="text-[10px] text-muted-foreground/80">
                   {t.usage}
                 </span>
               </div>
@@ -332,15 +332,15 @@ export function TypographySection() {
           ].map((rule) => (
             <div
               key={rule.title}
-              className="rounded-xl border border-fcu-primary-100 bg-white p-5"
+              className="rounded-xl border border-border bg-card p-5"
             >
-              <p className="text-sm font-semibold text-fcu-primary-800">
+              <p className="text-sm font-semibold text-foreground">
                 {rule.title}
               </p>
-              <p className="mt-1 text-xs font-medium text-fcu-secondary-700">
+              <p className="mt-1 text-xs font-medium text-fcu-secondary-500">
                 {rule.value}
               </p>
-              <p className="mt-1 text-[10px] text-fcu-primary-400">
+              <p className="mt-1 text-[10px] text-muted-foreground">
                 {rule.detail}
               </p>
             </div>

@@ -169,19 +169,16 @@ export function IconSection() {
       description='Lucide React is our icon library — open source, consistent stroke width, pixel-aligned. All icons inherit currentColor for seamless theming.'
     >
       <Subsection title='Icon Sizes'>
-        <div className='flex flex-wrap items-end gap-8 rounded-2xl border border-fcu-primary-100 bg-white p-8'>
+        <div className='flex flex-wrap items-end gap-8 rounded-2xl border border-border bg-card p-8'>
           {SIZES.map((s) => (
             <div key={s.size} className='text-center'>
               <div className='mb-2 flex items-center justify-center'>
-                <Search
-                  className='text-fcu-primary-600'
-                  style={{ width: s.size, height: s.size }}
-                />
+                <Search className='text-foreground/80' style={{ width: s.size, height: s.size }} />
               </div>
-              <p className='text-xs font-bold tabular-nums text-fcu-primary-700'>
+              <p className='text-xs font-bold tabular-nums text-foreground'>
                 {s.label}
               </p>
-              <p className='text-[10px] text-fcu-primary-400'>{s.className}</p>
+              <p className='text-[10px] text-muted-foreground'>{s.className}</p>
             </div>
           ))}
         </div>
@@ -196,7 +193,7 @@ export function IconSection() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder='Search icons...'
-            className='max-w-xs border-fcu-primary-200 text-sm'
+            className='max-w-xs border-border text-sm'
           />
 
           <div className='flex flex-wrap gap-1.5'>
@@ -205,8 +202,8 @@ export function IconSection() {
               className={cn(
                 'rounded-full px-3 py-1 text-[10px] font-medium transition-colors',
                 !activeCategory
-                  ? 'bg-fcu-primary-900 text-white'
-                  : 'bg-fcu-primary-50 text-fcu-primary-600 hover:bg-fcu-primary-100',
+                  ? 'bg-foreground text-background'
+                  : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground',
               )}
             >
               All
@@ -220,8 +217,8 @@ export function IconSection() {
                 className={cn(
                   'rounded-full px-3 py-1 text-[10px] font-medium transition-colors',
                   activeCategory === cat
-                    ? 'bg-fcu-primary-900 text-white'
-                    : 'bg-fcu-primary-50 text-fcu-primary-600 hover:bg-fcu-primary-100',
+                    ? 'bg-foreground text-background'
+                    : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground',
                 )}
               >
                 {cat}
@@ -230,7 +227,7 @@ export function IconSection() {
           </div>
 
           <div className='ml-auto flex items-center gap-2'>
-            <span className='text-[10px] text-fcu-primary-400'>Size:</span>
+            <span className='text-[10px] text-muted-foreground'>Size:</span>
             {SIZES.filter((s) => [16, 24, 32].includes(s.size)).map((s) => (
               <button
                 key={s.size}
@@ -238,8 +235,8 @@ export function IconSection() {
                 className={cn(
                   'rounded px-2 py-0.5 text-[10px] font-medium transition-colors',
                   previewSize === s.size
-                    ? 'bg-fcu-primary-900 text-white'
-                    : 'bg-fcu-primary-50 text-fcu-primary-600 hover:bg-fcu-primary-100',
+                    ? 'bg-foreground text-background'
+                    : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground',
                 )}
               >
                 {s.label}
@@ -249,8 +246,8 @@ export function IconSection() {
         </div>
 
         {filtered.length === 0 ? (
-          <div className='flex h-40 items-center justify-center rounded-2xl border border-dashed border-fcu-primary-200 bg-fcu-primary-50/30'>
-            <p className='text-sm text-fcu-primary-400'>
+          <div className='flex h-40 items-center justify-center rounded-2xl border border-dashed border-border bg-muted/30'>
+            <p className='text-sm text-muted-foreground'>
               No icons match &ldquo;{search}&rdquo;
             </p>
           </div>
@@ -262,14 +259,14 @@ export function IconSection() {
                 <button
                   key={entry.name}
                   onClick={() => handleCopy(entry.name)}
-                  className='group flex flex-col items-center gap-2 rounded-xl border border-transparent p-3 transition-all hover:border-fcu-primary-200 hover:bg-fcu-primary-50 focus-visible:ring-2 focus-visible:ring-fcu-primary-500'
+                  className='group flex flex-col items-center gap-2 rounded-xl border border-transparent p-3 transition-all hover:border-border hover:bg-muted/40 focus-visible:ring-2 focus-visible:ring-ring'
                   title={`${entry.name} (${entry.category})`}
                 >
                   <Icon
-                    className='text-fcu-primary-600 transition-colors group-hover:text-fcu-primary-900'
+                    className='text-foreground/75 transition-colors group-hover:text-foreground'
                     style={{ width: previewSize, height: previewSize }}
                   />
-                  <span className='max-w-full truncate text-[9px] text-fcu-primary-400 group-hover:text-fcu-primary-600'>
+                  <span className='max-w-full truncate text-[9px] text-muted-foreground group-hover:text-foreground/80'>
                     {entry.name}
                   </span>
                 </button>
@@ -294,7 +291,7 @@ export function IconSection() {
             {
               title: 'Colour',
               rule: 'Always use currentColor (inherited from text colour)',
-              code: '<Search className="text-fcu-primary-600" />',
+              code: '<Search className="text-foreground" />',
             },
             {
               title: 'Touch Target',
@@ -314,13 +311,13 @@ export function IconSection() {
           ].map((r) => (
             <div
               key={r.title}
-              className='rounded-xl border border-fcu-primary-100 bg-white p-5'
+              className='rounded-xl border border-border bg-card p-5'
             >
-              <p className='text-sm font-semibold text-fcu-primary-800'>
+              <p className='text-sm font-semibold text-foreground'>
                 {r.title}
               </p>
-              <p className='mt-1 text-xs text-fcu-primary-500'>{r.rule}</p>
-              <code className='mt-2 block rounded bg-fcu-primary-50 px-2 py-1 text-[10px] text-fcu-primary-600'>
+              <p className='mt-1 text-xs text-muted-foreground'>{r.rule}</p>
+              <code className='mt-2 block rounded bg-muted px-2 py-1 text-[10px] text-foreground/80'>
                 {r.code}
               </code>
             </div>

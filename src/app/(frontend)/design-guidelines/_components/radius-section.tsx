@@ -72,33 +72,33 @@ export function RadiusSection() {
 
   return (
     <SectionWrapper
-      id="radius"
-      title="Borders & Radius"
-      description="A consistent border radius scale derived from --radius (0.625rem / 10px). All components reference this base value so the entire system can be tuned from a single token."
+      id='radius'
+      title='Borders & Radius'
+      description='A consistent border radius scale derived from --radius (0.625rem / 10px). All components reference this base value so the entire system can be tuned from a single token.'
     >
       <Subsection
-        title="Radius Scale"
-        description="Each token is computed from the base --radius variable. The boxes below show the actual corner rounding."
+        title='Radius Scale'
+        description='Each token is computed from the base --radius variable. The boxes below show the actual corner rounding.'
       >
-        <div className="grid grid-cols-3 gap-4 sm:grid-cols-5 lg:grid-cols-9">
+        <div className='grid grid-cols-3 gap-4 sm:grid-cols-5 lg:grid-cols-9'>
           {RADIUS_TOKENS.map((r) => {
             const displayRadius =
               r.computed === 9999 ? '50%' : `${r.computed}px`
 
             return (
-              <div key={r.name} className="text-center">
+              <div key={r.name} className='text-center'>
                 <div
-                  className="mx-auto mb-3 flex size-20 items-center justify-center border-2 border-fcu-primary-200 bg-fcu-primary-50/70 transition-colors hover:border-fcu-primary-400 hover:bg-fcu-primary-100"
+                  className='mx-auto mb-3 flex size-20 items-center justify-center border-2 border-border bg-muted/70 transition-colors hover:border-muted-foreground/40 hover:bg-muted'
                   style={{
                     borderRadius: displayRadius,
                   }}
                 >
-                  <span className="text-[10px] font-bold tabular-nums text-fcu-primary-600">
+                  <span className='text-[10px] font-bold tabular-nums text-foreground/80'>
                     {r.computed === 9999 ? '∞' : `${r.computed}px`}
                   </span>
                 </div>
                 <CopyButton value={r.tailwind} />
-                <p className="mt-0.5 text-[9px] text-fcu-primary-400">
+                <p className='mt-0.5 text-[9px] text-muted-foreground'>
                   {r.name}
                 </p>
               </div>
@@ -108,12 +108,12 @@ export function RadiusSection() {
       </Subsection>
 
       <Subsection
-        title="Interactive Preview"
-        description="Drag the slider to preview custom radius values on different shapes."
+        title='Interactive Preview'
+        description='Drag the slider to preview custom radius values on different shapes.'
       >
-        <div className="rounded-2xl border border-fcu-primary-100 bg-white p-6">
-          <div className="mb-6 flex items-center gap-4">
-            <label className="text-xs font-medium text-fcu-primary-600">
+        <div className='rounded-2xl border border-border bg-card p-6'>
+          <div className='mb-6 flex items-center gap-4'>
+            <label className='text-xs font-medium text-foreground/80'>
               Radius:
             </label>
             <Slider
@@ -122,87 +122,84 @@ export function RadiusSection() {
               max={48}
               min={0}
               step={1}
-              className="max-w-xs"
+              className='max-w-xs'
             />
-            <span className="min-w-[48px] text-right text-sm font-bold tabular-nums text-fcu-primary-800">
+            <span className='min-w-[48px] text-right text-sm font-bold tabular-nums text-foreground'>
               {customRadius[0]}px
             </span>
           </div>
 
-          <div className="flex flex-wrap items-end gap-6">
+          <div className='flex flex-wrap items-end gap-6'>
             {/* Small box */}
-            <div className="text-center">
+            <div className='text-center'>
               <div
-                className="size-16 bg-fcu-primary-500 transition-all duration-200"
+                className='size-16 bg-fcu-primary-900 transition-all duration-200'
                 style={{ borderRadius: `${customRadius[0]}px` }}
               />
-              <p className="mt-2 text-[10px] text-fcu-primary-400">64×64</p>
+              <p className='mt-2 text-[10px] text-muted-foreground'>64×64</p>
             </div>
             {/* Medium box */}
-            <div className="text-center">
+            <div className='text-center'>
               <div
-                className="h-24 w-40 bg-fcu-secondary-500 transition-all duration-200"
+                className='h-24 w-40 bg-fcu-secondary-500 transition-all duration-200'
                 style={{ borderRadius: `${customRadius[0]}px` }}
               />
-              <p className="mt-2 text-[10px] text-fcu-primary-400">160×96</p>
+              <p className='mt-2 text-[10px] text-muted-foreground'>160×96</p>
             </div>
             {/* Card-like */}
-            <div className="text-center">
+            <div className='text-center'>
               <div
-                className="h-32 w-56 border-2 border-fcu-primary-200 bg-white transition-all duration-200"
+                className='h-32 w-56 border-2 border-border bg-card transition-all duration-200'
                 style={{ borderRadius: `${customRadius[0]}px` }}
               >
                 <div
-                  className="h-16 w-full bg-fcu-primary-100 transition-all duration-200"
+                  className='h-16 w-full bg-muted transition-all duration-200'
                   style={{
                     borderRadius: `${customRadius[0]}px ${customRadius[0]}px 0 0`,
                   }}
                 />
               </div>
-              <p className="mt-2 text-[10px] text-fcu-primary-400">Card</p>
+              <p className='mt-2 text-[10px] text-muted-foreground'>Card</p>
             </div>
             {/* Button */}
-            <div className="text-center">
+            <div className='text-center'>
               <div
-                className="flex h-10 items-center justify-center bg-fcu-primary-900 px-6 text-xs font-medium text-white transition-all duration-200"
+                className='flex h-10 items-center justify-center bg-fcu-primary-900 px-6 text-xs font-medium text-white transition-all duration-200'
                 style={{ borderRadius: `${customRadius[0]}px` }}
               >
                 Button
               </div>
-              <p className="mt-2 text-[10px] text-fcu-primary-400">Button</p>
+              <p className='mt-2 text-[10px] text-muted-foreground'>Button</p>
             </div>
           </div>
         </div>
       </Subsection>
 
       <Subsection
-        title="Border Widths"
-        description="Available border width tokens."
+        title='Border Widths'
+        description='Available border width tokens.'
       >
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className='grid grid-cols-2 gap-4 sm:grid-cols-4'>
           {BORDER_WIDTHS.map((b) => (
-            <div
-              key={b.name}
-              className="text-center"
-            >
+            <div key={b.name} className='text-center'>
               <div
                 className={cn(
                   'mx-auto mb-3 flex size-20 items-center justify-center rounded-xl bg-white',
                   b.name === 'none'
                     ? 'border-0'
                     : b.name === 'default'
-                      ? 'border border-fcu-primary-300'
+                      ? 'border border-border'
                       : b.name === 'thick'
-                        ? 'border-2 border-fcu-primary-300'
-                        : 'border-4 border-fcu-primary-300'
+                        ? 'border-2 border-border'
+                        : 'border-4 border-border',
                 )}
               >
-                <span className="text-xs font-bold tabular-nums text-fcu-primary-600">
+                <span className='text-xs font-bold tabular-nums text-foreground/80'>
                   {b.value}
                 </span>
               </div>
               <CopyButton value={b.tailwind} />
-              <p className="mt-0.5 text-[9px] text-fcu-primary-400">
+              <p className='mt-0.5 text-[9px] text-muted-foreground'>
                 {b.name}
               </p>
             </div>

@@ -27,11 +27,11 @@ export function SectionWrapper({
       transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
     >
       <div className="mb-8">
-        <h2 className="text-2xl font-bold tracking-tight text-fcu-primary-950">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground">
           {title}
         </h2>
         {description && (
-          <p className="mt-2 text-sm leading-relaxed text-fcu-primary-600/80">
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             {description}
           </p>
         )}
@@ -39,7 +39,7 @@ export function SectionWrapper({
 
       {children}
 
-      <Separator className="mt-20 bg-fcu-primary-100" />
+      <Separator className="mt-20 bg-border" />
     </motion.section>
   )
 }
@@ -55,11 +55,11 @@ export function Subsection({
 }) {
   return (
     <div className="mt-12 first:mt-0">
-      <h3 className="mb-1 text-sm font-bold uppercase tracking-wider text-fcu-primary-400">
+      <h3 className="mb-1 text-sm font-bold uppercase tracking-wider text-muted-foreground">
         {title}
       </h3>
       {description && (
-        <p className="mb-6 text-sm text-fcu-primary-500/80">{description}</p>
+        <p className="mb-6 text-sm text-muted-foreground">{description}</p>
       )}
       {!description && <div className="mb-6" />}
       {children}
