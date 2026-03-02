@@ -159,6 +159,144 @@ const SECONDARY_PALETTE: ColourStop[] = [
   },
 ]
 
+const GREEN_FADED_PALETTE: ColourStop[] = [
+  {
+    shade: '50',
+    oklch: 'oklch(0.99 0.011 100.72)',
+    cssVar: '--color-fcu-green-faded-50',
+    tailwind: 'fcu-green-faded-50',
+  },
+  {
+    shade: '100',
+    oklch: 'oklch(0.982 0.022 101.29)',
+    cssVar: '--color-fcu-green-faded-100',
+    tailwind: 'fcu-green-faded-100',
+  },
+  {
+    shade: '200',
+    oklch: 'oklch(0.964 0.05 102.3)',
+    cssVar: '--color-fcu-green-faded-200',
+    tailwind: 'fcu-green-faded-200',
+  },
+  {
+    shade: '300',
+    oklch: 'oklch(0.956 0.066 102.89)',
+    cssVar: '--color-fcu-green-faded-300',
+    tailwind: 'fcu-green-faded-300',
+  },
+  {
+    shade: '400',
+    oklch: 'oklch(0.937 0.082 102.57)',
+    cssVar: '--color-fcu-green-faded-400',
+    tailwind: 'fcu-green-faded-400',
+  },
+  {
+    shade: '500',
+    oklch: 'oklch(0.921 0.081 103.26)',
+    cssVar: '--color-fcu-green-faded-500',
+    tailwind: 'fcu-green-faded-500',
+  },
+  {
+    shade: '600',
+    oklch: 'oklch(0.765 0.067 103.03)',
+    cssVar: '--color-fcu-green-faded-600',
+    tailwind: 'fcu-green-faded-600',
+  },
+  {
+    shade: '700',
+    oklch: 'oklch(0.61 0.054 102.78)',
+    cssVar: '--color-fcu-green-faded-700',
+    tailwind: 'fcu-green-faded-700',
+  },
+  {
+    shade: '800',
+    oklch: 'oklch(0.448 0.04 104.17)',
+    cssVar: '--color-fcu-green-faded-800',
+    tailwind: 'fcu-green-faded-800',
+  },
+  {
+    shade: '900',
+    oklch: 'oklch(0.293 0.026 104.64)',
+    cssVar: '--color-fcu-green-faded-900',
+    tailwind: 'fcu-green-faded-900',
+  },
+  {
+    shade: '950',
+    oklch: 'oklch(0.216 0.019 103)',
+    cssVar: '--color-fcu-green-faded-950',
+    tailwind: 'fcu-green-faded-950',
+  },
+]
+
+const MINT_PALETTE: ColourStop[] = [
+  {
+    shade: '50',
+    oklch: 'oklch(0.981 0.014 169.11)',
+    cssVar: '--color-fcu-mint-50',
+    tailwind: 'fcu-mint-50',
+  },
+  {
+    shade: '100',
+    oklch: 'oklch(0.962 0.028 171.15)',
+    cssVar: '--color-fcu-mint-100',
+    tailwind: 'fcu-mint-100',
+  },
+  {
+    shade: '200',
+    oklch: 'oklch(0.934 0.052 170.18)',
+    cssVar: '--color-fcu-mint-200',
+    tailwind: 'fcu-mint-200',
+  },
+  {
+    shade: '300',
+    oklch: 'oklch(0.895 0.079 170.52)',
+    cssVar: '--color-fcu-mint-300',
+    tailwind: 'fcu-mint-300',
+  },
+  {
+    shade: '400',
+    oklch: 'oklch(0.87 0.076 170.49)',
+    cssVar: '--color-fcu-mint-400',
+    tailwind: 'fcu-mint-400',
+  },
+  {
+    shade: '500',
+    oklch: 'oklch(0.835 0.074 170.42)',
+    cssVar: '--color-fcu-mint-500',
+    tailwind: 'fcu-mint-500',
+  },
+  {
+    shade: '600',
+    oklch: 'oklch(0.699 0.061 170.9)',
+    cssVar: '--color-fcu-mint-600',
+    tailwind: 'fcu-mint-600',
+  },
+  {
+    shade: '700',
+    oklch: 'oklch(0.553 0.048 171.68)',
+    cssVar: '--color-fcu-mint-700',
+    tailwind: 'fcu-mint-700',
+  },
+  {
+    shade: '800',
+    oklch: 'oklch(0.418 0.036 171.73)',
+    cssVar: '--color-fcu-mint-800',
+    tailwind: 'fcu-mint-800',
+  },
+  {
+    shade: '900',
+    oklch: 'oklch(0.273 0.024 169.15)',
+    cssVar: '--color-fcu-mint-900',
+    tailwind: 'fcu-mint-900',
+  },
+  {
+    shade: '950',
+    oklch: 'oklch(0.206 0.018 169.9)',
+    cssVar: '--color-fcu-mint-950',
+    tailwind: 'fcu-mint-950',
+  },
+]
+
 const SEMANTIC_COLOURS = [
   {
     name: 'background',
@@ -362,6 +500,47 @@ export function ColourSection() {
             </div>
             <CopyButton value='#bbbb14' label='Secondary hex' />
           </div>
+
+          <div className='flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3'>
+            <div className='flex items-center gap-3'>
+              <span
+                className='size-8 rounded-lg border border-border'
+                style={{ backgroundColor: 'oklch(0.921 0.081 103.26)' }}
+                aria-hidden='true'
+              />
+              <div>
+                <p className='text-xs font-semibold text-foreground'>
+                  Green Faded 500
+                </p>
+                <p className='text-[10px] text-muted-foreground'>
+                  --color-fcu-green-faded-500
+                </p>
+              </div>
+            </div>
+            <CopyButton
+              value='--color-fcu-green-faded-500'
+              label='Green faded token'
+            />
+          </div>
+
+          <div className='flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3'>
+            <div className='flex items-center gap-3'>
+              <span
+                className='size-8 rounded-lg border border-border'
+                style={{ backgroundColor: 'oklch(0.835 0.074 170.42)' }}
+                aria-hidden='true'
+              />
+              <div>
+                <p className='text-xs font-semibold text-foreground'>
+                  Mint 500
+                </p>
+                <p className='text-[10px] text-muted-foreground'>
+                  --color-fcu-mint-500
+                </p>
+              </div>
+            </div>
+            <CopyButton value='--color-fcu-mint-500' label='Mint token' />
+          </div>
         </div>
       </Subsection>
 
@@ -401,6 +580,46 @@ export function ColourSection() {
           </div>
           <div className='grid grid-cols-2 gap-3 md:grid-cols-5'>
             {SECONDARY_PALETTE.map((stop) => (
+              <ColourSwatch key={stop.shade} stop={stop} prefix='secondary' />
+            ))}
+          </div>
+        </div>
+      </Subsection>
+
+      <Subsection
+        title='FCU Green Faded'
+        description='Soft green palette for subtle highlights and low-contrast support surfaces.'
+      >
+        <div className='rounded-3xl border border-border bg-muted/20 p-4 sm:p-5'>
+          <div className='mb-4 flex items-center justify-between'>
+            <p className='text-xs font-semibold text-foreground'>
+              Green Faded Scale
+            </p>
+            <Badge variant='outline' className='text-[10px]'>
+              5 per row
+            </Badge>
+          </div>
+          <div className='grid grid-cols-2 gap-3 md:grid-cols-5'>
+            {GREEN_FADED_PALETTE.map((stop) => (
+              <ColourSwatch key={stop.shade} stop={stop} prefix='secondary' />
+            ))}
+          </div>
+        </div>
+      </Subsection>
+
+      <Subsection
+        title='FCU Mint'
+        description='Fresh mint palette for supportive UI accents and soft visual contrast.'
+      >
+        <div className='rounded-3xl border border-border bg-muted/20 p-4 sm:p-5'>
+          <div className='mb-4 flex items-center justify-between'>
+            <p className='text-xs font-semibold text-foreground'>Mint Scale</p>
+            <Badge variant='outline' className='text-[10px]'>
+              5 per row
+            </Badge>
+          </div>
+          <div className='grid grid-cols-2 gap-3 md:grid-cols-5'>
+            {MINT_PALETTE.map((stop) => (
               <ColourSwatch key={stop.shade} stop={stop} prefix='secondary' />
             ))}
           </div>
