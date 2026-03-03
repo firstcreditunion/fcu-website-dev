@@ -548,6 +548,13 @@ export function ColourSection() {
 
   const allColours = [
     ...NEUTRAL_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
+    {
+      shade: 'warm',
+      oklch: '#028090',
+      cssVar: '--',
+      tailwind: 'fcu-primary-warm',
+      id: 'fcu-primary-warm',
+    },
     ...PRIMARY_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
     ...SECONDARY_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
     ...GREEN_FADED_PALETTE.map((s) => ({ ...s, id: s.tailwind })),
@@ -608,6 +615,23 @@ export function ColourSection() {
               </div>
             </div>
             <CopyButton value='#bbbb14' label='Secondary hex' />
+          </div>
+
+          <div className='flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3'>
+            <div className='flex items-center gap-3'>
+              <span
+                className='size-8 rounded-lg border border-border'
+                style={{ backgroundColor: '#028090' }}
+                aria-hidden='true'
+              />
+              <div>
+                <p className='text-xs font-semibold text-foreground'>
+                  FCU Primary Warm
+                </p>
+                <p className='text-[10px] text-muted-foreground'>#028090</p>
+              </div>
+            </div>
+            <CopyButton value='#028090' label='Primary warm hex' />
           </div>
 
           <div className='flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3'>
