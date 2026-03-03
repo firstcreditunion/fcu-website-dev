@@ -54,10 +54,7 @@ async function getResearchMarkdown(): Promise<string> {
   return fs.readFile(filePath, 'utf-8')
 }
 
-function getConfig(
-  configs: Record<string, unknown>[] | null,
-  name: string,
-) {
+function getConfig(configs: Record<string, unknown>[] | null, name: string) {
   if (!configs) return null
   const found = configs.find(
     (c) => (c as { componentName?: string }).componentName === name,
@@ -68,11 +65,12 @@ function getConfig(
 export default async function ComponentDesignPage() {
   const researchContent = await getResearchMarkdown()
 
-  let designTokens: { lastSyncedAt?: string } | null = null
+  let designTokens: { lastSyncedAt?: string | null } | null = null
   let componentConfigs: Record<string, unknown>[] | null = null
 
   try {
-    designTokens = await client.fetch(DESIGN_TOKENS_QUERY)
+    const tokensResult = await client.fetch(DESIGN_TOKENS_QUERY)
+    designTokens = tokensResult
     componentConfigs = await client.fetch(ALL_COMPONENT_CONFIGS_QUERY)
   } catch {
     // Sanity may not have these documents yet — that's fine
@@ -94,25 +92,65 @@ export default async function ComponentDesignPage() {
         <FinancialServicesSection />
 
         {/* UI Primitives — Interactive Playgrounds */}
-        <ButtonShowcase initialConfig={getConfig(componentConfigs, 'button') as never} />
-        <BadgeShowcase initialConfig={getConfig(componentConfigs, 'badge') as never} />
-        <InputShowcase initialConfig={getConfig(componentConfigs, 'input') as never} />
-        <SelectShowcase initialConfig={getConfig(componentConfigs, 'select') as never} />
-        <SwitchShowcase initialConfig={getConfig(componentConfigs, 'switch') as never} />
-        <SliderShowcase initialConfig={getConfig(componentConfigs, 'slider') as never} />
-        <LabelShowcase initialConfig={getConfig(componentConfigs, 'label') as never} />
-        <CardShowcase initialConfig={getConfig(componentConfigs, 'card') as never} />
-        <SeparatorShowcase initialConfig={getConfig(componentConfigs, 'separator') as never} />
-        <TabsShowcase initialConfig={getConfig(componentConfigs, 'tabs') as never} />
-        <AccordionShowcase initialConfig={getConfig(componentConfigs, 'accordion') as never} />
-        <TableShowcase initialConfig={getConfig(componentConfigs, 'table') as never} />
-        <DialogShowcase initialConfig={getConfig(componentConfigs, 'dialog') as never} />
-        <SheetShowcase initialConfig={getConfig(componentConfigs, 'sheet') as never} />
-        <TooltipShowcase initialConfig={getConfig(componentConfigs, 'tooltip') as never} />
-        <SonnerShowcase initialConfig={getConfig(componentConfigs, 'sonner') as never} />
-        <NavigationMenuShowcase initialConfig={getConfig(componentConfigs, 'navigation-menu') as never} />
-        <CommandShowcase initialConfig={getConfig(componentConfigs, 'command') as never} />
-        <ScrollAreaShowcase initialConfig={getConfig(componentConfigs, 'scroll-area') as never} />
+        <ButtonShowcase
+          initialConfig={getConfig(componentConfigs, 'button') as never}
+        />
+        <BadgeShowcase
+          initialConfig={getConfig(componentConfigs, 'badge') as never}
+        />
+        <InputShowcase
+          initialConfig={getConfig(componentConfigs, 'input') as never}
+        />
+        <SelectShowcase
+          initialConfig={getConfig(componentConfigs, 'select') as never}
+        />
+        <SwitchShowcase
+          initialConfig={getConfig(componentConfigs, 'switch') as never}
+        />
+        <SliderShowcase
+          initialConfig={getConfig(componentConfigs, 'slider') as never}
+        />
+        <LabelShowcase
+          initialConfig={getConfig(componentConfigs, 'label') as never}
+        />
+        <CardShowcase
+          initialConfig={getConfig(componentConfigs, 'card') as never}
+        />
+        <SeparatorShowcase
+          initialConfig={getConfig(componentConfigs, 'separator') as never}
+        />
+        <TabsShowcase
+          initialConfig={getConfig(componentConfigs, 'tabs') as never}
+        />
+        <AccordionShowcase
+          initialConfig={getConfig(componentConfigs, 'accordion') as never}
+        />
+        <TableShowcase
+          initialConfig={getConfig(componentConfigs, 'table') as never}
+        />
+        <DialogShowcase
+          initialConfig={getConfig(componentConfigs, 'dialog') as never}
+        />
+        <SheetShowcase
+          initialConfig={getConfig(componentConfigs, 'sheet') as never}
+        />
+        <TooltipShowcase
+          initialConfig={getConfig(componentConfigs, 'tooltip') as never}
+        />
+        <SonnerShowcase
+          initialConfig={getConfig(componentConfigs, 'sonner') as never}
+        />
+        <NavigationMenuShowcase
+          initialConfig={
+            getConfig(componentConfigs, 'navigation-menu') as never
+          }
+        />
+        <CommandShowcase
+          initialConfig={getConfig(componentConfigs, 'command') as never}
+        />
+        <ScrollAreaShowcase
+          initialConfig={getConfig(componentConfigs, 'scroll-area') as never}
+        />
 
         {/* Reference */}
         <ResearchDocumentSection content={researchContent} />
