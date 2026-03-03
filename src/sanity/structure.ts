@@ -1,7 +1,8 @@
 import type { StructureResolver } from 'sanity/structure'
-import { CogIcon, MenuIcon } from '@sanity/icons'
+import { CogIcon, MenuIcon, ComponentIcon, ColorWheelIcon, UsersIcon } from '@sanity/icons'
 
-const SINGLETONS = ['siteSettings', 'headerNavigation']
+const SINGLETONS = ['siteSettings', 'headerNavigation', 'designTokens']
+const HIDDEN_TYPES = [...SINGLETONS, 'componentConfig', 'designSystemUser']
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -28,8 +29,45 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      S.listItem()
+        .title('Design System')
+        .icon(ColorWheelIcon)
+        .child(
+          S.list()
+            .title('Design System')
+            .items([
+              S.listItem()
+                .title('Design Tokens')
+                .icon(ColorWheelIcon)
+                .child(
+                  S.document()
+                    .schemaType('designTokens')
+                    .documentId('designTokens')
+                    .title('Design Tokens'),
+                ),
+              S.listItem()
+                .title('Component Configs')
+                .icon(ComponentIcon)
+                .child(
+                  S.documentTypeList('componentConfig').title(
+                    'Component Configs',
+                  ),
+                ),
+              S.listItem()
+                .title('Users')
+                .icon(UsersIcon)
+                .child(
+                  S.documentTypeList('designSystemUser').title(
+                    'Design System Users',
+                  ),
+                ),
+            ]),
+        ),
+
+      S.divider(),
+
       ...S.documentTypeListItems().filter(
-        (item) => !SINGLETONS.includes(item.getId() as string),
+        (item) => !HIDDEN_TYPES.includes(item.getId() as string),
       ),
 
       S.divider(),

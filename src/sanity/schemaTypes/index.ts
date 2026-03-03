@@ -2,6 +2,9 @@ import { type SchemaTypeDefinition } from 'sanity'
 
 import { headerNavigation } from './headerNavigation'
 import { siteSettings } from './siteSettings'
+import { designTokens, colorPalette, colorToken } from './designTokens'
+import { componentConfig, variantGuideline } from './componentConfig'
+import { designSystemUser } from './designSystemUser'
 
 import { link } from './objects/link'
 import { navGroup } from './objects/navGroup'
@@ -18,6 +21,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // Documents
     headerNavigation,
     siteSettings,
+    designTokens,
+    componentConfig,
+    designSystemUser,
 
     // Objects (reusable)
     link,
@@ -29,5 +35,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     dayHours,
     announcementBar,
     disputeResolutionScheme,
+    colorPalette,
+    colorToken,
+    variantGuideline,
   ],
 }

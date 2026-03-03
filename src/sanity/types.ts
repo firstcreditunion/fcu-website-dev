@@ -13,6 +13,32 @@
  */
 
 // Source: src/sanity/extract.json
+export type VariantGuideline = {
+  _type: "variantGuideline";
+  variant: string;
+  colorToken?: string;
+  usageNote?: string;
+};
+
+export type ColorToken = {
+  _type: "colorToken";
+  name: string;
+  cssVariable?: string;
+  oklch?: string;
+  hex?: string;
+  rgb?: string;
+};
+
+export type ColorPalette = {
+  _type: "colorPalette";
+  paletteName: string;
+  tokens?: Array<
+    {
+      _key: string;
+    } & ColorToken
+  >;
+};
+
 export type DisputeResolutionScheme = {
   _type: "disputeResolutionScheme";
   schemeName: string;
@@ -139,6 +165,75 @@ export type Link = {
   url?: string;
   externalUrl?: string;
   openInNewTab?: boolean;
+};
+
+export type DesignSystemUser = {
+  _id: string;
+  _type: "designSystemUser";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  email: string;
+  hashedPin?: string;
+  displayName?: string;
+  lastLoginAt?: string;
+  createdAt?: string;
+};
+
+export type ComponentConfig = {
+  _id: string;
+  _type: "componentConfig";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  componentName: string;
+  displayName: string;
+  category?: "actions" | "forms" | "layout" | "overlay" | "navigation" | "data";
+  approvedVariants?: Array<string>;
+  disabledVariants?: Array<string>;
+  approvedSizes?: Array<string>;
+  defaultVariant?: string;
+  defaultSize?: string;
+  variantGuidelines?: Array<
+    {
+      _key: string;
+    } & VariantGuideline
+  >;
+  componentSpecificConfig?: {
+    defaultLabel?: string;
+    defaultDisabled?: boolean;
+    defaultType?: "single" | "multiple";
+    defaultCollapsible?: boolean;
+    defaultSide?: "top" | "right" | "bottom" | "left";
+    defaultOrientation?: "horizontal" | "vertical";
+    defaultListVariant?: "default" | "line";
+    showCloseButton?: boolean;
+    defaultViewport?: boolean;
+    defaultPlaceholder?: string;
+    defaultMin?: number;
+    defaultMax?: number;
+    defaultStep?: number;
+  };
+  previewConfig?: {
+    selectedVariant?: string;
+    selectedSize?: string;
+    previewLabel?: string;
+    previewDisabled?: boolean;
+  };
+};
+
+export type DesignTokens = {
+  _id: string;
+  _type: "designTokens";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  lastSyncedAt?: string;
+  palettes?: Array<
+    {
+      _key: string;
+    } & ColorPalette
+  >;
 };
 
 export type SanityFileAssetReference = {
@@ -529,6 +624,9 @@ export type Slug = {
 };
 
 export type AllSanitySchemaTypes =
+  | VariantGuideline
+  | ColorToken
+  | ColorPalette
   | DisputeResolutionScheme
   | AnnouncementBar
   | DayHours
@@ -541,6 +639,9 @@ export type AllSanitySchemaTypes =
   | MainNavItem
   | NavGroup
   | Link
+  | DesignSystemUser
+  | ComponentConfig
+  | DesignTokens
   | SanityFileAssetReference
   | SiteSettings
   | HeaderNavigation
@@ -568,6 +669,129 @@ export type AllSanitySchemaTypes =
   | Slug;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: DESIGN_TOKENS_QUERY
+// Query: *[_id == "designTokens"][0] {    lastSyncedAt,    palettes[] {      _key,      paletteName,      tokens[] {        _key,        name,        cssVariable,        oklch,        hex,        rgb      }    }  }
+export type DESIGN_TOKENS_QUERY_RESULT =
+  | {
+      lastSyncedAt: null;
+      palettes: null;
+    }
+  | {
+      lastSyncedAt: string | null;
+      palettes: Array<{
+        _key: string;
+        paletteName: string;
+        tokens: Array<{
+          _key: string;
+          name: string;
+          cssVariable: string | null;
+          oklch: string | null;
+          hex: string | null;
+          rgb: string | null;
+        }> | null;
+      }> | null;
+    }
+  | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: ALL_COMPONENT_CONFIGS_QUERY
+// Query: *[_type == "componentConfig"] | order(displayName asc) {    _id,    componentName,    displayName,    category,    approvedVariants,    disabledVariants,    approvedSizes,    defaultVariant,    defaultSize,    variantGuidelines[] {      _key,      variant,      colorToken,      usageNote    },    componentSpecificConfig,    previewConfig  }
+export type ALL_COMPONENT_CONFIGS_QUERY_RESULT = Array<{
+  _id: string;
+  componentName: string;
+  displayName: string;
+  category:
+    | "actions"
+    | "data"
+    | "forms"
+    | "layout"
+    | "navigation"
+    | "overlay"
+    | null;
+  approvedVariants: Array<string> | null;
+  disabledVariants: Array<string> | null;
+  approvedSizes: Array<string> | null;
+  defaultVariant: string | null;
+  defaultSize: string | null;
+  variantGuidelines: Array<{
+    _key: string;
+    variant: string;
+    colorToken: string | null;
+    usageNote: string | null;
+  }> | null;
+  componentSpecificConfig: {
+    defaultLabel?: string;
+    defaultDisabled?: boolean;
+    defaultType?: "multiple" | "single";
+    defaultCollapsible?: boolean;
+    defaultSide?: "bottom" | "left" | "right" | "top";
+    defaultOrientation?: "horizontal" | "vertical";
+    defaultListVariant?: "default" | "line";
+    showCloseButton?: boolean;
+    defaultViewport?: boolean;
+    defaultPlaceholder?: string;
+    defaultMin?: number;
+    defaultMax?: number;
+    defaultStep?: number;
+  } | null;
+  previewConfig: {
+    selectedVariant?: string;
+    selectedSize?: string;
+    previewLabel?: string;
+    previewDisabled?: boolean;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: COMPONENT_CONFIG_QUERY
+// Query: *[_type == "componentConfig" && componentName == $componentName][0] {    _id,    componentName,    displayName,    category,    approvedVariants,    disabledVariants,    approvedSizes,    defaultVariant,    defaultSize,    variantGuidelines[] {      _key,      variant,      colorToken,      usageNote    },    componentSpecificConfig,    previewConfig  }
+export type COMPONENT_CONFIG_QUERY_RESULT = {
+  _id: string;
+  componentName: string;
+  displayName: string;
+  category:
+    | "actions"
+    | "data"
+    | "forms"
+    | "layout"
+    | "navigation"
+    | "overlay"
+    | null;
+  approvedVariants: Array<string> | null;
+  disabledVariants: Array<string> | null;
+  approvedSizes: Array<string> | null;
+  defaultVariant: string | null;
+  defaultSize: string | null;
+  variantGuidelines: Array<{
+    _key: string;
+    variant: string;
+    colorToken: string | null;
+    usageNote: string | null;
+  }> | null;
+  componentSpecificConfig: {
+    defaultLabel?: string;
+    defaultDisabled?: boolean;
+    defaultType?: "multiple" | "single";
+    defaultCollapsible?: boolean;
+    defaultSide?: "bottom" | "left" | "right" | "top";
+    defaultOrientation?: "horizontal" | "vertical";
+    defaultListVariant?: "default" | "line";
+    showCloseButton?: boolean;
+    defaultViewport?: boolean;
+    defaultPlaceholder?: string;
+    defaultMin?: number;
+    defaultMax?: number;
+    defaultStep?: number;
+  } | null;
+  previewConfig: {
+    selectedVariant?: string;
+    selectedSize?: string;
+    previewLabel?: string;
+    previewDisabled?: boolean;
+  } | null;
+} | null;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: HEADER_NAVIGATION_QUERY
@@ -753,6 +977,9 @@ export type SITE_SETTINGS_QUERY_RESULT =
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '\n  *[_id == "designTokens"][0] {\n    lastSyncedAt,\n    palettes[] {\n      _key,\n      paletteName,\n      tokens[] {\n        _key,\n        name,\n        cssVariable,\n        oklch,\n        hex,\n        rgb\n      }\n    }\n  }\n': DESIGN_TOKENS_QUERY_RESULT;
+    '\n  *[_type == "componentConfig"] | order(displayName asc) {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': ALL_COMPONENT_CONFIGS_QUERY_RESULT;
+    '\n  *[_type == "componentConfig" && componentName == $componentName][0] {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': COMPONENT_CONFIG_QUERY_RESULT;
     '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      megaMenu[] {\n        _key,\n        title,\n        items[] {\n          _key,\n          label,\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
   }

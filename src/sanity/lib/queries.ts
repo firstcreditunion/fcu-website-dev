@@ -1,5 +1,67 @@
 import { defineQuery } from 'next-sanity'
 
+export const DESIGN_TOKENS_QUERY = defineQuery(/* groq */ `
+  *[_id == "designTokens"][0] {
+    lastSyncedAt,
+    palettes[] {
+      _key,
+      paletteName,
+      tokens[] {
+        _key,
+        name,
+        cssVariable,
+        oklch,
+        hex,
+        rgb
+      }
+    }
+  }
+`)
+
+export const ALL_COMPONENT_CONFIGS_QUERY = defineQuery(/* groq */ `
+  *[_type == "componentConfig"] | order(displayName asc) {
+    _id,
+    componentName,
+    displayName,
+    category,
+    approvedVariants,
+    disabledVariants,
+    approvedSizes,
+    defaultVariant,
+    defaultSize,
+    variantGuidelines[] {
+      _key,
+      variant,
+      colorToken,
+      usageNote
+    },
+    componentSpecificConfig,
+    previewConfig
+  }
+`)
+
+export const COMPONENT_CONFIG_QUERY = defineQuery(/* groq */ `
+  *[_type == "componentConfig" && componentName == $componentName][0] {
+    _id,
+    componentName,
+    displayName,
+    category,
+    approvedVariants,
+    disabledVariants,
+    approvedSizes,
+    defaultVariant,
+    defaultSize,
+    variantGuidelines[] {
+      _key,
+      variant,
+      colorToken,
+      usageNote
+    },
+    componentSpecificConfig,
+    previewConfig
+  }
+`)
+
 export const HEADER_NAVIGATION_QUERY = defineQuery(/* groq */ `
   *[_id == "headerNavigation"][0] {
     mainNav[] {
