@@ -106,7 +106,7 @@ export function ComponentDesignLayout({
         />
       )}
 
-      <div className='mx-auto flex max-w-[1440px]'>
+      <div className='flex w-full'>
         <aside
           className={cn(
             'fixed top-0 left-0 z-40 h-screen w-64 border-r border-border bg-card/90 pt-20 backdrop-blur-xl transition-transform duration-300 lg:sticky lg:top-0 lg:z-0 lg:translate-x-0 lg:border-r-0 lg:bg-transparent lg:backdrop-blur-none',
@@ -168,8 +168,8 @@ export function ComponentDesignLayout({
           </ScrollArea>
         </aside>
 
-        <main className='min-w-0 flex-1 px-6 py-8 lg:px-16 lg:py-12'>
-          <div className='mx-auto max-w-4xl'>
+        <main className='min-w-0 flex-1 px-6 py-8 lg:px-12 lg:py-12'>
+          <div className='mx-auto'>
             <header className='mb-16'>
               <div className='mb-4 inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground'>
                 <span className='size-1.5 rounded-full bg-fcu-primary-900' />

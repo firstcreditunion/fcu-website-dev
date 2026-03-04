@@ -78,7 +78,7 @@ export function DesignGuidelinesLayout({
         />
       )}
 
-      <div className='mx-auto flex max-w-[1440px]'>
+      <div className='flex w-full'>
         {/* Sidebar */}
         <aside
           className={cn(
@@ -132,14 +132,10 @@ export function DesignGuidelinesLayout({
         </aside>
 
         {/* Main content */}
-        <main className='min-w-0 flex-1 px-6 py-8 lg:px-16 lg:py-12'>
-          <div className='mx-auto max-w-4xl'>
+        <main className='min-w-0 flex-1 px-6 py-8 lg:px-12 lg:py-12'>
+          <div className='mx-auto'>
             {/* Page header */}
             <header className='mb-16'>
-              <div className='mb-4 inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground'>
-                <span className='size-1.5 rounded-full bg-fcu-secondary-500' />
-                Internal Reference
-              </div>
               <h1 className='text-4xl font-bold tracking-tight text-foreground sm:text-5xl'>
                 Design Guidelines
               </h1>
