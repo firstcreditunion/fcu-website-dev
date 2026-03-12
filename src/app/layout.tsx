@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
 
+import { ClerkProvider } from '@clerk/nextjs'
 import { sanityFetch } from '@/sanity/lib/live'
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
@@ -99,14 +100,16 @@ export default async function RootLayout({
   const lang = typeof locale === 'string' ? locale.split('-')[0] : 'en'
 
   return (
-    <html lang={lang}>
-      <body className={poppins.className}>
-        {settings?.enableJsonLd && (
-          <JsonLd data={generateOrganizationSchema(settings)} />
-        )}
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang={lang}>
+        <body className={poppins.className}>
+          {settings?.enableJsonLd && (
+            <JsonLd data={generateOrganizationSchema(settings)} />
+          )}
+          <TooltipProvider>{children}</TooltipProvider>
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

@@ -6,7 +6,6 @@ import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Save, Loader2, Check, AlertCircle } from 'lucide-react'
-import { useAuth } from './auth-gate'
 import {
   saveComponentConfig,
   type ComponentConfigPayload,
@@ -37,7 +36,6 @@ export function PlaygroundShell({
   controls,
   guidelines,
 }: PlaygroundShellProps) {
-  const { email, pin } = useAuth()
   const [saveStatus, setSaveStatus] = React.useState<SaveStatus>('idle')
   const [hasChanges, setHasChanges] = React.useState(false)
   const initialConfigRef = React.useRef<string>(JSON.stringify(config))
@@ -51,7 +49,7 @@ export function PlaygroundShell({
     if (!config) return
     setSaveStatus('saving')
 
-    const result = await saveComponentConfig(email, pin, config)
+    const result = await saveComponentConfig(config)
     if (result.success) {
       setSaveStatus('saved')
       initialConfigRef.current = JSON.stringify(config)

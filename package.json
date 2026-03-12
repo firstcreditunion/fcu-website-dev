@@ -12,6 +12,7 @@
     "typegen": "sanity schema extract --enforce-required-fields --path=./src/sanity/extract.json && sanity typegen generate"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.0.4",
     "@next/third-parties": "^16.1.6",
     "@react-aria/color": "^3.1.4",
     "@react-three/fiber": "^9.5.0",

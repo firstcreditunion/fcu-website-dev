@@ -3,6 +3,7 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { parse, formatHex, formatRgb } from 'culori'
+import { auth } from '@clerk/nextjs/server'
 import { writeClient } from '@/sanity/lib/writeClient'
 
 interface TokenData {
@@ -24,14 +25,13 @@ function generateKey(str: string): string {
   return str.replace(/[^a-zA-Z0-9]/g, '_')
 }
 
-import { validateUser } from './auth'
-
-export async function syncTokens(
-  email: string,
-  pin: string,
-): Promise<{ success: boolean; message: string; paletteCount?: number }> {
-  const valid = await validateUser(email, pin)
-  if (!valid) {
+export async function syncTokens(): Promise<{
+  success: boolean
+  message: string
+  paletteCount?: number
+}> {
+  const { userId } = await auth()
+  if (!userId) {
     return { success: false, message: 'Authentication failed' }
   }
 

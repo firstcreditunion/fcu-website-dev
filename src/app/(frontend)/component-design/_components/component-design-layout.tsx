@@ -13,11 +13,27 @@ interface NavSection {
 
 const SECTIONS: NavSection[] = [
   { id: 'foundations', label: 'Foundations', group: 'Components' },
-  { id: 'content-messaging', label: 'Content & Messaging', group: 'Components' },
-  { id: 'engagement-conversion', label: 'Engagement & Conversion', group: 'Components' },
-  { id: 'navigation-discovery', label: 'Navigation & Discovery', group: 'Components' },
+  {
+    id: 'content-messaging',
+    label: 'Content & Messaging',
+    group: 'Components',
+  },
+  {
+    id: 'engagement-conversion',
+    label: 'Engagement & Conversion',
+    group: 'Components',
+  },
+  {
+    id: 'navigation-discovery',
+    label: 'Navigation & Discovery',
+    group: 'Components',
+  },
   { id: 'media', label: 'Media', group: 'Components' },
-  { id: 'financial-services', label: 'Financial Services', group: 'Components' },
+  {
+    id: 'financial-services',
+    label: 'Financial Services',
+    group: 'Components',
+  },
   { id: 'ui-button', label: 'Button', group: 'UI Primitives' },
   { id: 'ui-badge', label: 'Badge', group: 'UI Primitives' },
   { id: 'ui-input', label: 'Input', group: 'UI Primitives' },
@@ -34,10 +50,18 @@ const SECTIONS: NavSection[] = [
   { id: 'ui-sheet', label: 'Sheet', group: 'UI Primitives' },
   { id: 'ui-tooltip', label: 'Tooltip', group: 'UI Primitives' },
   { id: 'ui-sonner', label: 'Toast', group: 'UI Primitives' },
-  { id: 'ui-navigation-menu', label: 'Navigation Menu', group: 'UI Primitives' },
+  {
+    id: 'ui-navigation-menu',
+    label: 'Navigation Menu',
+    group: 'UI Primitives',
+  },
   { id: 'ui-command', label: 'Command', group: 'UI Primitives' },
   { id: 'ui-scroll-area', label: 'Scroll Area', group: 'UI Primitives' },
-  { id: 'architecture-research', label: 'Architecture Research', group: 'Reference' },
+  {
+    id: 'architecture-research',
+    label: 'Architecture Research',
+    group: 'Reference',
+  },
 ]
 
 export function ComponentDesignLayout({
@@ -124,57 +148,57 @@ export function ComponentDesignLayout({
 
               <nav aria-label='Component design sections'>
                 <ul className='space-y-0.5'>
-                  {sectionsWithGroupFlag.map(({ id, label, group, showGroupHeader }, i) => {
-                    const isActive = activeSection === id
+                  {sectionsWithGroupFlag.map(
+                    ({ id, label, group, showGroupHeader }, i) => {
+                      const isActive = activeSection === id
 
-                    return (
-                      <React.Fragment key={id}>
-                        {showGroupHeader && (
-                          <li className={cn('pt-4 pb-1.5', i === 0 && 'pt-0')}>
-                            <span className='px-3 text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60'>
-                              {group}
-                            </span>
-                          </li>
-                        )}
-                        <li>
-                          <button
-                            onClick={() => scrollTo(id)}
-                            className={cn(
-                              'group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-all duration-200',
-                              isActive
-                                ? 'bg-accent font-semibold text-accent-foreground shadow-sm'
-                                : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                            )}
-                          >
-                            <span
+                      return (
+                        <React.Fragment key={id}>
+                          {showGroupHeader && (
+                            <li
+                              className={cn('pt-4 pb-1.5', i === 0 && 'pt-0')}
+                            >
+                              <span className='px-3 text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60'>
+                                {group}
+                              </span>
+                            </li>
+                          )}
+                          <li>
+                            <button
+                              onClick={() => scrollTo(id)}
                               className={cn(
-                                'flex size-5 shrink-0 items-center justify-center rounded text-[10px] font-bold transition-colors',
+                                'group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-all duration-200',
                                 isActive
-                                  ? 'bg-foreground text-background'
-                                  : 'bg-muted text-muted-foreground group-hover:bg-border',
+                                  ? 'bg-accent font-semibold text-accent-foreground shadow-sm'
+                                  : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                               )}
                             >
-                              {i + 1}
-                            </span>
-                            {label}
-                          </button>
-                        </li>
-                      </React.Fragment>
-                    )
-                  })}
+                              <span
+                                className={cn(
+                                  'flex size-5 shrink-0 items-center justify-center rounded text-[10px] font-bold transition-colors',
+                                  isActive
+                                    ? 'bg-foreground text-background'
+                                    : 'bg-muted text-muted-foreground group-hover:bg-border',
+                                )}
+                              >
+                                {i + 1}
+                              </span>
+                              {label}
+                            </button>
+                          </li>
+                        </React.Fragment>
+                      )
+                    },
+                  )}
                 </ul>
               </nav>
             </div>
           </ScrollArea>
         </aside>
 
-        <main className='min-w-0 flex-1 px-6 py-8 lg:px-12 lg:py-12'>
-          <div className='mx-auto'>
+        <main className='min-w-0 flex-1 px-6 py-8 lg:px-16 lg:py-12'>
+          <div className='mx-auto max-w-4xl'>
             <header className='mb-16'>
-              <div className='mb-4 inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground'>
-                <span className='size-1.5 rounded-full bg-fcu-primary-900' />
-                Internal Reference
-              </div>
               <h1 className='text-4xl font-bold tracking-tight text-foreground sm:text-5xl'>
                 Component Design
               </h1>

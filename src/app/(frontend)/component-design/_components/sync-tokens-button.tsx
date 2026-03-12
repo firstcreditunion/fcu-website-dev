@@ -3,7 +3,6 @@
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { RefreshCw, Loader2, Check, AlertCircle } from 'lucide-react'
-import { useAuth } from './auth-gate'
 import { syncTokens } from '../_actions/sync-tokens'
 
 type Status = 'idle' | 'syncing' | 'success' | 'error'
@@ -13,13 +12,12 @@ export function SyncTokensButton({
 }: {
   lastSyncedAt?: string | null
 }) {
-  const { email, pin } = useAuth()
   const [status, setStatus] = React.useState<Status>('idle')
   const [message, setMessage] = React.useState('')
 
   async function handleSync() {
     setStatus('syncing')
-    const result = await syncTokens(email, pin)
+    const result = await syncTokens()
     if (result.success) {
       setStatus('success')
       setMessage(result.message)

@@ -1,7 +1,7 @@
 'use server'
 
+import { auth } from '@clerk/nextjs/server'
 import { writeClient } from '@/sanity/lib/writeClient'
-import { validateUser } from './auth'
 
 export interface ComponentConfigPayload {
   componentName: string
@@ -28,12 +28,10 @@ export interface ComponentConfigPayload {
 }
 
 export async function saveComponentConfig(
-  email: string,
-  pin: string,
   config: ComponentConfigPayload,
 ): Promise<{ success: boolean; message: string }> {
-  const valid = await validateUser(email, pin)
-  if (!valid) {
+  const { userId } = await auth()
+  if (!userId) {
     return { success: false, message: 'Authentication failed' }
   }
 

@@ -7,7 +7,6 @@ import {
   ALL_COMPONENT_CONFIGS_QUERY,
 } from '@/sanity/lib/queries'
 import { ComponentDesignLayout } from './_components/component-design-layout'
-import { AuthGate } from './_components/auth-gate'
 import { SyncTokensButton } from './_components/sync-tokens-button'
 import {
   FoundationsSection,
@@ -78,83 +77,81 @@ export default async function ComponentDesignPage() {
 
   return (
     <ComponentDesignLayout>
-      <AuthGate>
-        <div className='mb-8'>
-          <SyncTokensButton lastSyncedAt={designTokens?.lastSyncedAt} />
-        </div>
+      <div className='mb-8'>
+        <SyncTokensButton lastSyncedAt={designTokens?.lastSyncedAt} />
+      </div>
 
-        {/* Page Builder Blocks */}
-        <FoundationsSection />
-        <ContentMessagingSection />
-        <EngagementConversionSection />
-        <NavigationDiscoverySection />
-        <MediaSection />
-        <FinancialServicesSection />
+      {/* Page Builder Blocks */}
+      <FoundationsSection />
+      <ContentMessagingSection />
+      <EngagementConversionSection />
+      <NavigationDiscoverySection />
+      <MediaSection />
+      <FinancialServicesSection />
 
-        {/* UI Primitives — Interactive Playgrounds */}
-        <ButtonShowcase
-          initialConfig={getConfig(componentConfigs, 'button') as never}
-        />
-        <BadgeShowcase
-          initialConfig={getConfig(componentConfigs, 'badge') as never}
-        />
-        <InputShowcase
-          initialConfig={getConfig(componentConfigs, 'input') as never}
-        />
-        <SelectShowcase
-          initialConfig={getConfig(componentConfigs, 'select') as never}
-        />
-        <SwitchShowcase
-          initialConfig={getConfig(componentConfigs, 'switch') as never}
-        />
-        <SliderShowcase
-          initialConfig={getConfig(componentConfigs, 'slider') as never}
-        />
-        <LabelShowcase
-          initialConfig={getConfig(componentConfigs, 'label') as never}
-        />
-        <CardShowcase
-          initialConfig={getConfig(componentConfigs, 'card') as never}
-        />
-        <SeparatorShowcase
-          initialConfig={getConfig(componentConfigs, 'separator') as never}
-        />
-        <TabsShowcase
-          initialConfig={getConfig(componentConfigs, 'tabs') as never}
-        />
-        <AccordionShowcase
-          initialConfig={getConfig(componentConfigs, 'accordion') as never}
-        />
-        <TableShowcase
-          initialConfig={getConfig(componentConfigs, 'table') as never}
-        />
-        <DialogShowcase
-          initialConfig={getConfig(componentConfigs, 'dialog') as never}
-        />
-        <SheetShowcase
-          initialConfig={getConfig(componentConfigs, 'sheet') as never}
-        />
-        <TooltipShowcase
-          initialConfig={getConfig(componentConfigs, 'tooltip') as never}
-        />
-        <SonnerShowcase
-          initialConfig={getConfig(componentConfigs, 'sonner') as never}
-        />
-        <NavigationMenuShowcase
-          initialConfig={
-            getConfig(componentConfigs, 'navigation-menu') as never
-          }
-        />
-        <CommandShowcase
-          initialConfig={getConfig(componentConfigs, 'command') as never}
-        />
-        <ScrollAreaShowcase
-          initialConfig={getConfig(componentConfigs, 'scroll-area') as never}
-        />
+      {/* UI Primitives — Interactive Playgrounds */}
+      <ButtonShowcase
+        initialConfig={getConfig(componentConfigs, 'button') as never}
+      />
+      <BadgeShowcase
+        initialConfig={getConfig(componentConfigs, 'badge') as never}
+      />
+      <InputShowcase
+        initialConfig={getConfig(componentConfigs, 'input') as never}
+      />
+      <SelectShowcase
+        initialConfig={getConfig(componentConfigs, 'select') as never}
+      />
+      <SwitchShowcase
+        initialConfig={getConfig(componentConfigs, 'switch') as never}
+      />
+      <SliderShowcase
+        initialConfig={getConfig(componentConfigs, 'slider') as never}
+      />
+      <LabelShowcase
+        initialConfig={getConfig(componentConfigs, 'label') as never}
+      />
+      <CardShowcase
+        initialConfig={getConfig(componentConfigs, 'card') as never}
+      />
+      <SeparatorShowcase
+        initialConfig={getConfig(componentConfigs, 'separator') as never}
+      />
+      <TabsShowcase
+        initialConfig={getConfig(componentConfigs, 'tabs') as never}
+      />
+      <AccordionShowcase
+        initialConfig={getConfig(componentConfigs, 'accordion') as never}
+      />
+      <TableShowcase
+        initialConfig={getConfig(componentConfigs, 'table') as never}
+      />
+      <DialogShowcase
+        initialConfig={getConfig(componentConfigs, 'dialog') as never}
+      />
+      <SheetShowcase
+        initialConfig={getConfig(componentConfigs, 'sheet') as never}
+      />
+      <TooltipShowcase
+        initialConfig={getConfig(componentConfigs, 'tooltip') as never}
+      />
+      <SonnerShowcase
+        initialConfig={getConfig(componentConfigs, 'sonner') as never}
+      />
+      <NavigationMenuShowcase
+        initialConfig={
+          getConfig(componentConfigs, 'navigation-menu') as never
+        }
+      />
+      <CommandShowcase
+        initialConfig={getConfig(componentConfigs, 'command') as never}
+      />
+      <ScrollAreaShowcase
+        initialConfig={getConfig(componentConfigs, 'scroll-area') as never}
+      />
 
-        {/* Reference */}
-        <ResearchDocumentSection content={researchContent} />
-      </AuthGate>
+      {/* Reference */}
+      <ResearchDocumentSection content={researchContent} />
     </ComponentDesignLayout>
   )
 }
