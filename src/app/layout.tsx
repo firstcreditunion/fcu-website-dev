@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import { Poppins, Geist } from 'next/font/google'
 import './globals.css'
 
 import { ClerkProvider } from '@clerk/nextjs'
@@ -9,6 +9,9 @@ import { urlFor } from '@/sanity/lib/image'
 import { JsonLd, generateOrganizationSchema } from '@/lib/json-ld'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Toaster } from '@/components/ui/sonner'
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
@@ -101,7 +104,7 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang={lang}>
+      <html lang={lang} className={cn("font-sans", geist.variable)}>
         <body className={poppins.className}>
           {settings?.enableJsonLd && (
             <JsonLd data={generateOrganizationSchema(settings)} />
