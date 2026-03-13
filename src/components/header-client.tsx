@@ -78,25 +78,24 @@ export function HeaderClient({
     <header className='sticky top-0 z-50 w-full'>
       <div className='border-b border-gray-100 bg-white/80 backdrop-blur-xl'>
         <div className='mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8'>
-          {/* Left: Logo + Nav */}
-          <div className='flex items-center gap-8'>
-            <Link
-              href='/'
-              className='flex shrink-0 items-center'
-              aria-label='First Credit Union — Home'
-            >
-              <Image
-                src='/fcu-logo.png'
-                alt='First Credit Union'
-                width={120}
-                height={48}
-                className='h-10 w-auto lg:h-12'
-                priority
-              />
-            </Link>
+          {/* Logo — left */}
+          <Link
+            href='/'
+            className='flex shrink-0 items-center'
+            aria-label='First Credit Union — Home'
+          >
+            <Image
+              src='/fcu-logo.png'
+              alt='First Credit Union'
+              width={120}
+              height={48}
+              className='h-10 w-auto lg:h-12'
+              priority
+            />
+          </Link>
 
-            {/* Desktop nav items */}
-            <div className='hidden lg:flex'>
+          {/* Desktop nav items — center */}
+          <div className='hidden lg:flex'>
               <motion.nav
                 className='relative'
                 initial={{ opacity: 0, y: -10 }}
@@ -264,7 +263,6 @@ export function HeaderClient({
                 </AnimatePresence>
               </motion.nav>
             </div>
-          </div>
 
           {/* Utility nav — right */}
           <div className='flex items-center gap-1.5 sm:gap-2'>
