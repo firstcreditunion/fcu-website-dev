@@ -88,7 +88,7 @@ export function HeaderClient({
   return (
     <header className='sticky top-0 z-50 w-full'>
       <div className='border-b border-gray-100 bg-white/80 backdrop-blur-xl'>
-        <div className='flex h-16 items-center px-4 sm:px-6 lg:h-[72px] lg:px-10 xl:px-16'>
+        <div className='flex h-16 items-center px-4 sm:px-6 lg:h-[84px] lg:px-10 xl:px-16'>
           {/* Logo — far left */}
           <Link
             href='/'
