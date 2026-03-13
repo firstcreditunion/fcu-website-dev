@@ -825,7 +825,7 @@ export function ColourSection() {
               <label className='mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-muted-foreground'>
                 Foreground (Text)
               </label>
-              <Select value={contrastFg} onValueChange={setContrastFg}>
+              <Select value={contrastFg} onValueChange={(v) => v && setContrastFg(v)}>
                 <SelectTrigger className='h-9 text-xs'>
                   <SelectValue />
                 </SelectTrigger>
@@ -848,7 +848,7 @@ export function ColourSection() {
               <label className='mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-muted-foreground'>
                 Background
               </label>
-              <Select value={contrastBg} onValueChange={setContrastBg}>
+              <Select value={contrastBg} onValueChange={(v) => v && setContrastBg(v)}>
                 <SelectTrigger className='h-9 text-xs'>
                   <SelectValue />
                 </SelectTrigger>

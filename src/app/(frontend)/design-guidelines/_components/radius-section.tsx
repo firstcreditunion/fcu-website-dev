@@ -118,7 +118,9 @@ export function RadiusSection() {
             </label>
             <Slider
               value={customRadius}
-              onValueChange={setCustomRadius}
+              onValueChange={(v) =>
+                setCustomRadius(Array.isArray(v) ? [...v] : [v])
+              }
               max={48}
               min={0}
               step={1}
