@@ -10,7 +10,7 @@ import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schemaTypes'
 import { structure } from './src/sanity/structure'
 
-import { resolve } from '@/sanity/presentation/resolve'
+import { resolve } from './src/sanity/presentation/resolve'
 
 export default defineConfig({
   basePath: '/studio',
