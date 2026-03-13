@@ -161,12 +161,12 @@ export function HeaderClient({
                           onMouseEnter={() => openMenu(item._key)}
                           onMouseLeave={scheduleClose}
                         >
-                          <div className='mx-auto mt-3 max-w-7xl overflow-hidden rounded-2xl border border-gray-200/60 bg-white shadow-2xl shadow-fcu-primary-900/8'>
-                            <div className='p-8'>
-                              <div className='flex w-full gap-8'>
+                          <div className='overflow-hidden border-b border-gray-200/60 bg-white shadow-xl shadow-fcu-primary-900/8'>
+                            <div className='px-4 py-8 sm:px-6 lg:px-8'>
+                              <div className='mx-auto flex max-w-7xl gap-8'>
                                 {/* Featured groups — image cards */}
                                 {featuredGroups.length > 0 && (
-                                  <div className='shrink-0'>
+                                  <div className='w-[320px] shrink-0'>
                                     {featuredGroups.map((group) => (
                                       <div
                                         key={group._key}
