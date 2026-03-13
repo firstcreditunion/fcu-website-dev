@@ -1,5 +1,5 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
-import { BlockElementIcon } from '@sanity/icons'
+import { BlockElementIcon, ImageIcon } from '@sanity/icons'
 
 export const navGroup = defineType({
   name: 'navGroup',
@@ -15,6 +15,14 @@ export const navGroup = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'isFeatured',
+      title: 'Featured Group',
+      type: 'boolean',
+      description:
+        'Display links in this group as image cards with thumbnails and descriptions. When enabled, each link requires an image and description.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'items',
       title: 'Links',
       type: 'array',
@@ -26,11 +34,13 @@ export const navGroup = defineType({
     select: {
       title: 'title',
       items: 'items',
+      isFeatured: 'isFeatured',
     },
-    prepare({ title, items }) {
+    prepare({ title, items, isFeatured }) {
       return {
         title: title || 'Untitled Group',
-        subtitle: `${items?.length || 0} link${items?.length === 1 ? '' : 's'}`,
+        subtitle: `${isFeatured ? '★ Featured · ' : ''}${items?.length || 0} link${items?.length === 1 ? '' : 's'}`,
+        media: isFeatured ? ImageIcon : BlockElementIcon,
       }
     },
   },

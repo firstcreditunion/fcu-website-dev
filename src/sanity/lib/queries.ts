@@ -71,9 +71,24 @@ export const HEADER_NAVIGATION_QUERY = defineQuery(/* groq */ `
       megaMenu[] {
         _key,
         title,
+        isFeatured,
         items[] {
           _key,
           label,
+          description,
+          image {
+            asset-> {
+              _id,
+              url,
+              metadata {
+                lqip,
+                dimensions { width, height }
+              }
+            },
+            hotspot,
+            crop,
+            alt
+          },
           linkType,
           url,
           externalUrl,

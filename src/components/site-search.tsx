@@ -211,14 +211,10 @@ export function SiteSearch() {
       <button
         type='button'
         onClick={() => setOpen(true)}
-        className='hidden items-center gap-2 rounded-full border border-gray-200 bg-gray-50/60 px-4 py-1.5 text-sm text-gray-400 transition-all hover:border-gray-300 hover:bg-gray-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fcu-primary-900 sm:inline-flex'
+        className='hidden items-center justify-center rounded-xl p-2 text-fcu-primary-700 transition-colors hover:bg-fcu-primary-50 hover:text-fcu-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fcu-primary-900 sm:inline-flex'
         aria-label='Search the site'
       >
-        <Search className='size-4 text-gray-400' />
-        <span className='text-gray-500'>Search...</span>
-        <kbd className='pointer-events-none ml-4 hidden select-none items-center gap-0.5 rounded border border-gray-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-gray-400 md:inline-flex'>
-          <span className='text-xs'>⌘</span>K
-        </kbd>
+        <Search className='size-5' />
       </button>
 
       <CommandDialog

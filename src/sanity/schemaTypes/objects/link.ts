@@ -14,6 +14,24 @@ export const link = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 2,
+      description:
+        'Short description shown below the label. Required when this link is inside a Featured Group.',
+      validation: (rule) =>
+        rule.max(120).warning('Keep under 120 characters for best display'),
+    }),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      description:
+        'Thumbnail image shown alongside the link. Required when this link is inside a Featured Group.',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'linkType',
       title: 'Link Type',
       type: 'string',
@@ -68,12 +86,14 @@ export const link = defineType({
       linkType: 'linkType',
       url: 'url',
       externalUrl: 'externalUrl',
+      media: 'image',
     },
-    prepare({ title, linkType, url, externalUrl }) {
+    prepare({ title, linkType, url, externalUrl, media }) {
       const href = linkType === 'external' ? externalUrl : url
       return {
         title: title || 'Untitled Link',
         subtitle: href || 'No URL set',
+        media,
       }
     },
   },
