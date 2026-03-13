@@ -32,6 +32,24 @@ export const mainNavItem = defineType({
       of: [defineArrayMember({ type: 'navGroup' })],
       description: 'Leave empty for a simple link without a dropdown menu',
     }),
+    defineField({
+      name: 'featuredPosition',
+      title: 'Featured Group Position',
+      type: 'string',
+      description: 'Where to place the featured image group in the dropdown',
+      options: {
+        list: [
+          { title: 'Left', value: 'left' },
+          { title: 'Right', value: 'right' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'left',
+      hidden: ({ parent }) => {
+        const groups = parent?.megaMenu as Array<{ isFeatured?: boolean }> | undefined
+        return !groups?.some((g) => g.isFeatured)
+      },
+    }),
   ],
   preview: {
     select: {

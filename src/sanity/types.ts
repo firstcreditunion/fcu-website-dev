@@ -146,6 +146,7 @@ export type MainNavItem = {
       _key: string;
     } & NavGroup
   >;
+  featuredPosition?: "left" | "right";
 };
 
 export type NavGroup = {
@@ -804,7 +805,7 @@ export type COMPONENT_CONFIG_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: HEADER_NAVIGATION_QUERY
-// Query: *[_id == "headerNavigation"][0] {    mainNav[] {      _key,      label,      url,      megaMenu[] {        _key,        title,        isFeatured,        items[] {          _key,          label,          description,          image {            asset-> {              _id,              url,              metadata {                lqip,                dimensions { width, height }              }            },            hotspot,            crop,            alt          },          linkType,          url,          externalUrl,          openInNewTab        }      }    },    utilityNav {      primaryAction {        label,        url      },      secondaryAction {        label,        url      },      showSearch    }  }
+// Query: *[_id == "headerNavigation"][0] {    mainNav[] {      _key,      label,      url,      featuredPosition,      megaMenu[] {        _key,        title,        isFeatured,        items[] {          _key,          label,          description,          image {            asset-> {              _id,              url,              metadata {                lqip,                dimensions { width, height }              }            },            hotspot,            crop,            alt          },          linkType,          url,          externalUrl,          openInNewTab        }      }    },    utilityNav {      primaryAction {        label,        url      },      secondaryAction {        label,        url      },      showSearch    }  }
 export type HEADER_NAVIGATION_QUERY_RESULT =
   | {
       mainNav: null;
@@ -815,6 +816,7 @@ export type HEADER_NAVIGATION_QUERY_RESULT =
         _key: string;
         label: string;
         url: string;
+        featuredPosition: "left" | "right" | null;
         megaMenu: Array<{
           _key: string;
           title: string;
@@ -1007,7 +1009,7 @@ declare module "@sanity/client" {
     '\n  *[_id == "designTokens"][0] {\n    lastSyncedAt,\n    palettes[] {\n      _key,\n      paletteName,\n      tokens[] {\n        _key,\n        name,\n        cssVariable,\n        oklch,\n        hex,\n        rgb\n      }\n    }\n  }\n': DESIGN_TOKENS_QUERY_RESULT;
     '\n  *[_type == "componentConfig"] | order(displayName asc) {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': ALL_COMPONENT_CONFIGS_QUERY_RESULT;
     '\n  *[_type == "componentConfig" && componentName == $componentName][0] {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': COMPONENT_CONFIG_QUERY_RESULT;
-    '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      megaMenu[] {\n        _key,\n        title,\n        isFeatured,\n        items[] {\n          _key,\n          label,\n          description,\n          image {\n            asset-> {\n              _id,\n              url,\n              metadata {\n                lqip,\n                dimensions { width, height }\n              }\n            },\n            hotspot,\n            crop,\n            alt\n          },\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
+    '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      featuredPosition,\n      megaMenu[] {\n        _key,\n        title,\n        isFeatured,\n        items[] {\n          _key,\n          label,\n          description,\n          image {\n            asset-> {\n              _id,\n              url,\n              metadata {\n                lqip,\n                dimensions { width, height }\n              }\n            },\n            hotspot,\n            crop,\n            alt\n          },\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
   }
 }

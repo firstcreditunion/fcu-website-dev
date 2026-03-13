@@ -68,6 +68,7 @@ export const HEADER_NAVIGATION_QUERY = defineQuery(/* groq */ `
       _key,
       label,
       url,
+      featuredPosition,
       megaMenu[] {
         _key,
         title,
