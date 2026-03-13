@@ -1,7 +1,11 @@
 'use client'
 
 import * as React from 'react'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { PlaygroundShell, ControlRow, VariantPicker } from '../playground-shell'
@@ -9,7 +13,9 @@ import type { ComponentConfigPayload } from '../../_actions/save-component-confi
 
 const ALL_SIDES = ['top', 'right', 'bottom', 'left']
 
-interface Props { initialConfig: ComponentConfigPayload | null }
+interface Props {
+  initialConfig: ComponentConfigPayload | null
+}
 
 export function TooltipShowcase({ initialConfig }: Props) {
   const [config, setConfig] = React.useState<ComponentConfigPayload>(
@@ -26,11 +32,19 @@ export function TooltipShowcase({ initialConfig }: Props) {
   const label = config.previewConfig?.previewLabel ?? 'Hover for more info'
 
   function updateSpecific(partial: Record<string, unknown>) {
-    setConfig((prev) => ({ ...prev, componentSpecificConfig: { ...prev.componentSpecificConfig, ...partial } }))
+    setConfig((prev) => ({
+      ...prev,
+      componentSpecificConfig: { ...prev.componentSpecificConfig, ...partial },
+    }))
   }
 
-  function updatePreview(partial: Partial<NonNullable<ComponentConfigPayload['previewConfig']>>) {
-    setConfig((prev) => ({ ...prev, previewConfig: { ...prev.previewConfig, ...partial } }))
+  function updatePreview(
+    partial: Partial<NonNullable<ComponentConfigPayload['previewConfig']>>,
+  ) {
+    setConfig((prev) => ({
+      ...prev,
+      previewConfig: { ...prev.previewConfig, ...partial },
+    }))
   }
 
   return (
@@ -43,8 +57,8 @@ export function TooltipShowcase({ initialConfig }: Props) {
       onConfigChange={setConfig}
       preview={
         <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant='outline'>Hover Me</Button>
+          <TooltipTrigger render={<Button variant='outline' />}>
+            Hover Me
           </TooltipTrigger>
           <TooltipContent side={side as 'top'}>
             <p>{label}</p>
@@ -54,10 +68,18 @@ export function TooltipShowcase({ initialConfig }: Props) {
       controls={
         <>
           <ControlRow label='Side'>
-            <VariantPicker options={ALL_SIDES} value={side} onChange={(v) => updateSpecific({ defaultSide: v })} />
+            <VariantPicker
+              options={ALL_SIDES}
+              value={side}
+              onChange={(v) => updateSpecific({ defaultSide: v })}
+            />
           </ControlRow>
           <ControlRow label='Content'>
-            <Input value={label} onChange={(e) => updatePreview({ previewLabel: e.target.value })} className='h-8 text-xs' />
+            <Input
+              value={label}
+              onChange={(e) => updatePreview({ previewLabel: e.target.value })}
+              className='h-8 text-xs'
+            />
           </ControlRow>
         </>
       }

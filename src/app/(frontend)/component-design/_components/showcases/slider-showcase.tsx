@@ -44,7 +44,7 @@ export function SliderShowcase({ initialConfig }: Props) {
         <div className={orientation === 'vertical' ? 'flex h-44 items-center' : 'w-full max-w-sm'}>
           <Slider
             value={value}
-            onValueChange={setValue}
+            onValueChange={(v) => setValue(v as number[])}
             min={min}
             max={max}
             step={step}

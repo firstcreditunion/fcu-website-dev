@@ -38,8 +38,8 @@ export function SheetShowcase({ initialConfig }: Props) {
       onConfigChange={setConfig}
       preview={
         <Sheet>
-          <SheetTrigger asChild>
-            <Button variant='outline'>Open Sheet ({side})</Button>
+          <SheetTrigger render={<Button variant='outline' />}>
+            Open Sheet ({side})
           </SheetTrigger>
           <SheetContent side={side as 'right'} showCloseButton={showCloseButton}>
             <SheetHeader>
@@ -50,8 +50,8 @@ export function SheetShowcase({ initialConfig }: Props) {
               Sheet body content goes here.
             </div>
             <SheetFooter>
-              <SheetClose asChild>
-                <Button variant='outline'>Close</Button>
+              <SheetClose render={<Button variant='outline' />}>
+                Close
               </SheetClose>
               <Button>Save</Button>
             </SheetFooter>
