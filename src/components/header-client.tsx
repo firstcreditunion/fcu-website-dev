@@ -39,18 +39,11 @@ export function HeaderClient({
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
-  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const navRef = useRef<HTMLElement>(null)
+  const megaMenuRef = useRef<HTMLDivElement>(null)
 
-  const openMenu = useCallback((key: string) => {
-    if (closeTimeout.current) {
-      clearTimeout(closeTimeout.current)
-      closeTimeout.current = null
-    }
-    setActiveMenu(key)
-  }, [])
-
-  const scheduleClose = useCallback(() => {
-    closeTimeout.current = setTimeout(() => setActiveMenu(null), 120)
+  const toggleMenu = useCallback((key: string) => {
+    setActiveMenu((prev) => (prev === key ? null : key))
   }, [])
 
   useEffect(() => {
@@ -63,6 +56,24 @@ export function HeaderClient({
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [])
+
+  useEffect(() => {
+    if (!activeMenu) return
+
+    const onClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node
+      if (
+        navRef.current?.contains(target) ||
+        megaMenuRef.current?.contains(target)
+      ) {
+        return
+      }
+      setActiveMenu(null)
+    }
+
+    document.addEventListener('mousedown', onClickOutside)
+    return () => document.removeEventListener('mousedown', onClickOutside)
+  }, [activeMenu])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
@@ -97,11 +108,11 @@ export function HeaderClient({
           {/* Desktop nav items — center */}
           <div className='hidden lg:flex lg:shrink-0'>
             <motion.nav
+              ref={navRef}
               className='relative'
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              onMouseLeave={scheduleClose}
               aria-label='Main navigation'
             >
               <div className='px-1.5 py-1.5'>
@@ -110,25 +121,36 @@ export function HeaderClient({
                     const hasMega = item.megaMenu && item.megaMenu.length > 0
                     const isOpen = activeMenu === item._key
 
+                    if (hasMega) {
+                      return (
+                        <div key={item._key} className='relative'>
+                          <button
+                            type='button'
+                            className={`relative inline-flex items-center gap-1 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                              isOpen
+                                ? 'bg-fcu-primary-900 text-white shadow-md'
+                                : 'text-fcu-primary-900 hover:bg-fcu-primary-100/60 hover:text-fcu-primary-950'
+                            }`}
+                            onClick={() => toggleMenu(item._key)}
+                            aria-expanded={isOpen}
+                            aria-haspopup='true'
+                          >
+                            {item.label}
+                            <ChevronDown
+                              className={`size-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                            />
+                          </button>
+                        </div>
+                      )
+                    }
+
                     return (
                       <div key={item._key} className='relative'>
                         <Link
                           href={item.url}
-                          className={`relative inline-flex items-center gap-1 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
-                            isOpen
-                              ? 'bg-fcu-primary-900 text-white shadow-md'
-                              : 'text-fcu-primary-900 hover:bg-fcu-primary-100/60 hover:text-fcu-primary-950'
-                          }`}
-                          onMouseEnter={() => hasMega && openMenu(item._key)}
-                          aria-expanded={hasMega ? isOpen : undefined}
-                          aria-haspopup={hasMega ? 'true' : undefined}
+                          className='relative inline-flex items-center rounded-xl px-4 py-2 text-sm font-medium text-fcu-primary-900 transition-all duration-200 hover:bg-fcu-primary-100/60 hover:text-fcu-primary-950'
                         >
                           {item.label}
-                          {hasMega && (
-                            <ChevronDown
-                              className={`size-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                            />
-                          )}
                         </Link>
                       </div>
                     )
@@ -231,6 +253,7 @@ export function HeaderClient({
 
                     return (
                       <motion.div
+                        ref={megaMenuRef}
                         key={`mega-${item._key}`}
                         initial={{ opacity: 0, y: 8, scale: 0.96 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -238,8 +261,6 @@ export function HeaderClient({
                         transition={springTransition}
                         className='fixed inset-x-0 top-[calc(var(--header-h))] z-50'
                         style={{ '--header-h': '72px' } as React.CSSProperties}
-                        onMouseEnter={() => openMenu(item._key)}
-                        onMouseLeave={scheduleClose}
                       >
                         <div className='overflow-hidden border-b border-gray-200/60 bg-white shadow-xl shadow-fcu-primary-900/8'>
                           <div className='px-4 py-8 sm:px-6 lg:px-8'>
