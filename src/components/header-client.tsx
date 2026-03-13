@@ -146,6 +146,84 @@ export function HeaderClient({
                       const plainGroups = item.megaMenu.filter(
                         (g) => !g.isFeatured,
                       )
+                      const featuredOnRight = item.featuredPosition === 'right'
+
+                      const featuredSection = featuredGroups.length > 0 && (
+                        <div className='w-[320px] shrink-0'>
+                          {featuredGroups.map((group) => (
+                            <div key={group._key} className='mb-5 last:mb-0'>
+                              <h3 className='mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground'>
+                                {group.title}
+                              </h3>
+                              <div className='space-y-2'>
+                                {group.items?.map((navLink, index) => (
+                                  <motion.div
+                                    key={navLink._key}
+                                    initial={{ opacity: 0, y: 6 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{
+                                      duration: 0.2,
+                                      delay: index * 0.04,
+                                      ease: 'easeOut',
+                                    }}
+                                  >
+                                    <FeaturedNavLink
+                                      navLink={navLink}
+                                      onClose={() => setActiveMenu(null)}
+                                    />
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )
+
+                      const divider = featuredGroups.length > 0 &&
+                        plainGroups.length > 0 && (
+                          <div className='w-px self-stretch bg-gray-100' />
+                        )
+
+                      const plainSection = plainGroups.length > 0 && (
+                        <div
+                          className={`flex-1 grid gap-8 ${
+                            plainGroups.length >= 4
+                              ? 'grid-cols-4'
+                              : plainGroups.length === 3
+                                ? 'grid-cols-3'
+                                : plainGroups.length === 2
+                                  ? 'grid-cols-2'
+                                  : 'grid-cols-1'
+                          }`}
+                                  >
+                          {plainGroups.map((group) => (
+                            <div key={group._key}>
+                              <h3 className='mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground'>
+                                {group.title}
+                              </h3>
+                              <ul className='space-y-1' role='list'>
+                                {group.items?.map((navLink, index) => (
+                                  <motion.li
+                                    key={navLink._key}
+                                    initial={{ opacity: 0, x: -4 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{
+                                      duration: 0.15,
+                                      delay: index * 0.03,
+                                      ease: 'easeOut',
+                                    }}
+                                  >
+                                    <PlainNavLink
+                                      navLink={navLink}
+                                      onClose={() => setActiveMenu(null)}
+                                    />
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      )
 
                       return (
                         <motion.div
@@ -163,96 +241,19 @@ export function HeaderClient({
                         >
                           <div className='overflow-hidden border-b border-gray-200/60 bg-white shadow-xl shadow-fcu-primary-900/8'>
                             <div className='px-4 py-8 sm:px-6 lg:px-8'>
-                              <div className='mx-auto flex max-w-7xl gap-8'>
-                                {/* Featured groups — image cards */}
-                                {featuredGroups.length > 0 && (
-                                  <div className='w-[320px] shrink-0'>
-                                    {featuredGroups.map((group) => (
-                                      <div
-                                        key={group._key}
-                                        className='mb-5 last:mb-0'
-                                      >
-                                        <h3 className='mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground'>
-                                          {group.title}
-                                        </h3>
-                                        <div className='space-y-2'>
-                                          {group.items?.map(
-                                            (navLink, index) => (
-                                              <motion.div
-                                                key={navLink._key}
-                                                initial={{ opacity: 0, y: 6 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{
-                                                  duration: 0.2,
-                                                  delay: index * 0.04,
-                                                  ease: 'easeOut',
-                                                }}
-                                              >
-                                                <FeaturedNavLink
-                                                  navLink={navLink}
-                                                  onClose={() =>
-                                                    setActiveMenu(null)
-                                                  }
-                                                />
-                                              </motion.div>
-                                            ),
-                                          )}
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
-
-                                {/* Divider */}
-                                {featuredGroups.length > 0 &&
-                                  plainGroups.length > 0 && (
-                                    <div className='w-px self-stretch bg-gray-100' />
-                                  )}
-
-                                {/* Plain groups — text links in auto columns */}
-                                {plainGroups.length > 0 && (
-                                  <div
-                                    className={`flex-1 grid gap-8 ${
-                                      plainGroups.length >= 4
-                                        ? 'grid-cols-4'
-                                        : plainGroups.length === 3
-                                          ? 'grid-cols-3'
-                                          : plainGroups.length === 2
-                                            ? 'grid-cols-2'
-                                            : 'grid-cols-1'
-                                    }`}
-                                  >
-                                    {plainGroups.map((group) => (
-                                      <div key={group._key}>
-                                        <h3 className='mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground'>
-                                          {group.title}
-                                        </h3>
-                                        <ul className='space-y-1' role='list'>
-                                          {group.items?.map(
-                                            (navLink, index) => (
-                                              <motion.li
-                                                key={navLink._key}
-                                                initial={{ opacity: 0, x: -4 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{
-                                                  duration: 0.15,
-                                                  delay: index * 0.03,
-                                                  ease: 'easeOut',
-                                                }}
-                                              >
-                                                <PlainNavLink
-                                                  navLink={navLink}
-                                                  onClose={() =>
-                                                    setActiveMenu(null)
-                                                  }
-                                                />
-                                              </motion.li>
-                                            ),
-                                          )}
-                                        </ul>
-                                      </div>
-                                    ))}
-                                  </div>
+                              <div className='mx-auto flex max-w-screen-xl gap-8'>
+                                {featuredOnRight ? (
+                                  <>
+                                    {plainSection}
+                                    {divider}
+                                    {featuredSection}
+                                  </>
+                                ) : (
+                                  <>
+                                    {featuredSection}
+                                    {divider}
+                                    {plainSection}
+                                  </>
                                 )}
                               </div>
                             </div>
