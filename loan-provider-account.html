@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Provider Account | First Credit Union</title>
+<style>
+:root{--t:#0F6E56;--tl:#E1F5EE;--tm:#1D9E75;--tb:#9FE1CB;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9fafb;color:#111827;}
+.page{max-width:900px;margin:0 auto;padding:2rem 1rem;}
+.bc{font-size:12px;color:#6b7280;margin-bottom:1.5rem;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.bc a{color:#6b7280;text-decoration:none;}.bc span{opacity:.5;}
+.sl{font-size:11px;font-weight:600;letter-spacing:.08em;color:#9ca3af;text-transform:uppercase;margin-bottom:8px;}
+.hero{background:var(--tl);border:1px solid var(--tb);border-radius:12px;padding:2.5rem 2rem;margin-bottom:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;}
+.hero-full{background:var(--tl);border:1px solid var(--tb);border-radius:12px;padding:2.5rem 2rem;margin-bottom:1.5rem;}
+.badge{display:inline-block;background:#9FE1CB;color:#064e3b;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;margin-bottom:12px;}
+.hero h1,.hero-full h1{font-size:28px;font-weight:600;color:#064e3b;margin-bottom:10px;}
+.hero p,.hero-full p{font-size:15px;color:#0F6E56;line-height:1.7;margin-bottom:1.5rem;max-width:680px;}
+.hero-note{font-size:13px;color:#0F6E56;background:#fff;border:1px solid var(--tb);border-radius:8px;padding:10px 14px;margin-top:0;line-height:1.5;}
+.stat-pills{display:flex;gap:10px;flex-wrap:wrap;}
+.pill{background:#fff;border:1px solid var(--tb);border-radius:8px;padding:8px 16px;font-size:13px;font-weight:500;color:#064e3b;}
+.btn-p{display:inline-block;background:var(--t);color:#E1F5EE;font-size:14px;font-weight:500;padding:10px 20px;border-radius:8px;text-decoration:none;margin-right:8px;}
+.btn-g{display:inline-block;border:1px solid var(--t);color:var(--t);font-size:14px;font-weight:500;padding:10px 20px;border-radius:8px;text-decoration:none;}
+.mini-visual{background:#fff;border:1px solid var(--tb);border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:10px;}
+.mv-label{font-size:11px;color:#0F6E56;font-weight:600;}
+.mv-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0;}
+.mv-k{color:#064e3b;font-weight:500;}.mv-v{color:#0F6E56;}
+.mv-divider{border:none;border-top:1px solid var(--tb);}
+.mv-bar-wrap{background:#E1F5EE;border-radius:4px;height:8px;overflow:hidden;}
+.mv-bar{height:100%;border-radius:4px;background:var(--t);}
+.mv-meta{display:flex;justify-content:space-between;font-size:11px;color:#0F6E56;}
+.tier-row{display:flex;flex-direction:column;gap:4px;}
+.tier-header{display:flex;justify-content:space-between;align-items:baseline;}
+.tier-name{font-size:12px;color:#064e3b;font-weight:500;}
+.tier-rate{font-size:14px;font-weight:600;color:#064e3b;}
+.tier-sub{font-size:11px;color:#0F6E56;}
+.month-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;}
+.month-pill{border-radius:6px;padding:5px 4px;text-align:center;font-size:11px;font-weight:500;}
+.month-pill.locked{background:#E1F5EE;color:#5DCAA5;}
+.month-pill.unlocked{background:var(--t);color:#E1F5EE;}
+.prog-section{display:flex;flex-direction:column;gap:5px;}
+.prog-row{display:flex;justify-content:space-between;font-size:12px;}
+.prog-name{color:#064e3b;font-weight:500;}.prog-val{color:#064e3b;}
+.prog-bar-loan{height:100%;border-radius:4px;background:#B45309;}
+.prog-bar-save{height:100%;border-radius:4px;background:var(--t);}
+.prog-note{display:flex;align-items:center;gap:6px;font-size:11px;color:#064e3b;}
+.prog-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem;}
+.fc{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1rem;}
+.fi-icon{width:30px;height:30px;border-radius:8px;background:var(--tl);display:flex;align-items:center;justify-content:center;margin-bottom:8px;font-size:14px;}
+.fc h3{font-size:13px;font-weight:600;color:#111827;margin-bottom:3px;}
+.fc p{font-size:12px;color:#6b7280;line-height:1.5;}
+.amber-notice{border-left:3px solid #B45309;border-radius:0 8px 8px 0;background:#FFFBEB;border-top:1px solid #FCD34D;border-right:1px solid #FCD34D;border-bottom:1px solid #FCD34D;padding:10px 14px;font-size:13px;color:#92400e;line-height:1.5;margin-bottom:1.5rem;}
+.amber-notice strong{font-weight:600;}
+.notice-bar{border-left:3px solid var(--tm);border-radius:0 8px 8px 0;background:#f9fafb;border-top:1px solid #e5e7eb;border-right:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;padding:10px 14px;font-size:13px;color:#374151;line-height:1.5;margin-bottom:1.5rem;}
+.notice-bar strong{color:#111827;font-weight:600;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
+.ic{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.25rem;}
+.ic h3{font-size:14px;font-weight:600;color:#111827;margin-bottom:12px;}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #f3f4f6;font-size:13px;}
+.rr:last-child{border-bottom:none;}
+.rr .l{color:#6b7280;}.rr .v{font-weight:500;color:#111827;}.rr .v.teal{color:var(--t);}
+.free{background:var(--tl);color:#064e3b;font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600;}
+.rates-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;}
+.rates-card h3{font-size:14px;font-weight:600;color:#111827;margin-bottom:12px;}
+table.rtable{width:100%;font-size:12px;border-collapse:collapse;}
+table.rtable th{font-size:11px;font-weight:600;color:#9ca3af;text-align:left;padding:0 0 8px;border-bottom:1px solid #e5e7eb;}
+table.rtable td{padding:8px 0;border-bottom:1px solid #f3f4f6;color:#6b7280;}
+table.rtable tr:last-child td{border-bottom:none;}
+.rate-val{font-weight:600;color:var(--t);}
+.faq-wrap{background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;margin-bottom:1.5rem;}
+.faq-i{border-bottom:1px solid #f3f4f6;padding:1rem 1.25rem;}
+.faq-i:last-child{border-bottom:none;}
+.faq-q{font-size:14px;font-weight:600;color:#111827;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.faq-a{font-size:13px;color:#6b7280;line-height:1.6;margin-top:8px;}
+.chv{width:14px;height:14px;opacity:.35;flex-shrink:0;}
+.rel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem;}
+.rel-grid.three{grid-template-columns:repeat(3,1fr);}
+.rc{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1rem 1.25rem;}
+.rc h4{font-size:13px;font-weight:600;color:#111827;margin-bottom:4px;}
+.rc p{font-size:12px;color:#6b7280;line-height:1.5;margin-bottom:8px;}
+.rc a{font-size:12px;color:var(--t);font-weight:500;text-decoration:none;}
+.ac-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:1.5rem;}
+.ac{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:10px;}
+.ac h3{font-size:15px;font-weight:600;color:#111827;}
+.ac p{font-size:13px;color:#6b7280;line-height:1.6;flex:1;}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;}
+.tag{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--tl);color:#064e3b;font-weight:500;}
+.tag.amber{background:#FEF3C7;color:#92400e;}
+.ac-rate{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid #e5e7eb;font-size:13px;}
+.ac-rate .lbl{color:#6b7280;}.ac-rate .val{font-weight:600;color:var(--t);}
+.ac-cta{display:inline-block;border:1px solid #d1d5db;color:#374151;font-size:13px;font-weight:500;padding:8px 16px;border-radius:8px;text-decoration:none;text-align:center;}
+.compare-wrap{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;overflow-x:auto;}
+.compare-wrap h3{font-size:14px;font-weight:600;color:#111827;margin-bottom:12px;}
+table.ctable{width:100%;font-size:12px;border-collapse:collapse;}
+table.ctable th{font-size:11px;font-weight:600;color:#9ca3af;text-align:left;padding:0 8px 8px 0;border-bottom:1px solid #e5e7eb;}
+table.ctable th:not(:first-child){text-align:center;}
+table.ctable td{padding:7px 8px 7px 0;border-bottom:1px solid #f3f4f6;color:#6b7280;vertical-align:middle;}
+table.ctable tr:last-child td{border-bottom:none;}
+table.ctable td:not(:first-child){text-align:center;}
+.ck{color:var(--t);font-weight:600;}.cx{color:#d1d5db;}
+.cta-bar{background:var(--tl);border:1px solid var(--tb);border-radius:12px;padding:1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;margin-bottom:1rem;}
+.cta-bar h3{font-size:16px;font-weight:600;color:#064e3b;margin-bottom:4px;}
+.cta-bar p{font-size:13px;color:#0F6E56;line-height:1.5;}
+.cta-row{display:flex;gap:8px;flex-shrink:0;}
+.legal-note{font-size:11px;color:#9ca3af;line-height:1.5;margin-bottom:1rem;}
+@media(max-width:600px){.hero,.two-col{grid-template-columns:1fr;}.feat-grid,.rel-grid,.rel-grid.three,.ac-grid{grid-template-columns:1fr 1fr;}.cta-bar{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="bc"><a href="#">Home</a><span>&rsaquo;</span><a href="#">Accounts</a><span>&rsaquo;</span><a href="#">Savings</a><span>&rsaquo;</span>Loan Provider Account</div>
+  <div class="sl">Savings accounts</div>
+  <div class="hero">
+    <div>
+      <div class="badge">Come out of debt with savings</div>
+      <h1>Loan Provider Account</h1>
+      <p>If you get a personal loan with us, you will need to open a Loan Provider Account and save a minimum of $5 per week. Funds remain frozen for the loan duration &mdash; so you come out of debt with savings.</p>
+      <a class="btn-p" href="#">Apply for a loan</a><a class="btn-g" href="#">Contact us</a>
+    </div>
+    <div class="mini-visual">
+      <div class="mv-label">Example &mdash; loan &amp; savings progress</div>
+      <div class="prog-section">
+        <div class="prog-row"><span class="prog-name">Loan remaining</span><span class="prog-val">$4,200</span></div>
+        <div class="mv-bar-wrap"><div style="height:100%;border-radius:4px;background:#B45309;width:42%"></div></div>
+      </div>
+      <div class="prog-section">
+        <div class="prog-row"><span class="prog-name">Savings built up</span><span class="prog-val">$520</span></div>
+        <div class="mv-bar-wrap"><div class="mv-bar" style="width:52%"></div></div>
+      </div>
+      <div class="mv-divider"></div>
+      <div class="prog-note"><div class="prog-dot" style="background:#B45309;"></div>Loan reduces with each repayment</div>
+      <div class="prog-note"><div class="prog-dot" style="background:var(--t);"></div>Savings grow &mdash; unlocked when loan is paid off</div>
+    </div>
+  </div>
+  <div class="sl">What&rsquo;s included</div>
+  <div class="feat-grid">
+    <div class="fc"><div class="fi-icon">💰</div><h3>Build savings while you repay</h3><p>Save a minimum of $5 per week alongside your loan repayments</p></div>
+    <div class="fc"><div class="fi-icon">💳</div><h3>No account fees</h3><p>No monthly or joining fees on the account</p></div>
+    <div class="fc"><div class="fi-icon">✅</div><h3>Funds unlock at loan end</h3><p>When your loan is paid off, your savings are released &mdash; yours to keep</p></div>
+    <div class="fc"><div class="fi-icon">📈</div><h3>1.50% p.a. interest</h3><p>Your savings earn interest while held in the account</p></div>
+  </div>
+  <div class="amber-notice"><strong>Important &mdash; funds are frozen:</strong> The Loan Provider Account is frozen for the duration of your personal loan. To withdraw, you must give 14 days notice or pay a $20 early withdrawal fee. All withdrawals must be made by <a href="#" style="color:#92400e;text-decoration:underline;">contacting us</a> directly.</div>
+  <div class="notice-bar"><strong>Depositor Compensation Scheme:</strong> From 1 July 2025 this account is covered by the Depositor Compensation Scheme. <a href="#" style="color:var(--t);">Learn more &rarr;</a></div>
+  <div class="sl">Rates &amp; fees</div>
+  <div class="two-col">
+    <div class="ic"><h3>Interest rate</h3>
+      <div class="rr"><span class="l">Loan Provider Account</span><span class="v teal">1.50% p.a.</span></div>
+      <p style="margin-top:8px;font-size:11px;color:#9ca3af;">Rates subject to change. See <a href="#" style="color:var(--t);">Rates &amp; Fees</a> for current rates.</p>
+    </div>
+    <div class="ic"><h3>Fees</h3><div class="rr"><span class="l">Monthly account fee</span><span class="free">Free</span></div><div class="rr"><span class="l">Withdrawal with 14 days notice</span><span class="free">Free</span></div><div class="rr"><span class="l">Early withdrawal (without notice)</span><span class="v">$20.00</span></div></div>
+  </div>
+  <div class="sl">Common questions</div>
+  <div class="faq-wrap">
+<div class="faq-i"><div class="faq-q">Do I have to open a Loan Provider Account if I get a personal loan? <svg class="chv" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="faq-a">Yes. If you get a personal loan with First Credit Union, you will need to open a Loan Provider Account and save a minimum of $5 per week for the duration of your loan.</div></div><div class="faq-i"><div class="faq-q">Can I access my savings while the loan is active? <svg class="chv" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="faq-a">Your funds are frozen for the duration of the loan. If you need to withdraw, you must give 14 days notice. If you cannot wait, you can withdraw immediately for a $20 early withdrawal fee. All withdrawals must be made by contacting us directly.</div></div><div class="faq-i"><div class="faq-q">What happens to my savings when my loan is paid off? <svg class="chv" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="faq-a">Once your loan is paid off in full, your Loan Provider Account is unfrozen and the savings are yours to keep. You come out of debt with savings &mdash; that&rsquo;s the whole idea.</div></div><div class="faq-i"><div class="faq-q">Is this account covered by the Depositor Compensation Scheme? <svg class="chv" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="faq-a">Yes. From 1 July 2025, the Loan Provider Account is covered by the Depositor Compensation Scheme.</div></div>
+  </div>
+  <div class="sl">Related</div>
+  <div class="rel-grid three">
+    <div class="rc"><h4>Personal Loans</h4><p>Low-interest personal loans with no application or establishment fees.</p><a href="#">Learn more &rarr;</a></div>
+    <div class="rc"><h4>Online Savings Account</h4><p>Flexible savings with 24/7 access and no withdrawal fees. 1.50% p.a.</p><a href="#">Learn more &rarr;</a></div>
+    <div class="rc"><h4>Money Maker Account</h4><p>Tiered savings rates up to 3.00% p.a. with full access to your funds.</p><a href="#">Learn more &rarr;</a></div>
+  </div>
+  <div class="legal-note">First Credit Union Incorporated. Not a registered bank. See <a href="#" style="color:var(--t);">Rates &amp; Fees</a> for full details. Interest rates subject to change without notice.</div>
+  <div class="cta-bar">
+    <div><h3>Interested in a personal loan?</h3><p>Apply online or contact us to find out more. Call centre open Monday 10am&ndash;5pm and Tuesday&ndash;Friday 8am&ndash;5pm.</p></div>
+    <div class="cta-row"><a class="btn-p" href="#">Apply for a loan</a><a class="btn-g" href="#">Contact us</a></div>
+  </div>
+</div>
+</body>
+</html>

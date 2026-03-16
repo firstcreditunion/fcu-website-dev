@@ -1,0 +1,492 @@
+
+<style>
+  :root {
+    --fcu-teal: #0F6E56;
+    --fcu-teal-light: #E1F5EE;
+    --fcu-teal-mid: #1D9E75;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .page { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    margin: 1.5rem 0;
+  }
+
+  .hero {
+    background: var(--fcu-teal-light);
+    border-radius: var(--border-radius-lg);
+    padding: 2.5rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border: 0.5px solid #9FE1CB;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: #9FE1CB;
+    color: #085041;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--border-radius-md);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 500;
+    color: #085041;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .hero p {
+    font-size: 15px;
+    color: #0F6E56;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .cta-primary {
+    display: inline-block;
+    background: var(--fcu-teal);
+    color: #E1F5EE;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  .cta-secondary {
+    display: inline-block;
+    border: 0.5px solid var(--fcu-teal);
+    color: var(--fcu-teal);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+  }
+  .hero-visual {
+    background: #5DCAA5;
+    border-radius: var(--border-radius-lg);
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #04342C;
+    font-size: 13px;
+    font-weight: 500;
+    border: 0.5px solid #1D9E75;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .feature-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+  }
+  .feature-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--border-radius-md);
+    background: var(--fcu-teal-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .feature-icon svg { width: 16px; height: 16px; fill: var(--fcu-teal); }
+  .feature-card h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+  .feature-card p {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .info-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+  }
+  .info-card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 12px;
+  }
+  .rate-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    font-size: 13px;
+  }
+  .rate-row:last-child { border-bottom: none; }
+  .rate-row .label { color: var(--color-text-secondary); }
+  .rate-row .value { font-weight: 500; color: var(--color-text-primary); }
+  .rate-row .value.highlight { color: var(--fcu-teal); }
+  .rate-row .value.warning { color: #BA7517; }
+  .free-badge {
+    background: var(--fcu-teal-light);
+    color: #085041;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+  }
+
+  .card-section {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .card-visual {
+    background: linear-gradient(135deg, #0F6E56, #1D9E75);
+    border-radius: 12px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 14px;
+  }
+  .card-visual-chip {
+    width: 28px;
+    height: 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+  }
+  .card-visual-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .card-visual-name {
+    font-size: 12px;
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+  }
+  .mc-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  .faq-section {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .faq-item {
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding: 1rem 1.25rem;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .faq-a {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+  .faq-chevron { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.4; }
+
+  .notice-bar {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-left: 3px solid var(--fcu-teal-mid);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  .notice-bar strong { color: var(--color-text-primary); font-weight: 500; }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .related-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.25rem;
+  }
+  .related-card h4 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+  .related-card p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; margin-bottom: 10px; }
+  .link-btn { font-size: 12px; color: var(--fcu-teal); font-weight: 500; text-decoration: none; }
+
+  .contact-cta {
+    background: var(--fcu-teal-light);
+    border: 0.5px solid #9FE1CB;
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .contact-cta h3 { font-size: 16px; font-weight: 500; color: #085041; margin-bottom: 4px; }
+  .contact-cta p { font-size: 13px; color: #0F6E56; }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .breadcrumb a { color: var(--color-text-tertiary); text-decoration: none; }
+  .breadcrumb span { opacity: 0.5; }
+
+  @media (max-width: 600px) {
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .two-col { grid-template-columns: 1fr; }
+    .related-grid { grid-template-columns: 1fr; }
+    .card-section { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="#">Home</a><span>›</span>
+    <a href="#">Accounts</a><span>›</span>
+    <a href="#">Transactional</a><span>›</span>
+    Everyday Account
+  </div>
+
+  <div class="section-label">Transactional accounts</div>
+  <div class="hero">
+    <div>
+      <div class="hero-badge">No monthly fees</div>
+      <h1>Everyday Account</h1>
+      <p>The perfect account for your day-to-day purchases. 24/7 access with internet and mobile banking, plus a Mastercard® Debit Card for spending anywhere.</p>
+      <a class="cta-primary" href="#">Open account online</a>
+      <a class="cta-secondary" href="#">Learn more</a>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg" width="160" height="100">
+        <rect x="10" y="15" width="140" height="70" rx="8" fill="#085041" opacity="0.9"/>
+        <rect x="20" y="30" width="22" height="16" rx="3" fill="#5DCAA5" opacity="0.6"/>
+        <text x="20" y="70" font-family="sans-serif" font-size="9" fill="#9FE1CB" opacity="0.9">FIRST CREDIT UNION</text>
+        <circle cx="128" cy="55" r="11" fill="#E1F5EE" opacity="0.4"/>
+        <circle cx="138" cy="55" r="11" fill="#9FE1CB" opacity="0.5"/>
+        <text x="78" y="72" font-family="sans-serif" font-size="8" fill="#9FE1CB" opacity="0.7">MASTERCARD® DEBIT</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="section-label">What's included</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 16 16"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 2a5 5 0 110 10A5 5 0 018 3zm.5 2.5h-1v4l3.5 2.1.5-.8-3-1.8V5.5z"/></svg>
+      </div>
+      <h3>24/7 access</h3>
+      <p>Online and mobile banking around the clock</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 16 16"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v1H2V4zm0 3h12v5a1 1 0 01-1 1H3a1 1 0 01-1-1V7zm3 2v1h4V9H5z"/></svg>
+      </div>
+      <h3>No account fees</h3>
+      <p>No monthly or joining fees ever</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 16 16"><path d="M11 2H5a1 1 0 00-1 1v10a1 1 0 001 1h6a1 1 0 001-1V3a1 1 0 00-1-1zM5 1h6a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V3a2 2 0 012-2zm3 9a1 1 0 100 2 1 1 0 000-2z"/></svg>
+      </div>
+      <h3>Mobile banking</h3>
+      <p>Manage money from your phone</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm.5 4v4.25l3 1.77-.75 1.23L8 9.25V4h.5z"/></svg>
+      </div>
+      <h3>Wages & direct debits</h3>
+      <p>Ideal for salary deposits and auto-payments</p>
+    </div>
+  </div>
+
+  <div class="notice-bar">
+    <strong>Depositor Compensation Scheme:</strong> From 1 July 2025, this account is covered by the Depositor Compensation Scheme. <a href="#" style="color: var(--fcu-teal);">Learn more →</a>
+  </div>
+
+  <div class="section-label">Rates & fees</div>
+  <div class="two-col">
+    <div class="info-card">
+      <h3>Interest rates</h3>
+      <div class="rate-row">
+        <span class="label">Credit balance</span>
+        <span class="value highlight">0.05% p.a.</span>
+      </div>
+      <div class="rate-row">
+        <span class="label">Overdrawn balance</span>
+        <span class="value warning">20.00% p.a.</span>
+      </div>
+      <div style="margin-top: 10px; font-size: 11px; color: var(--color-text-tertiary); line-height: 1.5;">
+        Looking for higher returns? See our <a href="#" style="color: var(--fcu-teal);">savings accounts</a> or <a href="#" style="color: var(--fcu-teal);">term deposits</a>.
+      </div>
+    </div>
+    <div class="info-card">
+      <h3>Transaction fees</h3>
+      <div class="rate-row">
+        <span class="label">Deposits (all types)</span>
+        <span class="free-badge">Free</span>
+      </div>
+      <div class="rate-row">
+        <span class="label">Cash withdrawal (branch)</span>
+        <span class="free-badge">Free</span>
+      </div>
+      <div class="rate-row">
+        <span class="label">Automatic payments</span>
+        <span class="free-badge">Free</span>
+      </div>
+      <div class="rate-row">
+        <span class="label">Transfers (NZ accounts)</span>
+        <span class="free-badge">Free</span>
+      </div>
+      <div class="rate-row">
+        <span class="label">Disputed transaction</span>
+        <span class="value">$50.00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Debit card</div>
+  <div class="card-section">
+    <div>
+      <h3 style="font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px;">Mastercard® Debit Card</h3>
+      <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 12px;">Use your Everyday Account with a Mastercard Debit Card — spend online, in-store, and overseas using your own money. Contactless payments supported wherever you see the PayWave symbol.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+        <div class="rate-row" style="border-bottom: none; padding: 4px 0;"><span class="label" style="font-size: 12px;">First card issued</span><span class="free-badge">Free</span></div>
+        <div class="rate-row" style="border-bottom: none; padding: 4px 0;"><span class="label" style="font-size: 12px;">Replacement card</span><span class="value" style="font-size: 12px;">$13</span></div>
+        <div class="rate-row" style="border-bottom: none; padding: 4px 0;"><span class="label" style="font-size: 12px;">Admin fee (6-monthly)</span><span class="value" style="font-size: 12px;">$5</span></div>
+        <div class="rate-row" style="border-bottom: none; padding: 4px 0;"><span class="label" style="font-size: 12px;">Eftpos / contactless</span><span class="value" style="font-size: 12px;">$0.35</span></div>
+      </div>
+      <a href="#" style="font-size: 13px; color: var(--fcu-teal); font-weight: 500;">Full Mastercard fees & features →</a>
+    </div>
+    <div>
+      <div class="card-visual">
+        <div><div class="card-visual-chip"></div></div>
+        <div class="card-visual-bottom">
+          <div class="card-visual-name">First Credit Union</div>
+          <div style="display: flex;">
+            <div class="mc-circle" style="background:#eb001b; margin-right: -8px;"></div>
+            <div class="mc-circle" style="background:#f79e1b; opacity:0.7;"></div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 11px; color: var(--color-text-tertiary); margin-top: 8px; text-align: center; line-height: 1.4;">Mastercard® ID Check protects your online purchases</p>
+    </div>
+  </div>
+
+  <div class="section-label">Common questions</div>
+  <div class="faq-section">
+    <div class="faq-item">
+      <div class="faq-q">What is the interest rate on an Everyday Account?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Credit balances earn 0.05% p.a. Overdrawn balances attract interest at 20.00% p.a. and must be repaid promptly — we do not offer arranged overdraft facilities.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Are there any account fees?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">No monthly account fees, no joining fees. Standard Mastercard Debit Card fees apply if you choose to get a debit card.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can my account go overdrawn?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Your account may become overdrawn if direct debits or debit card payments are processed when there are insufficient funds. We don't offer arranged overdrafts — any overdrawn balance must be repaid promptly and attracts a 20% p.a. interest rate plus a $10 unarranged overdraft fee.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I apply?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">New members can apply online to become a member and open an Everyday Account. Existing members can contact us or visit a branch to open an additional account.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is this account covered by the Depositor Compensation Scheme?<svg class="faq-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Yes. From 1 July 2025, the Everyday Account is covered by the Depositor Compensation Scheme. See our Important Information page for details.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Other transactional accounts</div>
+  <div class="related-grid">
+    <div class="related-card">
+      <h4>Bill Pay Account</h4>
+      <p>Keep bill payments separate from everyday spending. Set up automatic payments and direct debits.</p>
+      <a class="link-btn" href="#">Open an account →</a>
+    </div>
+    <div class="related-card">
+      <h4>Expense Account</h4>
+      <p>Manage your budget by keeping expense money separate from your everyday funds.</p>
+      <a class="link-btn" href="#">Open an account →</a>
+    </div>
+    <div class="related-card">
+      <h4>Special Purpose Account</h4>
+      <p>Short-term savings goals with funds kept readily available whenever you need them.</p>
+      <a class="link-btn" href="#">Open an account →</a>
+    </div>
+  </div>
+
+  <div class="contact-cta">
+    <div>
+      <h3>Ready to open your Everyday Account?</h3>
+      <p>Apply online in minutes, or call us Monday–Friday. Our team is happy to help.</p>
+    </div>
+    <div style="display: flex; gap: 10px; flex-shrink: 0;">
+      <a class="cta-primary" href="#">Apply online</a>
+      <a class="cta-secondary" href="#" style="border-color: var(--fcu-teal); color: var(--fcu-teal);">Find a branch</a>
+    </div>
+  </div>
+
+</div>

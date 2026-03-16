@@ -1,0 +1,416 @@
+
+<style>
+  :root {
+    --fcu-teal: #0F6E56;
+    --fcu-teal-light: #E1F5EE;
+    --fcu-teal-mid: #1D9E75;
+    --fcu-teal-border: #9FE1CB;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .page { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; font-family: var(--font-sans); }
+
+  .breadcrumb {
+    font-size: 12px; color: var(--color-text-tertiary);
+    margin-bottom: 1.5rem; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+  }
+  .breadcrumb a { color: var(--color-text-tertiary); text-decoration: none; }
+  .breadcrumb span { opacity: 0.5; }
+
+  .section-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+    color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 8px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--fcu-teal-light);
+    border: 0.5px solid var(--fcu-teal-border);
+    border-radius: var(--border-radius-lg);
+    padding: 2.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-block; background: #9FE1CB; color: #085041;
+    font-size: 11px; font-weight: 500; padding: 4px 10px;
+    border-radius: var(--border-radius-md); margin-bottom: 12px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 500; color: #085041; line-height: 1.25; margin-bottom: 10px; }
+  .hero p { font-size: 15px; color: #0F6E56; line-height: 1.65; margin-bottom: 1.5rem; }
+  .cta-primary {
+    display: inline-block; background: var(--fcu-teal); color: #E1F5EE;
+    font-size: 14px; font-weight: 500; padding: 10px 20px;
+    border-radius: var(--border-radius-md); text-decoration: none; margin-right: 8px;
+  }
+  .cta-ghost {
+    display: inline-block; border: 0.5px solid var(--fcu-teal); color: var(--fcu-teal);
+    font-size: 14px; font-weight: 500; padding: 10px 20px;
+    border-radius: var(--border-radius-md); text-decoration: none;
+  }
+
+  /* BUDGET VISUAL */
+  .budget-visual {
+    background: #fff;
+    border: 0.5px solid var(--fcu-teal-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+  }
+  .bv-label { font-size: 11px; color: #0F6E56; margin-bottom: 8px; font-weight: 500; }
+  .bv-bar-wrap { background: #E1F5EE; border-radius: 4px; height: 8px; margin-bottom: 12px; overflow: hidden; }
+  .bv-bar { height: 100%; border-radius: 4px; background: var(--fcu-teal); }
+  .bv-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+  .bv-row .bv-name { color: #085041; }
+  .bv-row .bv-amt { font-weight: 500; color: #085041; }
+  .bv-divider { border: none; border-top: 0.5px solid #9FE1CB; margin: 8px 0; }
+  .bv-total { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; color: #085041; }
+
+  /* FEATURES GRID */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px; margin-bottom: 1.5rem;
+  }
+  .feature-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg); padding: 1rem;
+  }
+  .feat-icon {
+    width: 30px; height: 30px; border-radius: var(--border-radius-md);
+    background: var(--fcu-teal-light);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
+  }
+  .feat-icon svg { width: 14px; height: 14px; fill: var(--fcu-teal); }
+  .feature-card h3 { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .feature-card p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+
+  /* HOW IT WORKS */
+  .how-wrap {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem; margin-bottom: 1.5rem;
+  }
+  .how-wrap h3 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 14px; }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .step { padding: 0 1rem; border-right: 0.5px solid var(--color-border-tertiary); }
+  .step:first-child { padding-left: 0; }
+  .step:last-child { border-right: none; padding-right: 0; }
+  .step-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--fcu-teal-light); color: var(--fcu-teal);
+    font-size: 12px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px;
+  }
+  .step h4 { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .step p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+
+  /* NOTICE */
+  .notice-bar {
+    border-left: 3px solid var(--fcu-teal-mid);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    background: var(--color-background-secondary);
+    border-top: 0.5px solid var(--color-border-tertiary);
+    border-right: 0.5px solid var(--color-border-tertiary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding: 10px 14px; font-size: 13px;
+    color: var(--color-text-secondary); line-height: 1.5; margin-bottom: 1.5rem;
+  }
+  .notice-bar strong { color: var(--color-text-primary); font-weight: 500; }
+
+  /* RATES & FEES */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+  .info-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg); padding: 1.25rem;
+  }
+  .info-card h3 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+  .rate-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px;
+  }
+  .rate-row:last-child { border-bottom: none; }
+  .rate-row .lbl { color: var(--color-text-secondary); }
+  .rate-row .val { font-weight: 500; color: var(--color-text-primary); }
+  .rate-row .val.teal { color: var(--fcu-teal); }
+  .rate-row .val.amber { color: #BA7517; }
+  .free-badge {
+    background: var(--fcu-teal-light); color: #085041;
+    font-size: 11px; padding: 2px 8px;
+    border-radius: var(--border-radius-md); font-weight: 500;
+  }
+
+  /* DEBIT CARD STRIP */
+  .debit-strip {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg); padding: 1.25rem;
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 1rem; align-items: center; margin-bottom: 1.5rem;
+  }
+  .debit-card-mini {
+    width: 64px; height: 42px;
+    background: linear-gradient(135deg, #0F6E56, #1D9E75);
+    border-radius: 6px; display: flex; flex-direction: column;
+    justify-content: space-between; padding: 6px 8px; flex-shrink: 0;
+  }
+  .chip-mini { width: 14px; height: 10px; background: rgba(255,255,255,0.35); border-radius: 2px; }
+  .mc-mini { display: flex; }
+  .mc-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .debit-strip h3 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+  .debit-strip p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+  .debit-strip a { font-size: 13px; font-weight: 500; color: var(--fcu-teal); text-decoration: none; white-space: nowrap; }
+
+  /* FAQ */
+  .faq-wrap {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg); overflow: hidden; margin-bottom: 1.5rem;
+  }
+  .faq-item { border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1rem 1.25rem; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    font-size: 14px; font-weight: 500; color: var(--color-text-primary);
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  }
+  .faq-a { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-top: 8px; }
+  .chevron { width: 14px; height: 14px; opacity: 0.35; flex-shrink: 0; }
+
+  /* RELATED ACCOUNTS */
+  .related-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px; margin-bottom: 1.5rem;
+  }
+  .related-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg); padding: 1rem 1.25rem;
+  }
+  .related-card h4 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 5px; }
+  .related-card p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; margin-bottom: 10px; }
+  .link-btn { font-size: 12px; color: var(--fcu-teal); font-weight: 500; text-decoration: none; }
+
+  /* CONTACT CTA */
+  .contact-cta {
+    background: var(--fcu-teal-light); border: 0.5px solid var(--fcu-teal-border);
+    border-radius: var(--border-radius-lg); padding: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
+  }
+  .contact-cta h3 { font-size: 16px; font-weight: 500; color: #085041; margin-bottom: 4px; }
+  .contact-cta p { font-size: 13px; color: #0F6E56; line-height: 1.5; }
+  .cta-row { display: flex; gap: 8px; flex-shrink: 0; }
+
+  @media (max-width: 620px) {
+    .hero { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr; gap: 12px; }
+    .step { border-right: none; border-bottom: 0.5px solid var(--color-border-tertiary); padding: 0 0 12px; }
+    .step:last-child { border-bottom: none; padding-bottom: 0; }
+    .two-col { grid-template-columns: 1fr; }
+    .related-grid { grid-template-columns: 1fr; }
+    .debit-strip { grid-template-columns: 1fr; }
+    .contact-cta { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<div class="page">
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="#">Home</a><span>›</span>
+    <a href="#">Accounts</a><span>›</span>
+    <a href="#">Transactional</a><span>›</span>
+    Expense Account
+  </div>
+
+  <!-- HERO -->
+  <div class="section-label">Transactional accounts</div>
+  <div class="hero">
+    <div>
+      <div class="hero-badge">No monthly fees</div>
+      <h1>Expense Account</h1>
+      <p>Take control of your budget by keeping your expense money completely separate from your everyday funds. A simple, practical way to stay on top of what you're spending.</p>
+      <a class="cta-primary" href="#">Contact us to open</a>
+      <a class="cta-ghost" href="#">Find a branch</a>
+    </div>
+    <!-- INLINE BUDGET VISUAL -->
+    <div class="budget-visual">
+      <div class="bv-label">Example — monthly expenses</div>
+      <div class="bv-row"><span class="bv-name">Rent</span><span class="bv-amt">$1,200</span></div>
+      <div class="bv-bar-wrap"><div class="bv-bar" style="width:80%;"></div></div>
+      <div class="bv-row"><span class="bv-name">Power &amp; internet</span><span class="bv-amt">$180</span></div>
+      <div class="bv-bar-wrap"><div class="bv-bar" style="width:30%;"></div></div>
+      <div class="bv-row"><span class="bv-name">Insurance</span><span class="bv-amt">$95</span></div>
+      <div class="bv-bar-wrap"><div class="bv-bar" style="width:20%;"></div></div>
+      <div class="bv-row"><span class="bv-name">Subscriptions</span><span class="bv-amt">$45</span></div>
+      <div class="bv-bar-wrap"><div class="bv-bar" style="width:10%;"></div></div>
+      <div class="bv-divider"></div>
+      <div class="bv-total"><span>Total set aside</span><span>$1,520</span></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section-label">What's included</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feat-icon">
+        <svg viewBox="0 0 16 16"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v1H2V4zm0 3h12v5a1 1 0 01-1 1H3a1 1 0 01-1-1V7zm3 2v1h4V9H5z"/></svg>
+      </div>
+      <h3>No account fees</h3>
+      <p>No monthly or joining fees — ever</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">
+        <svg viewBox="0 0 16 16"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.5 3.5h-1V9l3.5 2.1-.5.8L7 9.75V4.5h.5z"/></svg>
+      </div>
+      <h3>24/7 access</h3>
+      <p>Online and mobile banking around the clock</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">
+        <svg viewBox="0 0 16 16"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1zm1 3v6h8V5H4zm1 1h2v2H5V6zm4 0h2v1H9V6zm0 2h2v1H9V8zm-4 2h6v1H5v-1z"/></svg>
+      </div>
+      <h3>Separate from everyday</h3>
+      <p>Distinct account keeps expense funds ringfenced</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">
+        <svg viewBox="0 0 16 16"><path d="M1 4a1 1 0 011-1h12a1 1 0 011 1v2H1V4zm0 4h14v4a1 1 0 01-1 1H2a1 1 0 01-1-1V8zm3 1v2h2V9H4z"/></svg>
+      </div>
+      <h3>Debit card eligible</h3>
+      <p>Link your Mastercard® Debit Card to this account</p>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section-label">How it works</div>
+  <div class="how-wrap">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Open your Expense Account</h4>
+        <p>Contact us or visit a branch to open an Expense Account alongside your existing accounts.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Set up a regular transfer</h4>
+        <p>Use internet or mobile banking to set up an automatic payment into your Expense Account each payday.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Pay your expenses from it</h4>
+        <p>Set up direct debits and automatic payments from this account for rent, power, insurance, and other regular outgoings.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DCS NOTICE -->
+  <div class="notice-bar">
+    <strong>Depositor Compensation Scheme:</strong> From 1 July 2025, the Expense Account is covered by the Depositor Compensation Scheme. <a href="#" style="color: var(--fcu-teal);">See important information →</a>
+  </div>
+
+  <!-- RATES & FEES -->
+  <div class="section-label">Rates &amp; fees</div>
+  <div class="two-col">
+    <div class="info-card">
+      <h3>Interest rates</h3>
+      <div class="rate-row"><span class="lbl">Credit balance</span><span class="val teal">0.05% p.a.</span></div>
+      <div class="rate-row"><span class="lbl">Overdrawn balance</span><span class="val amber">20.00% p.a.</span></div>
+      <div style="margin-top: 10px; font-size: 11px; color: var(--color-text-tertiary); line-height: 1.5;">
+        Looking for higher returns? Explore our <a href="#" style="color:var(--fcu-teal);">savings accounts</a> or <a href="#" style="color:var(--fcu-teal);">term deposits</a>.
+      </div>
+    </div>
+    <div class="info-card">
+      <h3>Transaction fees</h3>
+      <div class="rate-row"><span class="lbl">All deposits</span><span class="free-badge">Free</span></div>
+      <div class="rate-row"><span class="lbl">Cash withdrawal (branch)</span><span class="free-badge">Free</span></div>
+      <div class="rate-row"><span class="lbl">Automatic payments</span><span class="free-badge">Free</span></div>
+      <div class="rate-row"><span class="lbl">Direct debits &amp; bill payments</span><span class="free-badge">Free</span></div>
+      <div class="rate-row"><span class="lbl">NZ bank transfers</span><span class="free-badge">Free</span></div>
+      <div class="rate-row"><span class="lbl">Disputed transaction</span><span class="val">$50.00</span></div>
+    </div>
+  </div>
+
+  <!-- DEBIT CARD STRIP -->
+  <div class="section-label">Debit card</div>
+  <div class="debit-strip">
+    <div class="debit-card-mini">
+      <div class="chip-mini"></div>
+      <div class="mc-mini">
+        <div class="mc-dot" style="background:#eb001b; margin-right:-4px;"></div>
+        <div class="mc-dot" style="background:#f79e1b; opacity:0.75;"></div>
+      </div>
+    </div>
+    <div>
+      <h3>Mastercard® Debit Card</h3>
+      <p>You can link your Mastercard Debit Card to your Expense Account. Use it in-store, online, and with contactless payments. First card issued free. Physical card arrives within 7–10 working days — your digital card is available immediately via the mobile app.</p>
+    </div>
+    <a href="#">View card details →</a>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-label">Common questions</div>
+  <div class="faq-wrap">
+    <div class="faq-item">
+      <div class="faq-q">What is an Expense Account for?<svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">The Expense Account is designed to help you manage your budget by keeping money set aside for regular expenses — like rent, power, and insurance — completely separate from your everyday spending money.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Are there any fees?<svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">No monthly account fees and no joining fees. If you choose to link a Mastercard Debit Card, card-specific fees apply — see the Rates &amp; Fees page for full details.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the interest rate?<svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">The Expense Account earns 0.05% p.a. on credit balances. Overdrawn balances attract 20.00% p.a. and must be repaid promptly. For higher interest rates, see our savings accounts or term deposits.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I open an Expense Account?<svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Existing members can open an Expense Account by contacting us by phone or visiting your nearest branch. New to First Credit Union? You'll need to become a member first — apply online to get started.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I have multiple transactional accounts?<svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Yes. Many members hold an Everyday Account for day-to-day spending alongside an Expense Account for bills and a Bill Pay Account for other outgoings. Multiple accounts make it easier to manage different parts of your budget.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can my account go overdrawn?<svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Your account may become overdrawn if direct debits or debit card payments are processed when there are insufficient funds. We do not offer arranged overdrafts — any overdrawn balance must be repaid promptly and attracts 20% p.a. interest plus a $10 unarranged overdraft fee.</div>
+    </div>
+  </div>
+
+  <!-- RELATED ACCOUNTS -->
+  <div class="section-label">Other transactional accounts</div>
+  <div class="related-grid">
+    <div class="related-card">
+      <h4>Everyday Account</h4>
+      <p>Your main account for day-to-day spending, wages, and 24/7 banking access.</p>
+      <a class="link-btn" href="#">Apply online →</a>
+    </div>
+    <div class="related-card">
+      <h4>Bill Pay Account</h4>
+      <p>Keep your bill payments separate from savings and everyday spending.</p>
+      <a class="link-btn" href="#">Open an account →</a>
+    </div>
+    <div class="related-card">
+      <h4>Special Purpose Account</h4>
+      <p>Short-term savings goals with funds kept readily available when you need them.</p>
+      <a class="link-btn" href="#">Open an account →</a>
+    </div>
+  </div>
+
+  <!-- CONTACT CTA -->
+  <div class="contact-cta">
+    <div>
+      <h3>Ready to open an Expense Account?</h3>
+      <p>Contact us by phone or visit a branch — our team will have you set up in no time. Call centre open Monday 10am–5pm and Tuesday–Friday 8am–5pm.</p>
+    </div>
+    <div class="cta-row">
+      <a class="cta-primary" href="#">Contact us</a>
+      <a class="cta-ghost" href="#">Find a branch</a>
+    </div>
+  </div>
+
+</div>
