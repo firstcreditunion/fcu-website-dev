@@ -196,21 +196,19 @@ export function ComponentDesignLayout({
           </ScrollArea>
         </aside>
 
-        <main className='min-w-0 flex-1 px-6 py-8 lg:px-16 lg:py-12'>
-          <div className='mx-auto max-w-4xl'>
-            <header className='mb-16'>
-              <h1 className='text-4xl font-bold tracking-tight text-foreground sm:text-5xl'>
-                Component Design
-              </h1>
-              <p className='mt-4 max-w-2xl text-lg text-muted-foreground'>
-                Reusable, CMS-driven component library for First Credit Union.
-                Each block is designed for the page builder — editors compose,
-                developers maintain.
-              </p>
-            </header>
+        <main className='min-w-0 flex-1 px-6 py-8 lg:px-10 lg:py-12'>
+          <header className='mb-16'>
+            <h1 className='text-4xl font-bold tracking-tight text-foreground sm:text-5xl'>
+              Component Design
+            </h1>
+            <p className='mt-4 max-w-2xl text-lg text-muted-foreground'>
+              Reusable, CMS-driven component library for First Credit Union.
+              Each block is designed for the page builder — editors compose,
+              developers maintain.
+            </p>
+          </header>
 
-            {children}
-          </div>
+          {children}
         </main>
       </div>
     </div>

@@ -3,15 +3,8 @@
 import * as React from 'react'
 import { motion } from 'motion/react'
 import { Separator } from '@/components/ui/separator'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Save, Loader2, Check, AlertCircle } from 'lucide-react'
-import {
-  saveComponentConfig,
-  type ComponentConfigPayload,
-} from '../_actions/save-component-config'
-
-type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
+import type { ComponentConfigPayload } from '../_actions/save-component-config'
 
 interface PlaygroundShellProps {
   id: string
@@ -30,37 +23,10 @@ export function PlaygroundShell({
   title,
   description,
   category,
-  config,
-  onConfigChange,
   preview,
   controls,
   guidelines,
 }: PlaygroundShellProps) {
-  const [saveStatus, setSaveStatus] = React.useState<SaveStatus>('idle')
-  const [hasChanges, setHasChanges] = React.useState(false)
-  const initialConfigRef = React.useRef<string>(JSON.stringify(config))
-
-  React.useEffect(() => {
-    const current = JSON.stringify(config)
-    setHasChanges(current !== initialConfigRef.current)
-  }, [config])
-
-  async function handleSave() {
-    if (!config) return
-    setSaveStatus('saving')
-
-    const result = await saveComponentConfig(config)
-    if (result.success) {
-      setSaveStatus('saved')
-      initialConfigRef.current = JSON.stringify(config)
-      setHasChanges(false)
-      setTimeout(() => setSaveStatus('idle'), 2000)
-    } else {
-      setSaveStatus('error')
-      setTimeout(() => setSaveStatus('idle'), 3000)
-    }
-  }
-
   return (
     <motion.section
       id={id}
@@ -70,42 +36,20 @@ export function PlaygroundShell({
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
     >
-      <div className='mb-6 flex items-start justify-between gap-4'>
-        <div>
-          <div className='mb-2 flex items-center gap-2'>
-            <h2 className='text-2xl font-bold tracking-tight text-foreground'>
-              {title}
-            </h2>
-            {category && (
-              <Badge variant='secondary' className='text-[10px]'>
-                {category}
-              </Badge>
-            )}
-          </div>
-          <p className='text-sm leading-relaxed text-muted-foreground'>
-            {description}
-          </p>
-        </div>
-
-        <div className='flex shrink-0 items-center gap-2'>
-          {hasChanges && (
-            <span className='text-xs font-medium text-amber-600'>
-              Unsaved
-            </span>
+      <div className='mb-6'>
+        <div className='mb-2 flex items-center gap-2'>
+          <h2 className='text-2xl font-bold tracking-tight text-foreground'>
+            {title}
+          </h2>
+          {category && (
+            <Badge variant='secondary' className='text-[10px]'>
+              {category}
+            </Badge>
           )}
-          <Button
-            size='sm'
-            onClick={handleSave}
-            disabled={!hasChanges || saveStatus === 'saving'}
-            variant={saveStatus === 'saved' ? 'secondary' : 'default'}
-          >
-            {saveStatus === 'saving' && <Loader2 className='size-3.5 animate-spin' />}
-            {saveStatus === 'saved' && <Check className='size-3.5' />}
-            {saveStatus === 'error' && <AlertCircle className='size-3.5' />}
-            {saveStatus === 'idle' && <Save className='size-3.5' />}
-            {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'saved' ? 'Saved' : saveStatus === 'error' ? 'Error' : 'Save'}
-          </Button>
         </div>
+        <p className='text-sm leading-relaxed text-muted-foreground'>
+          {description}
+        </p>
       </div>
 
       <div className='grid gap-6 lg:grid-cols-[1fr_320px]'>

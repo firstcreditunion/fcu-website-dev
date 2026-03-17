@@ -1,4 +1,5 @@
 import { HeroSection } from './_components/hero-section'
+import { StatsBar } from './_components/stats-bar'
 import { FeaturesSection } from './_components/features-section'
 import { HowItWorks } from './_components/how-it-works'
 import { RatesFees } from './_components/rates-fees'
@@ -18,6 +19,7 @@ export default function BillPayAccountPage() {
     <div className='overflow-x-hidden'>
       <HeroSection />
       <FeaturesSection />
+      <StatsBar />
       <HowItWorks />
       <RatesFees />
       <DebitCardSection />

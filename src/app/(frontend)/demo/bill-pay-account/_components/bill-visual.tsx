@@ -38,8 +38,32 @@ function BillRow({ name, freq, amount, color }: (typeof bills)[number]) {
 function IPhoneFrame({ children }: { children: React.ReactNode }) {
   return (
     <div className='relative mx-auto w-[300px]'>
-      <div className='rounded-[44px] border-[3px] border-fcu-primary-900/10 bg-fcu-primary-950 p-[6px] shadow-2xl shadow-fcu-primary-900/15'>
-        <div className='relative flex h-[580px] flex-col overflow-hidden rounded-[38px] bg-gradient-to-b from-fcu-primary-50 to-white'>
+      {/* Surface shadow — ellipse on the "ground" beneath the tilted phone */}
+      <div
+        className='pointer-events-none absolute -bottom-6 left-1/2 h-16 w-[70%] -translate-x-1/2 rounded-full opacity-30 blur-2xl'
+        style={{ background: 'radial-gradient(ellipse, var(--color-fcu-primary-900) 0%, transparent 70%)' }}
+      />
+
+      {/* Ambient glow behind the device */}
+      <div className='absolute -inset-8 rounded-full bg-fcu-primary-400/15 blur-3xl' />
+      <div className='absolute -inset-4 rounded-[60px] bg-fcu-primary-500/8 blur-xl' />
+
+      <div
+        className='relative rotate-[5deg] transform-gpu rounded-[44px] border-[3px] border-fcu-primary-900/10 bg-fcu-primary-950 p-[6px]'
+        style={{
+          boxShadow: [
+            '0 2px 4px rgba(0,0,0,0.04)',
+            '0 8px 16px rgba(0,0,0,0.06)',
+            '0 20px 40px rgba(0,0,0,0.08)',
+            '0 50px 100px -15px var(--color-fcu-primary-900 / 0.25)',
+            'inset 0 1px 0 rgba(255,255,255,0.08)',
+          ].join(', '),
+        }}
+      >
+        {/* Top bezel highlight for a reflective edge */}
+        <div className='pointer-events-none absolute inset-x-6 top-0 h-px rounded-full bg-white/20' />
+
+        <div className='relative flex h-[580px] flex-col overflow-hidden rounded-[38px] bg-linear-to-b from-fcu-primary-50 to-white'>
           {/* Status bar */}
           <div className='flex items-center justify-between px-7 pt-3.5 pb-1'>
             <span className='font-mono text-[11px] font-semibold text-fcu-primary-950'>9:41</span>
@@ -97,7 +121,7 @@ export function BillVisual() {
             <BillRow key={bill.name} {...bill} />
           ))}
         </AnimatedList>
-        <div className='pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent' />
+        <div className='pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-linear-to-t from-white to-transparent' />
       </div>
 
       <div className='mt-3 shrink-0 border-t border-fcu-primary-200/60 pt-3'>
