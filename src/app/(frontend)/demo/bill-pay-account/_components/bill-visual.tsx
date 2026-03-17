@@ -80,9 +80,36 @@ function BillRow({ name, freq, amount, color }: (typeof bills)[number]) {
   )
 }
 
+function useLiveClock() {
+  const [time, setTime] = useState(() => {
+    const now = new Date()
+    return `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`
+  })
+
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date()
+      setTime(`${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`)
+    }
+    let intervalId: ReturnType<typeof setInterval> | undefined
+    const ms = (60 - new Date().getSeconds()) * 1000
+    const timeoutId = setTimeout(() => {
+      tick()
+      intervalId = setInterval(tick, 60_000)
+    }, ms)
+    return () => {
+      clearTimeout(timeoutId)
+      if (intervalId) clearInterval(intervalId)
+    }
+  }, [])
+
+  return time
+}
+
 const TILT_MAX = 8
 
 function IPhoneFrame({ children }: { children: React.ReactNode }) {
+  const clock = useLiveClock()
   const frameRef = useRef<HTMLDivElement>(null)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
 
@@ -197,8 +224,8 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
         <div className='relative flex h-[570px] flex-col overflow-hidden rounded-[36px] bg-linear-to-b from-fcu-primary-50 to-white'>
           {/* Status bar */}
           <div className='flex items-center justify-between px-7 pt-3.5 pb-1'>
-            <span className='font-mono text-[11px] font-semibold text-fcu-primary-950'>
-              9:41
+            <span className='font-mono text-[11px] font-semibold text-fcu-primary-950' suppressHydrationWarning>
+              {clock}
             </span>
             <div className='flex items-center gap-1.5'>
               <svg
