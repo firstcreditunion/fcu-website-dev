@@ -29,7 +29,7 @@ const features = [
 export function FeaturesSection() {
   return (
     <section className='relative z-10 -mt-28 px-6 sm:-mt-32 md:-mt-40 lg:px-8'>
-      <div className='mx-auto max-w-5xl rounded-3xl bg-white px-8 py-14 shadow-lg ring-1 ring-black/5 sm:px-12 sm:py-16 md:px-16 md:py-20'>
+      <div className='mx-auto max-w-7xl rounded-3xl bg-white px-8 py-14 shadow-lg ring-1 ring-black/5 sm:px-12 sm:py-16 md:px-16 md:py-20'>
         <BlurFade delay={0} inView>
           <h2 className='mb-12 text-center text-2xl font-semibold tracking-tight text-fcu-primary-950 md:mb-14 md:text-3xl'>
             What&apos;s included

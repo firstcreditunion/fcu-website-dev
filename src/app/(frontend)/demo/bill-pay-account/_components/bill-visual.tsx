@@ -3,14 +3,54 @@
 import { AnimatedList } from '@/components/ui/animated-list'
 
 const bills = [
-  { name: 'Mortgage / rent', freq: 'Fortnightly AP', amount: '$900', color: 'bg-fcu-primary-900' },
-  { name: 'Power & gas', freq: 'Monthly DD', amount: '$160', color: 'bg-fcu-primary-600' },
-  { name: 'Phone & internet', freq: 'Monthly DD', amount: '$110', color: 'bg-fcu-primary-700' },
-  { name: 'Insurance', freq: 'Monthly DD', amount: '$85', color: 'bg-fcu-secondary-500' },
-  { name: 'Water rates', freq: 'Monthly DD', amount: '$65', color: 'bg-fcu-primary-800' },
-  { name: 'Car registration', freq: 'Annual AP', amount: '$45', color: 'bg-fcu-primary-400' },
-  { name: 'Gym membership', freq: 'Fortnightly DD', amount: '$30', color: 'bg-fcu-primary-500' },
-  { name: 'Streaming services', freq: 'Monthly DD', amount: '$25', color: 'bg-fcu-secondary-500' },
+  {
+    name: 'Mortgage / rent',
+    freq: 'Fortnightly AP',
+    amount: '$900',
+    color: 'bg-fcu-primary-900',
+  },
+  {
+    name: 'Power & gas',
+    freq: 'Monthly DD',
+    amount: '$160',
+    color: 'bg-fcu-primary-600',
+  },
+  {
+    name: 'Phone & internet',
+    freq: 'Monthly DD',
+    amount: '$110',
+    color: 'bg-fcu-primary-700',
+  },
+  {
+    name: 'Insurance',
+    freq: 'Monthly DD',
+    amount: '$85',
+    color: 'bg-fcu-secondary-500',
+  },
+  {
+    name: 'Water rates',
+    freq: 'Monthly DD',
+    amount: '$65',
+    color: 'bg-fcu-primary-800',
+  },
+  {
+    name: 'Car registration',
+    freq: 'Annual AP',
+    amount: '$45',
+    color: 'bg-fcu-primary-400',
+  },
+  {
+    name: 'Gym membership',
+    freq: 'Fortnightly DD',
+    amount: '$30',
+    color: 'bg-fcu-primary-500',
+  },
+  {
+    name: 'Streaming services',
+    freq: 'Monthly DD',
+    amount: '$25',
+    color: 'bg-fcu-secondary-500',
+  },
 ]
 
 function BillRow({ name, freq, amount, color }: (typeof bills)[number]) {
@@ -19,8 +59,12 @@ function BillRow({ name, freq, amount, color }: (typeof bills)[number]) {
       <div className='flex items-center gap-2.5'>
         <div className={`size-2 shrink-0 rounded-full ${color}`} />
         <div>
-          <div className='text-[13px] font-medium leading-tight text-fcu-primary-950'>{name}</div>
-          <div className='text-[10px] leading-tight text-fcu-primary-800/50'>{freq}</div>
+          <div className='text-[13px] font-medium leading-tight text-fcu-primary-950'>
+            {name}
+          </div>
+          <div className='text-[10px] leading-tight text-fcu-primary-800/50'>
+            {freq}
+          </div>
         </div>
       </div>
       <div className='flex items-center gap-2'>
@@ -41,12 +85,15 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
       {/* Surface shadow — ellipse on the "ground" beneath the tilted phone */}
       <div
         className='pointer-events-none absolute -bottom-6 left-1/2 h-16 w-[70%] -translate-x-1/2 rounded-full opacity-30 blur-2xl'
-        style={{ background: 'radial-gradient(ellipse, var(--color-fcu-primary-900) 0%, transparent 70%)' }}
+        style={{
+          background:
+            'radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 20%)',
+        }}
       />
 
       {/* Ambient glow behind the device */}
-      <div className='absolute -inset-8 rounded-full bg-fcu-primary-400/15 blur-3xl' />
-      <div className='absolute -inset-4 rounded-[60px] bg-fcu-primary-500/8 blur-xl' />
+      <div className='absolute -inset-8 rounded-full bg-black/10 blur-3xl' />
+      <div className='absolute -inset-4 rounded-[60px] bg-black/5 blur-xl' />
 
       <div
         className='relative rotate-[5deg] transform-gpu rounded-[44px] border-[3px] border-fcu-primary-900/10 bg-fcu-primary-950 p-[6px]'
@@ -66,23 +113,107 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
         <div className='relative flex h-[580px] flex-col overflow-hidden rounded-[38px] bg-linear-to-b from-fcu-primary-50 to-white'>
           {/* Status bar */}
           <div className='flex items-center justify-between px-7 pt-3.5 pb-1'>
-            <span className='font-mono text-[11px] font-semibold text-fcu-primary-950'>9:41</span>
+            <span className='font-mono text-[11px] font-semibold text-fcu-primary-950'>
+              9:41
+            </span>
             <div className='flex items-center gap-1.5'>
-              <svg width='14' height='10' viewBox='0 0 14 10' fill='none' className='text-fcu-primary-950'>
-                <rect x='0' y='6' width='2.5' height='4' rx='0.5' fill='currentColor' />
-                <rect x='3.8' y='4' width='2.5' height='6' rx='0.5' fill='currentColor' />
-                <rect x='7.6' y='2' width='2.5' height='8' rx='0.5' fill='currentColor' />
-                <rect x='11.4' y='0' width='2.5' height='10' rx='0.5' fill='currentColor' />
+              <svg
+                width='14'
+                height='10'
+                viewBox='0 0 14 10'
+                fill='none'
+                className='text-fcu-primary-950'
+              >
+                <rect
+                  x='0'
+                  y='6'
+                  width='2.5'
+                  height='4'
+                  rx='0.5'
+                  fill='currentColor'
+                />
+                <rect
+                  x='3.8'
+                  y='4'
+                  width='2.5'
+                  height='6'
+                  rx='0.5'
+                  fill='currentColor'
+                />
+                <rect
+                  x='7.6'
+                  y='2'
+                  width='2.5'
+                  height='8'
+                  rx='0.5'
+                  fill='currentColor'
+                />
+                <rect
+                  x='11.4'
+                  y='0'
+                  width='2.5'
+                  height='10'
+                  rx='0.5'
+                  fill='currentColor'
+                />
               </svg>
-              <svg width='13' height='10' viewBox='0 0 13 10' fill='none' className='text-fcu-primary-950'>
-                <path d='M6.5 9.5a1 1 0 100-2 1 1 0 000 2z' fill='currentColor' />
-                <path d='M3.8 7a3.8 3.8 0 015.4 0' stroke='currentColor' strokeWidth='1.2' strokeLinecap='round' />
-                <path d='M1.5 4.5a7 7 0 0110 0' stroke='currentColor' strokeWidth='1.2' strokeLinecap='round' />
+              <svg
+                width='13'
+                height='10'
+                viewBox='0 0 13 10'
+                fill='none'
+                className='text-fcu-primary-950'
+              >
+                <path
+                  d='M6.5 9.5a1 1 0 100-2 1 1 0 000 2z'
+                  fill='currentColor'
+                />
+                <path
+                  d='M3.8 7a3.8 3.8 0 015.4 0'
+                  stroke='currentColor'
+                  strokeWidth='1.2'
+                  strokeLinecap='round'
+                />
+                <path
+                  d='M1.5 4.5a7 7 0 0110 0'
+                  stroke='currentColor'
+                  strokeWidth='1.2'
+                  strokeLinecap='round'
+                />
               </svg>
-              <svg width='22' height='10' viewBox='0 0 22 10' fill='none' className='text-fcu-primary-950'>
-                <rect x='0.5' y='0.5' width='18' height='9' rx='2' stroke='currentColor' strokeWidth='1' />
-                <rect x='2' y='2' width='13' height='6' rx='1' fill='currentColor' />
-                <rect x='19.5' y='3' width='2' height='4' rx='1' fill='currentColor' opacity='0.4' />
+              <svg
+                width='22'
+                height='10'
+                viewBox='0 0 22 10'
+                fill='none'
+                className='text-fcu-primary-950'
+              >
+                <rect
+                  x='0.5'
+                  y='0.5'
+                  width='18'
+                  height='9'
+                  rx='2'
+                  stroke='currentColor'
+                  strokeWidth='1'
+                />
+                <rect
+                  x='2'
+                  y='2'
+                  width='13'
+                  height='6'
+                  rx='1'
+                  fill='currentColor'
+                />
+                <rect
+                  x='19.5'
+                  y='3'
+                  width='2'
+                  height='4'
+                  rx='1'
+                  fill='currentColor'
+                  opacity='0.4'
+                />
               </svg>
             </div>
           </div>

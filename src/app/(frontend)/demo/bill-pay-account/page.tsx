@@ -19,8 +19,8 @@ export default function BillPayAccountPage() {
     <div className='overflow-x-hidden'>
       <HeroSection />
       <FeaturesSection />
-      <StatsBar />
       <HowItWorks />
+      <StatsBar />
       <RatesFees />
       <DebitCardSection />
       <FaqSection />

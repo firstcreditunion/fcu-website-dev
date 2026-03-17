@@ -11,8 +11,8 @@ export function HeroSection() {
   return (
     <section className='relative'>
       {/* Radiant-style rounded gradient panel */}
-      <div className='absolute inset-2 bottom-0 rounded-4xl bg-linear-135 from-fcu-primary-100 from-28% via-fcu-primary-50 via-70% to-white ring-1 ring-fcu-primary-900/5 ring-inset' />
-      <DotPattern className='absolute inset-2 bottom-0 overflow-hidden rounded-4xl opacity-[0.08] mask-[radial-gradient(ellipse_80%_60%_at_50%_40%,black_40%,transparent_100%)]' />
+      <div className='absolute inset-2 bottom-0 rounded-4xl bg-linear-135 from-fcu-primary-50 from-28% to-white ring-1 ring-fcu-primary-900/5 ring-inset' />
+      {/* <DotPattern className='absolute inset-2 bottom-0 overflow-hidden rounded-4xl opacity-[0.08] mask-[radial-gradient(ellipse_80%_60%_at_50%_40%,black_40%,transparent_100%)]' /> */}
 
       {/* Container layout */}
       <div className='relative px-6 lg:px-8'>

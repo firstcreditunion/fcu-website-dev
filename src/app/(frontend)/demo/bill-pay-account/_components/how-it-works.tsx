@@ -24,7 +24,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className='bg-gradient-to-b from-white to-fcu-primary-50/30'>
+    <section className='my-20'>
       <div className='mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28 lg:px-8'>
         <TextAnimate
           as='h2'
