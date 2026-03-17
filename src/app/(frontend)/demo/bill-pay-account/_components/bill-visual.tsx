@@ -56,7 +56,7 @@ const bills = [
 
 function BillRow({ name, freq, amount, color }: (typeof bills)[number]) {
   return (
-    <div className='flex items-center justify-between rounded-xl border border-fcu-primary-100 bg-white px-3.5 py-2.5 shadow-sm'>
+    <div className='flex items-center justify-between rounded-xl border border-fcu-mint-100 bg-white/80 px-3.5 py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]'>
       <div className='flex items-center gap-2.5'>
         <div className={`size-2 shrink-0 rounded-full ${color}`} />
         <div>
@@ -69,7 +69,7 @@ function BillRow({ name, freq, amount, color }: (typeof bills)[number]) {
         </div>
       </div>
       <div className='flex items-center gap-2'>
-        <span className='rounded-md bg-fcu-primary-100 px-1.5 py-0.5 text-[9px] font-semibold text-fcu-primary-900'>
+        <span className='rounded-md bg-fcu-green-faded-200 px-1.5 py-0.5 text-[9px] font-semibold text-fcu-green-faded-800'>
           Auto
         </span>
         <span className='font-mono text-[13px] font-semibold tabular-nums text-fcu-primary-950'>
@@ -221,7 +221,7 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
         />
 
         {/* Screen */}
-        <div className='relative flex h-[570px] flex-col overflow-hidden rounded-[36px] bg-linear-to-b from-fcu-primary-50 to-white'>
+        <div className='relative flex h-[570px] flex-col overflow-hidden rounded-[36px] bg-linear-to-b from-fcu-mint-100 to-fcu-mint-50'>
           {/* Status bar */}
           <div className='flex items-center justify-between px-7 pt-3.5 pb-1'>
             <span className='font-mono text-[11px] font-semibold text-fcu-primary-950' suppressHydrationWarning>
@@ -369,10 +369,10 @@ export function BillVisual() {
             <BillRow key={bill.name} {...bill} />
           ))}
         </AnimatedList>
-        <div className='pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-linear-to-t from-white to-transparent' />
+        <div className='pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-linear-to-t from-fcu-mint-50 to-transparent' />
       </div>
 
-      <div className='mt-3 shrink-0 border-t border-fcu-primary-200/60 pt-3'>
+      <div className='mt-3 shrink-0 border-t border-fcu-green-faded-300/60 pt-3'>
         <div className='flex justify-between text-sm font-semibold text-fcu-primary-950'>
           <span>Committed</span>
           <span className='font-mono'>$1,420</span>
