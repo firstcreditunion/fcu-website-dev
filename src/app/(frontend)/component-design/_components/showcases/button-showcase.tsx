@@ -703,7 +703,7 @@ export function ButtonShowcase({ initialConfig }: Props) {
           <ControlRow label='Background'>
             <Select
               value={previewBg}
-              onValueChange={setPreviewBg}
+              onValueChange={(v) => v !== null && setPreviewBg(v)}
             >
               <SelectTrigger size='sm' className='w-full'>
                 <SelectValue>
