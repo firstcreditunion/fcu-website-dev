@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { AnimatedList } from '@/components/ui/animated-list'
 
 const bills = [
@@ -79,38 +80,121 @@ function BillRow({ name, freq, amount, color }: (typeof bills)[number]) {
   )
 }
 
+const TILT_MAX = 8
+
 function IPhoneFrame({ children }: { children: React.ReactNode }) {
+  const frameRef = useRef<HTMLDivElement>(null)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const el = frameRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const cx = rect.left + rect.width / 2
+    const cy = rect.top + rect.height / 2
+    const rawX = ((e.clientX - cx) / (rect.width / 2)) * TILT_MAX
+    const rawY = ((e.clientY - cy) / (rect.height / 2)) * -TILT_MAX
+    setTilt({
+      x: Math.max(-TILT_MAX, Math.min(TILT_MAX, rawX)),
+      y: Math.max(-TILT_MAX, Math.min(TILT_MAX, rawY)),
+    })
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    setTilt({ x: 0, y: 0 })
+  }, [])
+
+  useEffect(() => {
+    const el = frameRef.current
+    if (!el) return
+    const parent = el.closest('section') ?? el.parentElement?.parentElement
+    if (!parent) return
+
+    const parentEl = parent as HTMLElement
+    parentEl.addEventListener('mousemove', handleMouseMove)
+    parentEl.addEventListener('mouseleave', handleMouseLeave)
+    return () => {
+      parentEl.removeEventListener('mousemove', handleMouseMove)
+      parentEl.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [handleMouseMove, handleMouseLeave])
+
   return (
-    <div className='relative mx-auto w-[300px]'>
-      {/* Surface shadow — ellipse on the "ground" beneath the tilted phone */}
+    <div ref={frameRef} className='relative mx-auto w-[300px]'>
+      {/* Surface shadow */}
       <div
-        className='pointer-events-none absolute -bottom-6 left-1/2 h-16 w-[70%] -translate-x-1/2 rounded-full opacity-30 blur-2xl'
+        className='pointer-events-none absolute -bottom-8 left-1/2 h-20 w-[75%] -translate-x-1/2 rounded-full opacity-40 blur-2xl'
         style={{
           background:
-            'radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 20%)',
+            'radial-gradient(ellipse, rgba(0,0,0,0.7) 0%, transparent 70%)',
         }}
       />
 
       {/* Ambient glow behind the device */}
-      <div className='absolute -inset-8 rounded-full bg-black/10 blur-3xl' />
-      <div className='absolute -inset-4 rounded-[60px] bg-black/5 blur-xl' />
+      <div className='absolute -inset-10 rounded-full bg-black/10 blur-3xl' />
+      <div className='absolute -inset-5 rounded-[60px] bg-black/5 blur-xl' />
 
+      {/* Outer frame — interactive 3D tilt */}
       <div
-        className='relative rotate-[5deg] transform-gpu rounded-[44px] border-[3px] border-fcu-primary-900/10 bg-fcu-primary-950 p-[6px]'
+        className='relative rounded-[44px] p-[10px]'
         style={{
+          background:
+            'linear-gradient(145deg, #1a2a3e 0%, #0f1f32 50%, #0a1525 100%)',
           boxShadow: [
-            '0 2px 4px rgba(0,0,0,0.04)',
-            '0 8px 16px rgba(0,0,0,0.06)',
-            '0 20px 40px rgba(0,0,0,0.08)',
-            '0 50px 100px -15px var(--color-fcu-primary-900 / 0.25)',
-            'inset 0 1px 0 rgba(255,255,255,0.08)',
+            '0 0 0 1px rgba(255,255,255,0.08)',
+            '0 25px 60px -12px rgba(0,0,0,0.5)',
+            '0 40px 80px -20px rgba(0,0,0,0.2)',
+            'inset 0 1px 0 rgba(255,255,255,0.1)',
+            'inset 0 -1px 0 rgba(0,0,0,0.3)',
           ].join(', '),
+          transform: `perspective(1200px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
+          transition: 'transform 0.15s ease-out',
+          transformStyle: 'preserve-3d',
+          willChange: 'transform',
         }}
       >
-        {/* Top bezel highlight for a reflective edge */}
-        <div className='pointer-events-none absolute inset-x-6 top-0 h-px rounded-full bg-white/20' />
+        {/* Dynamic Island */}
+        <div
+          className='absolute top-[12px] left-1/2 z-20 h-[26px] w-[90px] -translate-x-1/2 rounded-full bg-black'
+          style={{ boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.5)' }}
+        >
+          <div
+            className='absolute top-1/2 right-[18px] size-2 -translate-y-1/2 rounded-full'
+            style={{
+              background:
+                'radial-gradient(circle, #1a2a3e 30%, #0d1520 70%)',
+              boxShadow: 'inset 0 0 2px rgba(100,180,220,0.3)',
+            }}
+          />
+        </div>
 
-        <div className='relative flex h-[580px] flex-col overflow-hidden rounded-[38px] bg-linear-to-b from-fcu-primary-50 to-white'>
+        {/* Power button (right) */}
+        <div
+          className='absolute -right-[2px] top-[120px] h-[55px] w-[3px] rounded-r-sm'
+          style={{
+            background: 'linear-gradient(180deg, #2a3a4e, #1a2a3e)',
+            boxShadow: '1px 0 2px rgba(0,0,0,0.3)',
+          }}
+        />
+        {/* Volume up (left) */}
+        <div
+          className='absolute -left-[2px] top-[100px] h-[28px] w-[3px] rounded-l-sm'
+          style={{
+            background: 'linear-gradient(180deg, #2a3a4e, #1a2a3e)',
+            boxShadow: '-1px 0 2px rgba(0,0,0,0.3)',
+          }}
+        />
+        {/* Volume down (left) */}
+        <div
+          className='absolute -left-[2px] top-[140px] h-[45px] w-[3px] rounded-l-sm'
+          style={{
+            background: 'linear-gradient(180deg, #2a3a4e, #1a2a3e)',
+            boxShadow: '-1px 0 2px rgba(0,0,0,0.3)',
+          }}
+        />
+
+        {/* Screen */}
+        <div className='relative flex h-[570px] flex-col overflow-hidden rounded-[36px] bg-linear-to-b from-fcu-primary-50 to-white'>
           {/* Status bar */}
           <div className='flex items-center justify-between px-7 pt-3.5 pb-1'>
             <span className='font-mono text-[11px] font-semibold text-fcu-primary-950'>
@@ -124,38 +208,10 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
                 fill='none'
                 className='text-fcu-primary-950'
               >
-                <rect
-                  x='0'
-                  y='6'
-                  width='2.5'
-                  height='4'
-                  rx='0.5'
-                  fill='currentColor'
-                />
-                <rect
-                  x='3.8'
-                  y='4'
-                  width='2.5'
-                  height='6'
-                  rx='0.5'
-                  fill='currentColor'
-                />
-                <rect
-                  x='7.6'
-                  y='2'
-                  width='2.5'
-                  height='8'
-                  rx='0.5'
-                  fill='currentColor'
-                />
-                <rect
-                  x='11.4'
-                  y='0'
-                  width='2.5'
-                  height='10'
-                  rx='0.5'
-                  fill='currentColor'
-                />
+                <rect x='0' y='6' width='2.5' height='4' rx='0.5' fill='currentColor' />
+                <rect x='3.8' y='4' width='2.5' height='6' rx='0.5' fill='currentColor' />
+                <rect x='7.6' y='2' width='2.5' height='8' rx='0.5' fill='currentColor' />
+                <rect x='11.4' y='0' width='2.5' height='10' rx='0.5' fill='currentColor' />
               </svg>
               <svg
                 width='13'
@@ -164,22 +220,9 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
                 fill='none'
                 className='text-fcu-primary-950'
               >
-                <path
-                  d='M6.5 9.5a1 1 0 100-2 1 1 0 000 2z'
-                  fill='currentColor'
-                />
-                <path
-                  d='M3.8 7a3.8 3.8 0 015.4 0'
-                  stroke='currentColor'
-                  strokeWidth='1.2'
-                  strokeLinecap='round'
-                />
-                <path
-                  d='M1.5 4.5a7 7 0 0110 0'
-                  stroke='currentColor'
-                  strokeWidth='1.2'
-                  strokeLinecap='round'
-                />
+                <path d='M6.5 9.5a1 1 0 100-2 1 1 0 000 2z' fill='currentColor' />
+                <path d='M3.8 7a3.8 3.8 0 015.4 0' stroke='currentColor' strokeWidth='1.2' strokeLinecap='round' />
+                <path d='M1.5 4.5a7 7 0 0110 0' stroke='currentColor' strokeWidth='1.2' strokeLinecap='round' />
               </svg>
               <svg
                 width='22'
@@ -188,38 +231,15 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
                 fill='none'
                 className='text-fcu-primary-950'
               >
-                <rect
-                  x='0.5'
-                  y='0.5'
-                  width='18'
-                  height='9'
-                  rx='2'
-                  stroke='currentColor'
-                  strokeWidth='1'
-                />
-                <rect
-                  x='2'
-                  y='2'
-                  width='13'
-                  height='6'
-                  rx='1'
-                  fill='currentColor'
-                />
-                <rect
-                  x='19.5'
-                  y='3'
-                  width='2'
-                  height='4'
-                  rx='1'
-                  fill='currentColor'
-                  opacity='0.4'
-                />
+                <rect x='0.5' y='0.5' width='18' height='9' rx='2' stroke='currentColor' strokeWidth='1' />
+                <rect x='2' y='2' width='13' height='6' rx='1' fill='currentColor' />
+                <rect x='19.5' y='3' width='2' height='4' rx='1' fill='currentColor' opacity='0.4' />
               </svg>
             </div>
           </div>
 
-          {/* Dynamic Island */}
-          <div className='mx-auto mb-3 h-[24px] w-[100px] rounded-full bg-fcu-primary-950' />
+          {/* Spacer for Dynamic Island */}
+          <div className='mx-auto mb-3 h-[24px] w-[100px]' />
 
           {/* App content */}
           <div className='flex min-h-0 flex-1 flex-col px-5 pb-4'>
@@ -231,6 +251,15 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
             <div className='h-[5px] w-[110px] rounded-full bg-fcu-primary-950/20' />
           </div>
         </div>
+
+        {/* Reflection / glass overlay */}
+        <div
+          className='pointer-events-none absolute inset-0 z-10 rounded-[44px]'
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(255,255,255,0.02) 100%)',
+          }}
+        />
       </div>
     </div>
   )
