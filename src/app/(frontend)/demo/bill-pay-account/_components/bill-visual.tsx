@@ -273,9 +273,70 @@ function IPhoneFrame({ children }: { children: React.ReactNode }) {
             {children}
           </div>
 
-          {/* Home indicator */}
-          <div className='flex justify-center pb-2.5'>
-            <div className='h-[5px] w-[110px] rounded-full bg-fcu-primary-950/20' />
+          {/* Bottom tab bar */}
+          <div className='shrink-0 px-4 pb-2'>
+            <div
+              className='flex items-center justify-around rounded-2xl px-2 py-2'
+              style={{
+                background: 'rgba(255,255,255,0.75)',
+                backdropFilter: 'blur(16px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+                boxShadow:
+                  '0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04)',
+              }}
+            >
+              {[
+                { label: 'Home', active: false, icon: (
+                  <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
+                    <path d='M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z' />
+                    <path d='M9 21V12h6v9' />
+                  </svg>
+                )},
+                { label: 'Bills', active: true, icon: (
+                  <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
+                    <rect x='5' y='2' width='14' height='20' rx='2' />
+                    <path d='M9 7h6M9 11h6M9 15h3' />
+                  </svg>
+                )},
+                { label: 'Cards', active: false, icon: (
+                  <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
+                    <rect x='2' y='5' width='20' height='14' rx='2' />
+                    <path d='M2 10h20' />
+                  </svg>
+                )},
+                { label: 'More', active: false, icon: (
+                  <svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'>
+                    <circle cx='12' cy='12' r='1' /><circle cx='12' cy='5' r='1' /><circle cx='12' cy='19' r='1' />
+                  </svg>
+                )},
+              ].map((tab) => (
+                <div
+                  key={tab.label}
+                  className='flex flex-col items-center gap-0.5'
+                >
+                  <div
+                    className={`flex size-8 items-center justify-center rounded-xl transition-colors ${
+                      tab.active
+                        ? 'bg-fcu-primary-900 text-white'
+                        : 'text-fcu-primary-800/40'
+                    }`}
+                  >
+                    {tab.icon}
+                  </div>
+                  <span
+                    className={`text-[8px] font-semibold ${
+                      tab.active ? 'text-fcu-primary-900' : 'text-fcu-primary-800/40'
+                    }`}
+                  >
+                    {tab.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+            {/* Home indicator */}
+            <div className='mt-1.5 flex justify-center'>
+              <div className='h-[4px] w-[100px] rounded-full bg-fcu-primary-950/15' />
+            </div>
           </div>
         </div>
 
