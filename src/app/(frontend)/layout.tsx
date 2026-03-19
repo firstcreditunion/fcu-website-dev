@@ -1,9 +1,11 @@
+import { Suspense } from 'react'
 import { draftMode } from 'next/headers'
 import { VisualEditing } from 'next-sanity/visual-editing'
 import { DisableDraftMode } from '@/components/disable-draft-mode'
 
 import { SanityLive } from '@/sanity/lib/live'
 import Header from '@/components/header'
+import { IntercomProvider } from '@/components/intercom-provider'
 
 export default async function FrontendLayout({
   children,
@@ -15,6 +17,9 @@ export default async function FrontendLayout({
       <Header />
       {children}
       <SanityLive />
+      <Suspense fallback={null}>
+        <IntercomProvider />
+      </Suspense>
       {(await draftMode()).isEnabled && (
         <>
           <DisableDraftMode />

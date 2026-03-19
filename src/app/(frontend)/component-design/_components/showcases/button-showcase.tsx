@@ -72,7 +72,8 @@ const VARIANT_META: Record<
 > = {
   default: {
     heading: 'Primary',
-    purpose: 'The single most important action per view. Bold, filled, high contrast.',
+    purpose:
+      'The single most important action per view. Bold, filled, high contrast.',
     fcuExample: '"Apply Now", "Open Account", "Submit Application"',
     icon: <Lock className='size-4' />,
     label: 'Apply Now',
@@ -93,7 +94,8 @@ const VARIANT_META: Record<
   },
   ghost: {
     heading: 'Ghost',
-    purpose: 'Minimal emphasis, no background. For tertiary or repeated actions.',
+    purpose:
+      'Minimal emphasis, no background. For tertiary or repeated actions.',
     fcuExample: '"Cancel", "Back", "Close", navigation items',
     icon: <X className='size-4' />,
     label: 'Cancel',
@@ -299,12 +301,7 @@ const SHADOW_COLOR_CLASS: Record<ShadowColorOption, string> = {
   'secondary-700': 'shadow-fcu-secondary-700/30',
 }
 
-const INSET_SHADOW_OPTIONS = [
-  'none',
-  '2xs',
-  'xs',
-  'sm',
-] as const
+const INSET_SHADOW_OPTIONS = ['none', '2xs', 'xs', 'sm'] as const
 type InsetShadowOption = (typeof INSET_SHADOW_OPTIONS)[number]
 
 const INSET_SHADOW_CLASS: Record<InsetShadowOption, string> = {
@@ -333,74 +330,262 @@ const BG_COLOR_GROUPS: BgColorGroup[] = [
       { value: 'white', label: 'White', cssVar: '#ffffff' },
       { value: 'neutral-50', label: 'Neutral 50', cssVar: 'oklch(0.985 0 0)' },
       { value: 'neutral-100', label: 'Neutral 100', cssVar: 'oklch(0.97 0 0)' },
-      { value: 'neutral-200', label: 'Neutral 200', cssVar: 'oklch(0.922 0 0)' },
-      { value: 'neutral-800', label: 'Neutral 800', cssVar: 'oklch(0.269 0 0)' },
-      { value: 'neutral-900', label: 'Neutral 900', cssVar: 'oklch(0.205 0 0)' },
+      {
+        value: 'neutral-200',
+        label: 'Neutral 200',
+        cssVar: 'oklch(0.922 0 0)',
+      },
+      {
+        value: 'neutral-800',
+        label: 'Neutral 800',
+        cssVar: 'oklch(0.269 0 0)',
+      },
+      {
+        value: 'neutral-900',
+        label: 'Neutral 900',
+        cssVar: 'oklch(0.205 0 0)',
+      },
       { value: 'black', label: 'Black', cssVar: '#000000' },
     ],
   },
   {
     groupLabel: 'FCU Primary (Blue)',
     items: [
-      { value: 'fcu-primary-50', label: '50', cssVar: 'var(--color-fcu-primary-50)' },
-      { value: 'fcu-primary-100', label: '100', cssVar: 'var(--color-fcu-primary-100)' },
-      { value: 'fcu-primary-200', label: '200', cssVar: 'var(--color-fcu-primary-200)' },
-      { value: 'fcu-primary-300', label: '300', cssVar: 'var(--color-fcu-primary-300)' },
-      { value: 'fcu-primary-400', label: '400', cssVar: 'var(--color-fcu-primary-400)' },
-      { value: 'fcu-primary-500', label: '500', cssVar: 'var(--color-fcu-primary-500)' },
-      { value: 'fcu-primary-600', label: '600', cssVar: 'var(--color-fcu-primary-600)' },
-      { value: 'fcu-primary-700', label: '700', cssVar: 'var(--color-fcu-primary-700)' },
-      { value: 'fcu-primary-800', label: '800', cssVar: 'var(--color-fcu-primary-800)' },
-      { value: 'fcu-primary-900', label: '900', cssVar: 'var(--color-fcu-primary-900)', isPrimary: true },
-      { value: 'fcu-primary-950', label: '950', cssVar: 'var(--color-fcu-primary-950)' },
+      {
+        value: 'fcu-primary-50',
+        label: '50',
+        cssVar: 'var(--color-fcu-primary-50)',
+      },
+      {
+        value: 'fcu-primary-100',
+        label: '100',
+        cssVar: 'var(--color-fcu-primary-100)',
+      },
+      {
+        value: 'fcu-primary-200',
+        label: '200',
+        cssVar: 'var(--color-fcu-primary-200)',
+      },
+      {
+        value: 'fcu-primary-300',
+        label: '300',
+        cssVar: 'var(--color-fcu-primary-300)',
+      },
+      {
+        value: 'fcu-primary-400',
+        label: '400',
+        cssVar: 'var(--color-fcu-primary-400)',
+      },
+      {
+        value: 'fcu-primary-500',
+        label: '500',
+        cssVar: 'var(--color-fcu-primary-500)',
+      },
+      {
+        value: 'fcu-primary-600',
+        label: '600',
+        cssVar: 'var(--color-fcu-primary-600)',
+      },
+      {
+        value: 'fcu-primary-700',
+        label: '700',
+        cssVar: 'var(--color-fcu-primary-700)',
+      },
+      {
+        value: 'fcu-primary-800',
+        label: '800',
+        cssVar: 'var(--color-fcu-primary-800)',
+      },
+      {
+        value: 'fcu-primary-900',
+        label: '900',
+        cssVar: 'var(--color-fcu-primary-900)',
+        isPrimary: true,
+      },
+      {
+        value: 'fcu-primary-950',
+        label: '950',
+        cssVar: 'var(--color-fcu-primary-950)',
+      },
     ],
   },
   {
     groupLabel: 'FCU Secondary (Green/Yellow)',
     items: [
-      { value: 'fcu-secondary-50', label: '50', cssVar: 'var(--color-fcu-secondary-50)' },
-      { value: 'fcu-secondary-100', label: '100', cssVar: 'var(--color-fcu-secondary-100)' },
-      { value: 'fcu-secondary-200', label: '200', cssVar: 'var(--color-fcu-secondary-200)' },
-      { value: 'fcu-secondary-300', label: '300', cssVar: 'var(--color-fcu-secondary-300)' },
-      { value: 'fcu-secondary-400', label: '400', cssVar: 'var(--color-fcu-secondary-400)' },
-      { value: 'fcu-secondary-500', label: '500', cssVar: 'var(--color-fcu-secondary-500)', isPrimary: true },
-      { value: 'fcu-secondary-600', label: '600', cssVar: 'var(--color-fcu-secondary-600)' },
-      { value: 'fcu-secondary-700', label: '700', cssVar: 'var(--color-fcu-secondary-700)' },
-      { value: 'fcu-secondary-800', label: '800', cssVar: 'var(--color-fcu-secondary-800)' },
-      { value: 'fcu-secondary-900', label: '900', cssVar: 'var(--color-fcu-secondary-900)' },
-      { value: 'fcu-secondary-950', label: '950', cssVar: 'var(--color-fcu-secondary-950)' },
+      {
+        value: 'fcu-secondary-50',
+        label: '50',
+        cssVar: 'var(--color-fcu-secondary-50)',
+      },
+      {
+        value: 'fcu-secondary-100',
+        label: '100',
+        cssVar: 'var(--color-fcu-secondary-100)',
+      },
+      {
+        value: 'fcu-secondary-200',
+        label: '200',
+        cssVar: 'var(--color-fcu-secondary-200)',
+      },
+      {
+        value: 'fcu-secondary-300',
+        label: '300',
+        cssVar: 'var(--color-fcu-secondary-300)',
+      },
+      {
+        value: 'fcu-secondary-400',
+        label: '400',
+        cssVar: 'var(--color-fcu-secondary-400)',
+      },
+      {
+        value: 'fcu-secondary-500',
+        label: '500',
+        cssVar: 'var(--color-fcu-secondary-500)',
+        isPrimary: true,
+      },
+      {
+        value: 'fcu-secondary-600',
+        label: '600',
+        cssVar: 'var(--color-fcu-secondary-600)',
+      },
+      {
+        value: 'fcu-secondary-700',
+        label: '700',
+        cssVar: 'var(--color-fcu-secondary-700)',
+      },
+      {
+        value: 'fcu-secondary-800',
+        label: '800',
+        cssVar: 'var(--color-fcu-secondary-800)',
+      },
+      {
+        value: 'fcu-secondary-900',
+        label: '900',
+        cssVar: 'var(--color-fcu-secondary-900)',
+      },
+      {
+        value: 'fcu-secondary-950',
+        label: '950',
+        cssVar: 'var(--color-fcu-secondary-950)',
+      },
     ],
   },
   {
     groupLabel: 'FCU Green Faded',
     items: [
-      { value: 'fcu-green-faded-50', label: '50', cssVar: 'var(--color-fcu-green-faded-50)' },
-      { value: 'fcu-green-faded-100', label: '100', cssVar: 'var(--color-fcu-green-faded-100)' },
-      { value: 'fcu-green-faded-200', label: '200', cssVar: 'var(--color-fcu-green-faded-200)' },
-      { value: 'fcu-green-faded-300', label: '300', cssVar: 'var(--color-fcu-green-faded-300)' },
-      { value: 'fcu-green-faded-400', label: '400', cssVar: 'var(--color-fcu-green-faded-400)' },
-      { value: 'fcu-green-faded-500', label: '500', cssVar: 'var(--color-fcu-green-faded-500)', isPrimary: true },
-      { value: 'fcu-green-faded-600', label: '600', cssVar: 'var(--color-fcu-green-faded-600)' },
-      { value: 'fcu-green-faded-700', label: '700', cssVar: 'var(--color-fcu-green-faded-700)' },
-      { value: 'fcu-green-faded-800', label: '800', cssVar: 'var(--color-fcu-green-faded-800)' },
-      { value: 'fcu-green-faded-900', label: '900', cssVar: 'var(--color-fcu-green-faded-900)' },
-      { value: 'fcu-green-faded-950', label: '950', cssVar: 'var(--color-fcu-green-faded-950)' },
+      {
+        value: 'fcu-green-faded-50',
+        label: '50',
+        cssVar: 'var(--color-fcu-green-faded-50)',
+      },
+      {
+        value: 'fcu-green-faded-100',
+        label: '100',
+        cssVar: 'var(--color-fcu-green-faded-100)',
+      },
+      {
+        value: 'fcu-green-faded-200',
+        label: '200',
+        cssVar: 'var(--color-fcu-green-faded-200)',
+      },
+      {
+        value: 'fcu-green-faded-300',
+        label: '300',
+        cssVar: 'var(--color-fcu-green-faded-300)',
+      },
+      {
+        value: 'fcu-green-faded-400',
+        label: '400',
+        cssVar: 'var(--color-fcu-green-faded-400)',
+      },
+      {
+        value: 'fcu-green-faded-500',
+        label: '500',
+        cssVar: 'var(--color-fcu-green-faded-500)',
+        isPrimary: true,
+      },
+      {
+        value: 'fcu-green-faded-600',
+        label: '600',
+        cssVar: 'var(--color-fcu-green-faded-600)',
+      },
+      {
+        value: 'fcu-green-faded-700',
+        label: '700',
+        cssVar: 'var(--color-fcu-green-faded-700)',
+      },
+      {
+        value: 'fcu-green-faded-800',
+        label: '800',
+        cssVar: 'var(--color-fcu-green-faded-800)',
+      },
+      {
+        value: 'fcu-green-faded-900',
+        label: '900',
+        cssVar: 'var(--color-fcu-green-faded-900)',
+      },
+      {
+        value: 'fcu-green-faded-950',
+        label: '950',
+        cssVar: 'var(--color-fcu-green-faded-950)',
+      },
     ],
   },
   {
     groupLabel: 'FCU Mint',
     items: [
       { value: 'fcu-mint-50', label: '50', cssVar: 'var(--color-fcu-mint-50)' },
-      { value: 'fcu-mint-100', label: '100', cssVar: 'var(--color-fcu-mint-100)' },
-      { value: 'fcu-mint-200', label: '200', cssVar: 'var(--color-fcu-mint-200)' },
-      { value: 'fcu-mint-300', label: '300', cssVar: 'var(--color-fcu-mint-300)' },
-      { value: 'fcu-mint-400', label: '400', cssVar: 'var(--color-fcu-mint-400)' },
-      { value: 'fcu-mint-500', label: '500', cssVar: 'var(--color-fcu-mint-500)', isPrimary: true },
-      { value: 'fcu-mint-600', label: '600', cssVar: 'var(--color-fcu-mint-600)' },
-      { value: 'fcu-mint-700', label: '700', cssVar: 'var(--color-fcu-mint-700)' },
-      { value: 'fcu-mint-800', label: '800', cssVar: 'var(--color-fcu-mint-800)' },
-      { value: 'fcu-mint-900', label: '900', cssVar: 'var(--color-fcu-mint-900)' },
-      { value: 'fcu-mint-950', label: '950', cssVar: 'var(--color-fcu-mint-950)' },
+      {
+        value: 'fcu-mint-100',
+        label: '100',
+        cssVar: 'var(--color-fcu-mint-100)',
+      },
+      {
+        value: 'fcu-mint-200',
+        label: '200',
+        cssVar: 'var(--color-fcu-mint-200)',
+      },
+      {
+        value: 'fcu-mint-300',
+        label: '300',
+        cssVar: 'var(--color-fcu-mint-300)',
+      },
+      {
+        value: 'fcu-mint-400',
+        label: '400',
+        cssVar: 'var(--color-fcu-mint-400)',
+      },
+      {
+        value: 'fcu-mint-500',
+        label: '500',
+        cssVar: 'var(--color-fcu-mint-500)',
+        isPrimary: true,
+      },
+      {
+        value: 'fcu-mint-600',
+        label: '600',
+        cssVar: 'var(--color-fcu-mint-600)',
+      },
+      {
+        value: 'fcu-mint-700',
+        label: '700',
+        cssVar: 'var(--color-fcu-mint-700)',
+      },
+      {
+        value: 'fcu-mint-800',
+        label: '800',
+        cssVar: 'var(--color-fcu-mint-800)',
+      },
+      {
+        value: 'fcu-mint-900',
+        label: '900',
+        cssVar: 'var(--color-fcu-mint-900)',
+      },
+      {
+        value: 'fcu-mint-950',
+        label: '950',
+        cssVar: 'var(--color-fcu-mint-950)',
+      },
     ],
   },
 ]
@@ -433,6 +618,7 @@ interface VariantStyle {
   shadow: ShadowOption
   shadowColor: ShadowColorOption
   insetShadow: InsetShadowOption
+  bgColor: string
 }
 
 const DEFAULT_STYLE: VariantStyle = {
@@ -445,6 +631,7 @@ const DEFAULT_STYLE: VariantStyle = {
   shadow: 'none',
   shadowColor: 'default',
   insetShadow: 'none',
+  bgColor: 'none',
 }
 
 function buildInitialStyles(): Record<ButtonVariant, VariantStyle> {
@@ -493,7 +680,6 @@ export function ButtonShowcase({ initialConfig }: Props) {
   const [showIcons, setShowIcons] = React.useState(true)
   const [customLabel, setCustomLabel] = React.useState('')
   const [saveStatus, setSaveStatus] = React.useState<SaveStatus>('idle')
-  const [previewBg, setPreviewBg] = React.useState('white')
 
   const [applyTo, setApplyTo] = React.useState<ApplyToOption>('all')
   const [variantStyles, setVariantStyles] = React.useState<
@@ -561,12 +747,13 @@ export function ButtonShowcase({ initialConfig }: Props) {
         size={size}
         disabled={showDisabled}
         className={`${RADIUS_CLASS[s.radius]} h-auto ${PADDING_X_CLASS[s.paddingX]} ${PADDING_Y_CLASS[s.paddingY]} ${BORDER_WIDTH_CLASS[s.borderWidth]} ${BORDER_STYLE_CLASS[s.borderStyle]} ${BORDER_COLOR_CLASS[s.borderColor]} ${SHADOW_CLASS[s.shadow]} ${SHADOW_COLOR_CLASS[s.shadowColor]} ${INSET_SHADOW_CLASS[s.insetShadow]}`}
+        style={
+          s.bgColor !== 'none'
+            ? { backgroundColor: BG_COLOR_MAP[s.bgColor] }
+            : undefined
+        }
       >
-        {showLoading ? (
-          <Loader2 className='animate-spin' />
-        ) : (
-          showIcons && icon
-        )}
+        {showLoading ? <Loader2 className='animate-spin' /> : showIcons && icon}
         {label}
         {showIcons && variant === 'link' && <ArrowRight />}
       </Button>
@@ -591,12 +778,13 @@ export function ButtonShowcase({ initialConfig }: Props) {
         disabled={showDisabled}
         aria-label={VARIANT_META[variant].heading}
         className={`${RADIUS_CLASS[s.radius]} ${BORDER_WIDTH_CLASS[s.borderWidth]} ${BORDER_STYLE_CLASS[s.borderStyle]} ${BORDER_COLOR_CLASS[s.borderColor]} ${SHADOW_CLASS[s.shadow]} ${SHADOW_COLOR_CLASS[s.shadowColor]} ${INSET_SHADOW_CLASS[s.insetShadow]}`}
+        style={
+          s.bgColor !== 'none'
+            ? { backgroundColor: BG_COLOR_MAP[s.bgColor] }
+            : undefined
+        }
       >
-        {showLoading ? (
-          <Loader2 className='animate-spin' />
-        ) : (
-          iconMap[variant]
-        )}
+        {showLoading ? <Loader2 className='animate-spin' /> : iconMap[variant]}
       </Button>
     )
   }
@@ -614,10 +802,7 @@ export function ButtonShowcase({ initialConfig }: Props) {
         usageNote: g.usageNote,
       }))}
       preview={
-        <div
-          className='w-full space-y-10 rounded-lg p-6 transition-colors'
-          style={{ backgroundColor: BG_COLOR_MAP[previewBg] }}
-        >
+        <div className='w-full space-y-10 rounded-lg p-6'>
           {ALL_VARIANTS.map((variant) => {
             const meta = VARIANT_META[variant]
             const isActive = variant === activeVariant
@@ -659,12 +844,7 @@ export function ButtonShowcase({ initialConfig }: Props) {
                           key={size}
                           className='flex flex-col items-center gap-1.5'
                         >
-                          {renderTextButton(
-                            variant,
-                            size,
-                            label,
-                            meta.icon,
-                          )}
+                          {renderTextButton(variant, size, label, meta.icon)}
                           <span className='text-[9px] font-medium text-muted-foreground/50'>
                             {SIZE_LABELS[size]}
                           </span>
@@ -702,16 +882,17 @@ export function ButtonShowcase({ initialConfig }: Props) {
         <>
           <ControlRow label='Background'>
             <Select
-              value={previewBg}
-              onValueChange={(v) => v !== null && setPreviewBg(v)}
+              value={displayStyle.bgColor}
+              onValueChange={(v) => v !== null && updateStyle('bgColor', v)}
             >
               <SelectTrigger size='sm' className='w-full'>
                 <SelectValue>
                   {(() => {
+                    if (displayStyle.bgColor === 'none') return 'None'
                     const entry = BG_COLOR_GROUPS.flatMap((g) => g.items).find(
-                      (i) => i.value === previewBg,
+                      (i) => i.value === displayStyle.bgColor,
                     )
-                    if (!entry) return previewBg
+                    if (!entry) return displayStyle.bgColor
                     return (
                       <span className='flex items-center gap-2'>
                         <span
@@ -725,6 +906,7 @@ export function ButtonShowcase({ initialConfig }: Props) {
                 </SelectValue>
               </SelectTrigger>
               <SelectContent className='max-h-72'>
+                <SelectItem value='none'>None</SelectItem>
                 {BG_COLOR_GROUPS.map((group) => (
                   <SelectGroup key={group.groupLabel}>
                     <SelectLabel>{group.groupLabel}</SelectLabel>
@@ -735,7 +917,9 @@ export function ButtonShowcase({ initialConfig }: Props) {
                             className='inline-block size-3.5 shrink-0 rounded-sm border border-foreground/15'
                             style={{ backgroundColor: item.cssVar }}
                           />
-                          <span className={item.isPrimary ? 'font-semibold' : ''}>
+                          <span
+                            className={item.isPrimary ? 'font-semibold' : ''}
+                          >
                             {item.label}
                           </span>
                           {item.isPrimary && (

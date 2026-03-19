@@ -27,7 +27,9 @@ export default defineConfig({
         },
       },
     }),
-    visionTool({ defaultApiVersion: apiVersion }),
+    visionTool({
+      defaultApiVersion: apiVersion,
+    }),
     assist({
       //Showing defaults
       assist: {
