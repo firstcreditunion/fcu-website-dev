@@ -339,6 +339,7 @@ export type SiteSettings = {
   tollFreePhone?: string;
   primaryEmail: string;
   headOfficeAddress?: Address;
+  googleMapsUrl?: string;
   postalAddress?: Address;
   businessHours?: Array<
     {
@@ -973,7 +974,7 @@ export type FOOTER_NAVIGATION_QUERY_RESULT =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_id == "siteSettings"][0] {    siteName,    siteTagline,    siteDescription,    siteUrl,    logo,    logoAlt,    titleTemplate,    defaultSeoTitle,    defaultSeoDescription,    defaultOgImage,    twitterHandle,    twitterCardType,    googleSiteVerification,    bingSiteVerification,    noIndexSite,    enableJsonLd,    enableAnalytics,    googleAnalyticsId,    googleTagManagerId,    socialLinks[] { _key, platform, url, label },    primaryPhone,    tollFreePhone,    primaryEmail,    headOfficeAddress,    postalAddress,    businessHours[] { _key, day, openTime, closeTime, isClosed },    holidayNotice,    announcementBar,    registeredName,    nzbn,    fspNumber,    copyrightNotice,    disputeResolutionScheme,    regulatoryBody,    privacyPolicyUrl,    termsUrl,    disclosureStatementUrl,    complaintsUrl,    accessibilityStatementUrl,    cookieConsentEnabled,    cookieConsentMessage,    locale,    maintenanceMode,    maintenanceMessage,    headerStyle,    footerStyle  }
+// Query: *[_id == "siteSettings"][0] {    siteName,    siteTagline,    siteDescription,    siteUrl,    logo,    logoAlt,    titleTemplate,    defaultSeoTitle,    defaultSeoDescription,    defaultOgImage,    twitterHandle,    twitterCardType,    googleSiteVerification,    bingSiteVerification,    noIndexSite,    enableJsonLd,    enableAnalytics,    googleAnalyticsId,    googleTagManagerId,    socialLinks[] { _key, platform, url, label },    primaryPhone,    tollFreePhone,    primaryEmail,    headOfficeAddress,    googleMapsUrl,    postalAddress,    businessHours[] { _key, day, openTime, closeTime, isClosed },    holidayNotice,    announcementBar,    registeredName,    nzbn,    fspNumber,    copyrightNotice,    disputeResolutionScheme,    regulatoryBody,    privacyPolicyUrl,    termsUrl,    disclosureStatementUrl,    complaintsUrl,    accessibilityStatementUrl,    cookieConsentEnabled,    cookieConsentMessage,    locale,    maintenanceMode,    maintenanceMessage,    headerStyle,    footerStyle  }
 export type SITE_SETTINGS_QUERY_RESULT =
   | {
       siteName: null;
@@ -1000,6 +1001,7 @@ export type SITE_SETTINGS_QUERY_RESULT =
       tollFreePhone: null;
       primaryEmail: null;
       headOfficeAddress: null;
+      googleMapsUrl: null;
       postalAddress: null;
       businessHours: null;
       holidayNotice: null;
@@ -1072,6 +1074,7 @@ export type SITE_SETTINGS_QUERY_RESULT =
       tollFreePhone: string | null;
       primaryEmail: string;
       headOfficeAddress: Address | null;
+      googleMapsUrl: string | null;
       postalAddress: Address | null;
       businessHours: Array<{
         _key: string;
@@ -1120,6 +1123,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "componentConfig" && componentName == $componentName][0] {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': COMPONENT_CONFIG_QUERY_RESULT;
     '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      featuredPosition,\n      megaMenu[] {\n        _key,\n        title,\n        isFeatured,\n        items[] {\n          _key,\n          label,\n          description,\n          image {\n            asset-> {\n              _id,\n              url,\n              metadata {\n                lqip,\n                dimensions { width, height }\n              }\n            },\n            hotspot,\n            crop,\n            alt\n          },\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "footerNavigation"][0] {\n    headline,\n    subheadline,\n    columns[] {\n      _key,\n      title,\n      links[] {\n        _key,\n        label,\n        linkType,\n        url,\n        externalUrl,\n        openInNewTab\n      }\n    },\n    newsletterCta {\n      heading,\n      description,\n      placeholder,\n      buttonLabel,\n      disclaimer\n    },\n    appStoreLinks {\n      iosUrl,\n      androidUrl\n    },\n    showSocialLinks,\n    showContactInfo,\n    legalLinks[] {\n      _key,\n      label,\n      linkType,\n      url,\n      externalUrl,\n      openInNewTab\n    }\n  }\n': FOOTER_NAVIGATION_QUERY_RESULT;
-    '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    googleMapsUrl,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
   }
 }

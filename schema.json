@@ -2005,6 +2005,13 @@
         },
         "optional": true
       },
+      "googleMapsUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "postalAddress": {
         "type": "objectAttribute",
         "value": {

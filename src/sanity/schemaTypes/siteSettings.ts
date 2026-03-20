@@ -261,6 +261,14 @@ export const siteSettings = defineType({
       group: 'contact',
     }),
     defineField({
+      name: 'googleMapsUrl',
+      title: 'Google Maps Directions URL',
+      type: 'url',
+      group: 'contact',
+      description: 'Google Maps link for directions to the head office',
+      validation: (rule) => rule.uri({ scheme: ['https'] }),
+    }),
+    defineField({
       name: 'postalAddress',
       title: 'Postal Address',
       type: 'address',

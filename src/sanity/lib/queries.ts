@@ -177,6 +177,7 @@ export const SITE_SETTINGS_QUERY = defineQuery(/* groq */ `
     tollFreePhone,
     primaryEmail,
     headOfficeAddress,
+    googleMapsUrl,
     postalAddress,
     businessHours[] { _key, day, openTime, closeTime, isClosed },
     holidayNotice,
