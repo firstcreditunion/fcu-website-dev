@@ -3,17 +3,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'motion/react'
+import { ArrowRight, ArrowUp, Phone, Mail, MapPin } from 'lucide-react'
 import {
-  ArrowRight,
-  ArrowUp,
-  Phone,
-  Mail,
-  MapPin,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Youtube,
-} from 'lucide-react'
+  IconBrandFacebook,
+  IconBrandInstagram,
+  IconBrandLinkedin,
+  IconBrandYoutube,
+} from '@tabler/icons-react'
 import type {
   FOOTER_NAVIGATION_QUERY_RESULT,
   SITE_SETTINGS_QUERY_RESULT,
@@ -53,12 +49,12 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
 
 const SOCIAL_ICONS: Record<
   string,
-  React.ComponentType<{ className?: string }>
+  React.ComponentType<{ className?: string; size?: number }>
 > = {
-  facebook: Facebook,
-  instagram: Instagram,
-  linkedin: Linkedin,
-  youtube: Youtube,
+  facebook: IconBrandFacebook,
+  instagram: IconBrandInstagram,
+  linkedin: IconBrandLinkedin,
+  youtube: IconBrandYoutube,
 }
 
 const containerVariants = {
@@ -255,7 +251,6 @@ export function FooterClient({
                     </div>
                   ))}
                 </div>
-
               </div>
             </motion.div>
           </div>
@@ -302,18 +297,10 @@ export function FooterClient({
                   >
                     <MapPin className='size-4 shrink-0' aria-hidden='true' />
                     {[
-                      (
-                        settingsData.headOfficeAddress as Record<
-                          string,
-                          string
-                        >
-                      )?.street,
-                      (
-                        settingsData.headOfficeAddress as Record<
-                          string,
-                          string
-                        >
-                      )?.city,
+                      (settingsData.headOfficeAddress as Record<string, string>)
+                        ?.street,
+                      (settingsData.headOfficeAddress as Record<string, string>)
+                        ?.city,
                     ]
                       .filter(Boolean)
                       .join(', ')}
@@ -363,9 +350,7 @@ export function FooterClient({
               </div>
               <button
                 type='button'
-                onClick={() =>
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className='inline-flex items-center gap-1.5 text-xs text-white/50 transition-colors hover:text-white'
                 aria-label='Back to top'
               >
@@ -390,11 +375,11 @@ export function FooterClient({
                   className='inline-block'
                   aria-label='First Credit Union home'
                 >
-                  <span className='text-lg font-bold tracking-tight text-fcu-primary-950'>
+                  <span className='text-xl font-extrabold tracking-tight text-fcu-primary-950'>
                     First Credit Union
                   </span>
                 </Link>
-                <p className='mt-1 text-xs font-medium tracking-tight text-fcu-primary-950/60'>
+                <p className='mt-1 text-xs font-medium tracking-tight text-gray-600'>
                   {copyrightText}
                 </p>
               </div>
@@ -425,9 +410,9 @@ export function FooterClient({
                             aria-label={
                               social.label || `Follow us on ${social.platform}`
                             }
-                            className='text-fcu-primary-950/60 transition-colors hover:text-fcu-primary-950'
+                            className='text-fcu-primary-950 transition-colors hover:text-fcu-primary-950'
                           >
-                            <Icon className='size-5' />
+                            <Icon className='size-6' />
                           </a>
                         )
                       })}
