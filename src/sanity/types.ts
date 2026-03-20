@@ -39,6 +39,25 @@ export type ColorPalette = {
   >;
 };
 
+export type FooterColumn = {
+  _type: "footerColumn";
+  title: string;
+  links?: Array<
+    {
+      _key: string;
+    } & FooterLink
+  >;
+};
+
+export type FooterLink = {
+  _type: "footerLink";
+  label: string;
+  linkType: "internal" | "external";
+  url?: string;
+  externalUrl?: string;
+  openInNewTab?: boolean;
+};
+
 export type DisputeResolutionScheme = {
   _type: "disputeResolutionScheme";
   schemeName: string;
@@ -368,6 +387,40 @@ export type SiteSettings = {
   pwaBackgroundColor?: string;
 };
 
+export type FooterNavigation = {
+  _id: string;
+  _type: "footerNavigation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  headline: string;
+  subheadline?: string;
+  columns?: Array<
+    {
+      _key: string;
+    } & FooterColumn
+  >;
+  newsletterCta?: {
+    heading?: string;
+    description?: string;
+    placeholder?: string;
+    buttonLabel?: string;
+    disclaimer?: string;
+  };
+  appStoreLinks?: {
+    iosUrl?: string;
+    androidUrl?: string;
+  };
+  showSocialLinks?: boolean;
+  showContactInfo?: boolean;
+  legalLinks?: Array<
+    {
+      _key: string;
+    } & FooterLink
+  >;
+};
+
 export type HeaderNavigation = {
   _id: string;
   _type: "headerNavigation";
@@ -637,6 +690,8 @@ export type AllSanitySchemaTypes =
   | VariantGuideline
   | ColorToken
   | ColorPalette
+  | FooterColumn
+  | FooterLink
   | DisputeResolutionScheme
   | AnnouncementBar
   | DayHours
@@ -654,6 +709,7 @@ export type AllSanitySchemaTypes =
   | DesignTokens
   | SanityFileAssetReference
   | SiteSettings
+  | FooterNavigation
   | HeaderNavigation
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
@@ -863,6 +919,59 @@ export type HEADER_NAVIGATION_QUERY_RESULT =
   | null;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: FOOTER_NAVIGATION_QUERY
+// Query: *[_id == "footerNavigation"][0] {    headline,    subheadline,    columns[] {      _key,      title,      links[] {        _key,        label,        linkType,        url,        externalUrl,        openInNewTab      }    },    newsletterCta {      heading,      description,      placeholder,      buttonLabel,      disclaimer    },    appStoreLinks {      iosUrl,      androidUrl    },    showSocialLinks,    showContactInfo,    legalLinks[] {      _key,      label,      linkType,      url,      externalUrl,      openInNewTab    }  }
+export type FOOTER_NAVIGATION_QUERY_RESULT =
+  | {
+      headline: null;
+      subheadline: null;
+      columns: null;
+      newsletterCta: null;
+      appStoreLinks: null;
+      showSocialLinks: null;
+      showContactInfo: null;
+      legalLinks: null;
+    }
+  | {
+      headline: string;
+      subheadline: string | null;
+      columns: Array<{
+        _key: string;
+        title: string;
+        links: Array<{
+          _key: string;
+          label: string;
+          linkType: "external" | "internal";
+          url: string | null;
+          externalUrl: string | null;
+          openInNewTab: boolean | null;
+        }> | null;
+      }> | null;
+      newsletterCta: {
+        heading: string | null;
+        description: string | null;
+        placeholder: string | null;
+        buttonLabel: string | null;
+        disclaimer: string | null;
+      } | null;
+      appStoreLinks: {
+        iosUrl: string | null;
+        androidUrl: string | null;
+      } | null;
+      showSocialLinks: boolean | null;
+      showContactInfo: boolean | null;
+      legalLinks: Array<{
+        _key: string;
+        label: string;
+        linkType: "external" | "internal";
+        url: string | null;
+        externalUrl: string | null;
+        openInNewTab: boolean | null;
+      }> | null;
+    }
+  | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
 // Query: *[_id == "siteSettings"][0] {    siteName,    siteTagline,    siteDescription,    siteUrl,    logo,    logoAlt,    titleTemplate,    defaultSeoTitle,    defaultSeoDescription,    defaultOgImage,    twitterHandle,    twitterCardType,    googleSiteVerification,    bingSiteVerification,    noIndexSite,    enableJsonLd,    enableAnalytics,    googleAnalyticsId,    googleTagManagerId,    socialLinks[] { _key, platform, url, label },    primaryPhone,    tollFreePhone,    primaryEmail,    headOfficeAddress,    postalAddress,    businessHours[] { _key, day, openTime, closeTime, isClosed },    holidayNotice,    announcementBar,    registeredName,    nzbn,    fspNumber,    copyrightNotice,    disputeResolutionScheme,    regulatoryBody,    privacyPolicyUrl,    termsUrl,    disclosureStatementUrl,    complaintsUrl,    accessibilityStatementUrl,    cookieConsentEnabled,    cookieConsentMessage,    locale,    maintenanceMode,    maintenanceMessage,    headerStyle,    footerStyle  }
 export type SITE_SETTINGS_QUERY_RESULT =
@@ -1010,6 +1119,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "componentConfig"] | order(displayName asc) {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': ALL_COMPONENT_CONFIGS_QUERY_RESULT;
     '\n  *[_type == "componentConfig" && componentName == $componentName][0] {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': COMPONENT_CONFIG_QUERY_RESULT;
     '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      featuredPosition,\n      megaMenu[] {\n        _key,\n        title,\n        isFeatured,\n        items[] {\n          _key,\n          label,\n          description,\n          image {\n            asset-> {\n              _id,\n              url,\n              metadata {\n                lqip,\n                dimensions { width, height }\n              }\n            },\n            hotspot,\n            crop,\n            alt\n          },\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
+    '\n  *[_id == "footerNavigation"][0] {\n    headline,\n    subheadline,\n    columns[] {\n      _key,\n      title,\n      links[] {\n        _key,\n        label,\n        linkType,\n        url,\n        externalUrl,\n        openInNewTab\n      }\n    },\n    newsletterCta {\n      heading,\n      description,\n      placeholder,\n      buttonLabel,\n      disclaimer\n    },\n    appStoreLinks {\n      iosUrl,\n      androidUrl\n    },\n    showSocialLinks,\n    showContactInfo,\n    legalLinks[] {\n      _key,\n      label,\n      linkType,\n      url,\n      externalUrl,\n      openInNewTab\n    }\n  }\n': FOOTER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
   }
 }

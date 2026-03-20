@@ -1,7 +1,7 @@
 import type { StructureResolver } from 'sanity/structure'
 import { CogIcon, MenuIcon, ComponentIcon, ColorWheelIcon, UsersIcon } from '@sanity/icons'
 
-const SINGLETONS = ['siteSettings', 'headerNavigation', 'designTokens']
+const SINGLETONS = ['siteSettings', 'headerNavigation', 'footerNavigation', 'designTokens']
 const HIDDEN_TYPES = [...SINGLETONS, 'componentConfig', 'designSystemUser']
 
 export const structure: StructureResolver = (S) =>
@@ -23,6 +23,15 @@ export const structure: StructureResolver = (S) =>
                     .schemaType('headerNavigation')
                     .documentId('headerNavigation')
                     .title('Header Navigation'),
+                ),
+              S.listItem()
+                .title('Footer Navigation')
+                .icon(MenuIcon)
+                .child(
+                  S.document()
+                    .schemaType('footerNavigation')
+                    .documentId('footerNavigation')
+                    .title('Footer Navigation'),
                 ),
             ]),
         ),

@@ -1,6 +1,6 @@
 'use client'
 
-import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from 'recharts'
+import { Bar, BarChart, XAxis, YAxis, CartesianGrid, Cell } from 'recharts'
 import {
   Card,
   CardContent,
@@ -35,11 +35,6 @@ export function SentimentChart({
 }: {
   data: { sentiment: string; count: number; percentage: number }[]
 }) {
-  const chartData = data.map((d) => ({
-    ...d,
-    fill: COLORS[d.sentiment] ?? 'hsl(215, 14%, 60%)',
-  }))
-
   return (
     <Card>
       <CardHeader>
@@ -50,7 +45,7 @@ export function SentimentChart({
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[300px] w-full">
-          <BarChart data={chartData} margin={{ left: 0, right: 16 }}>
+          <BarChart data={data} margin={{ left: 0, right: 16 }}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="sentiment"
@@ -61,7 +56,7 @@ export function SentimentChart({
             <YAxis
               tickLine={false}
               axisLine={false}
-              tickFormatter={(v) => v.toLocaleString()}
+              tickFormatter={(v: number) => v.toLocaleString()}
             />
             <ChartTooltip
               content={
@@ -73,11 +68,10 @@ export function SentimentChart({
               }
             />
             <Bar dataKey="count" radius={[4, 4, 0, 0]}>
-              {chartData.map((entry) => (
-                <Bar
+              {data.map((entry) => (
+                <Cell
                   key={entry.sentiment}
-                  dataKey="count"
-                  fill={entry.fill}
+                  fill={COLORS[entry.sentiment] ?? 'hsl(215, 14%, 60%)'}
                 />
               ))}
             </Bar>

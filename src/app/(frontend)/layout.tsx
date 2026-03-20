@@ -5,6 +5,7 @@ import { DisableDraftMode } from '@/components/disable-draft-mode'
 
 import { SanityLive } from '@/sanity/lib/live'
 import Header from '@/components/header'
+import Footer from '@/components/footer'
 import { IntercomProvider } from '@/components/intercom-provider'
 
 export default async function FrontendLayout({
@@ -16,6 +17,7 @@ export default async function FrontendLayout({
     <section className='bg-white min-h-screen'>
       <Header />
       {children}
+      <Footer />
       <SanityLive />
       <Suspense fallback={null}>
         <IntercomProvider />

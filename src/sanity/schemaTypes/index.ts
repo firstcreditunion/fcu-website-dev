@@ -1,6 +1,7 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
 import { headerNavigation } from './headerNavigation'
+import { footerNavigation } from './footerNavigation'
 import { siteSettings } from './siteSettings'
 import { designTokens, colorPalette, colorToken } from './designTokens'
 import { componentConfig, variantGuideline } from './componentConfig'
@@ -15,11 +16,14 @@ import { address } from './objects/address'
 import { dayHours } from './objects/dayHours'
 import { announcementBar } from './objects/announcementBar'
 import { disputeResolutionScheme } from './objects/disputeResolutionScheme'
+import { footerLink } from './objects/footerLink'
+import { footerColumn } from './objects/footerColumn'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     // Documents
     headerNavigation,
+    footerNavigation,
     siteSettings,
     designTokens,
     componentConfig,
@@ -35,6 +39,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     dayHours,
     announcementBar,
     disputeResolutionScheme,
+    footerLink,
+    footerColumn,
     colorPalette,
     colorToken,
     variantGuideline,

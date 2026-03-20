@@ -111,6 +111,46 @@ export const HEADER_NAVIGATION_QUERY = defineQuery(/* groq */ `
   }
 `)
 
+export const FOOTER_NAVIGATION_QUERY = defineQuery(/* groq */ `
+  *[_id == "footerNavigation"][0] {
+    headline,
+    subheadline,
+    columns[] {
+      _key,
+      title,
+      links[] {
+        _key,
+        label,
+        linkType,
+        url,
+        externalUrl,
+        openInNewTab
+      }
+    },
+    newsletterCta {
+      heading,
+      description,
+      placeholder,
+      buttonLabel,
+      disclaimer
+    },
+    appStoreLinks {
+      iosUrl,
+      androidUrl
+    },
+    showSocialLinks,
+    showContactInfo,
+    legalLinks[] {
+      _key,
+      label,
+      linkType,
+      url,
+      externalUrl,
+      openInNewTab
+    }
+  }
+`)
+
 export const SITE_SETTINGS_QUERY = defineQuery(/* groq */ `
   *[_id == "siteSettings"][0] {
     siteName,
