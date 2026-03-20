@@ -390,13 +390,9 @@ export function FooterClient({
                   className='inline-block'
                   aria-label='First Credit Union home'
                 >
-                  <Image
-                    src='/fcu-logo.png'
-                    alt='First Credit Union'
-                    width={160}
-                    height={32}
-                    className='h-8 w-auto'
-                  />
+                  <span className='text-lg font-bold tracking-tight text-fcu-primary-950'>
+                    First Credit Union
+                  </span>
                 </Link>
                 <p className='mt-1 text-xs font-medium tracking-tight text-fcu-primary-950/60'>
                   {copyrightText}
