@@ -2406,6 +2406,13 @@
         },
         "optional": false
       },
+      "headlineFontSize": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "subheadline": {
         "type": "objectAttribute",
         "value": {

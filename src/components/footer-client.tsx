@@ -15,6 +15,7 @@ import type {
   SITE_SETTINGS_QUERY_RESULT,
 } from '@/sanity/types'
 import { ShieldedBadge } from '@/components/shielded-badge'
+import { cn } from '@/lib/utils'
 
 type FooterLink = {
   _key: string
@@ -123,7 +124,18 @@ export function FooterClient({
         {/* Headline */}
         <div className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8'>
           <motion.div variants={itemVariants} className='py-12 md:py-16'>
-            <h2 className='text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl'>
+            <h2
+              className={cn(
+                'font-semibold tracking-tight text-white',
+                !footerData.headlineFontSize?.trim() &&
+                  'text-3xl sm:text-4xl md:text-5xl lg:text-6xl',
+              )}
+              style={
+                footerData.headlineFontSize?.trim()
+                  ? { fontSize: footerData.headlineFontSize.trim() }
+                  : undefined
+              }
+            >
               {footerData.headline}
             </h2>
             {footerData.subheadline && (

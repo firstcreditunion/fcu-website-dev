@@ -22,6 +22,14 @@ export const footerNavigation = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'headlineFontSize',
+      title: 'Headline font size',
+      type: 'string',
+      description:
+        'Optional CSS font-size value for the headline. Examples: 2.5rem, 40px, clamp(1.75rem, 4vw, 3.75rem). Leave empty to use the default responsive sizes.',
+      placeholder: 'e.g. clamp(1.75rem, 2vw + 1rem, 3.75rem)',
+    }),
+    defineField({
       name: 'subheadline',
       title: 'Subheadline',
       type: 'string',
