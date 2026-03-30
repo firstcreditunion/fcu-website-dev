@@ -42,23 +42,43 @@ export const footerNavigation = defineType({
         layout: 'radio',
         list: [
           {
+            title: 'XS (text-xs → text-lg)',
+            value: 'scale-xs',
+          },
+          {
+            title: 'SM (text-sm → text-xl)',
+            value: 'scale-sm',
+          },
+          {
+            title: 'Base (text-base → text-2xl)',
+            value: 'scale-md',
+          },
+          {
+            title: 'LG (text-lg → text-3xl)',
+            value: 'scale-lg',
+          },
+          {
+            title: 'XL (text-xl → text-4xl)',
+            value: 'scale-xl',
+          },
+          {
+            title: '2XL (text-2xl → text-5xl)',
+            value: 'scale-2xl',
+          },
+          {
             title: 'Default (text-3xl → text-6xl)',
             value: 'default',
           },
           {
-            title: 'Smaller (text-2xl → text-5xl)',
-            value: 'scale-2xl',
-          },
-          {
-            title: 'Larger (text-4xl → text-7xl)',
+            title: '4XL (text-4xl → text-7xl)',
             value: 'scale-4xl',
           },
           {
-            title: 'XL (text-5xl → text-8xl)',
+            title: '5XL (text-5xl → text-8xl)',
             value: 'scale-5xl',
           },
           {
-            title: 'Hero (text-6xl → text-9xl)',
+            title: 'Hero 6XL (text-6xl → text-9xl)',
             value: 'scale-6xl',
           },
         ],
