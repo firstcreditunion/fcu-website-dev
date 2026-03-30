@@ -399,8 +399,13 @@ export type FooterNavigation = {
   title?: string;
   headline: string;
   headlineFontSizePreset?:
-    | "default"
+    | "scale-xs"
+    | "scale-sm"
+    | "scale-md"
+    | "scale-lg"
+    | "scale-xl"
     | "scale-2xl"
+    | "default"
     | "scale-4xl"
     | "scale-5xl"
     | "scale-6xl";
@@ -948,6 +953,11 @@ export type FOOTER_NAVIGATION_QUERY_RESULT =
         | "scale-4xl"
         | "scale-5xl"
         | "scale-6xl"
+        | "scale-lg"
+        | "scale-md"
+        | "scale-sm"
+        | "scale-xl"
+        | "scale-xs"
         | null;
       subheadline: string | null;
       columns: Array<{

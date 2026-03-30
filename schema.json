@@ -2413,11 +2413,31 @@
           "of": [
             {
               "type": "string",
-              "value": "default"
+              "value": "scale-xs"
+            },
+            {
+              "type": "string",
+              "value": "scale-sm"
+            },
+            {
+              "type": "string",
+              "value": "scale-md"
+            },
+            {
+              "type": "string",
+              "value": "scale-lg"
+            },
+            {
+              "type": "string",
+              "value": "scale-xl"
             },
             {
               "type": "string",
               "value": "scale-2xl"
+            },
+            {
+              "type": "string",
+              "value": "default"
             },
             {
               "type": "string",

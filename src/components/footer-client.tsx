@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'motion/react'
-import { ArrowRight, ArrowUp, Phone, Mail, MapPin } from 'lucide-react'
+import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react'
 import {
   IconBrandFacebook,
   IconBrandInstagram,
@@ -328,44 +328,33 @@ export function FooterClient({
               variants={itemVariants}
               className='flex flex-wrap items-center gap-x-6 gap-y-2 py-5'
             >
-              <div className='flex flex-1 flex-wrap items-center gap-x-6 gap-y-2'>
-                {legalLinks.map((link) => (
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className='text-xs text-white/50 transition-colors hover:text-white'
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {footerData.legalLinks?.map((link) => {
+                const href =
+                  link.linkType === 'external' ? link.externalUrl : link.url
+                if (!href) return null
+                return (
                   <Link
-                    key={link.label}
-                    href={link.href}
+                    key={link._key}
+                    href={href}
+                    target={link.openInNewTab ? '_blank' : undefined}
+                    rel={
+                      link.openInNewTab ? 'noopener noreferrer' : undefined
+                    }
                     className='text-xs text-white/50 transition-colors hover:text-white'
                   >
                     {link.label}
                   </Link>
-                ))}
-                {footerData.legalLinks?.map((link) => {
-                  const href =
-                    link.linkType === 'external' ? link.externalUrl : link.url
-                  if (!href) return null
-                  return (
-                    <Link
-                      key={link._key}
-                      href={href}
-                      target={link.openInNewTab ? '_blank' : undefined}
-                      rel={
-                        link.openInNewTab ? 'noopener noreferrer' : undefined
-                      }
-                      className='text-xs text-white/50 transition-colors hover:text-white'
-                    >
-                      {link.label}
-                    </Link>
-                  )
-                })}
-              </div>
-              <button
-                type='button'
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className='inline-flex items-center gap-1.5 text-xs text-white/50 transition-colors hover:text-white'
-                aria-label='Back to top'
-              >
-                Back to top
-                <ArrowUp className='size-3' aria-hidden='true' />
-              </button>
+                )
+              })}
             </motion.div>
           </div>
         )}
