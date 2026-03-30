@@ -235,46 +235,6 @@ export function FooterClient({
                   </div>
                 )}
 
-                {/* App Store links */}
-                {footerData.appStoreLinks &&
-                  (footerData.appStoreLinks.iosUrl ||
-                    footerData.appStoreLinks.androidUrl) && (
-                    <div className='mt-8 flex flex-wrap items-center gap-3'>
-                      {footerData.appStoreLinks.iosUrl && (
-                        <a
-                          href={footerData.appStoreLinks.iosUrl}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className='inline-block overflow-hidden rounded-xl transition-opacity hover:opacity-80'
-                        >
-                          <Image
-                            src='/badges/app-store-badge.svg'
-                            alt='Download on the App Store'
-                            width={135}
-                            height={40}
-                            className='h-10 w-auto'
-                          />
-                        </a>
-                      )}
-                      {footerData.appStoreLinks.androidUrl && (
-                        <a
-                          href={footerData.appStoreLinks.androidUrl}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className='inline-block overflow-hidden rounded-xl transition-opacity hover:opacity-80'
-                        >
-                          <Image
-                            src='/badges/google-play-badge.svg'
-                            alt='Get it on Google Play'
-                            width={135}
-                            height={40}
-                            className='h-10 w-auto'
-                          />
-                        </a>
-                      )}
-                    </div>
-                  )}
-
                 {/* Social icons */}
                 {footerData.showSocialLinks &&
                   settingsData.socialLinks &&
@@ -303,9 +263,54 @@ export function FooterClient({
                       })}
                     </nav>
                   )}
+
+                {/* App download badges */}
+                {footerData.appStoreLinks &&
+                  (footerData.appStoreLinks.iosUrl ||
+                    footerData.appStoreLinks.androidUrl) && (
+                    <div className='mt-6 border-t border-white/10 pt-6'>
+                      <h4 className='mb-3 text-xs font-semibold uppercase tracking-wider text-fcu-secondary-500'>
+                        Get Our App
+                      </h4>
+                      <div className='flex flex-wrap items-center gap-3'>
+                        {footerData.appStoreLinks.iosUrl && (
+                          <a
+                            href={footerData.appStoreLinks.iosUrl}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='inline-block overflow-hidden rounded-xl transition-opacity hover:opacity-80'
+                          >
+                            <Image
+                              src='/badges/app-store-badge.svg'
+                              alt='Download on the App Store'
+                              width={135}
+                              height={40}
+                              className='h-10 w-auto'
+                            />
+                          </a>
+                        )}
+                        {footerData.appStoreLinks.androidUrl && (
+                          <a
+                            href={footerData.appStoreLinks.androidUrl}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='inline-block overflow-hidden rounded-xl transition-opacity hover:opacity-80'
+                          >
+                            <Image
+                              src='/badges/google-play-badge.svg'
+                              alt='Get it on Google Play'
+                              width={135}
+                              height={40}
+                              className='h-10 w-auto'
+                            />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
               </div>
 
-              {/* Right column — Nav columns + Contact */}
+              {/* Right column — Nav columns + App downloads */}
               <div className='py-8 lg:py-10 lg:pl-10'>
                 <div className='grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4'>
                   {footerData.columns?.map((column) => (
@@ -407,9 +412,7 @@ export function FooterClient({
                     key={link._key}
                     href={href}
                     target={link.openInNewTab ? '_blank' : undefined}
-                    rel={
-                      link.openInNewTab ? 'noopener noreferrer' : undefined
-                    }
+                    rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
                     className='text-xs text-white/50 transition-colors hover:text-white'
                   >
                     {link.label}
