@@ -242,6 +242,35 @@ export function FooterClient({
                       )}
                     </div>
                   )}
+
+                {/* Social icons */}
+                {footerData.showSocialLinks &&
+                  settingsData.socialLinks &&
+                  settingsData.socialLinks.length > 0 && (
+                    <nav
+                      aria-label='Social media'
+                      className='mt-8 flex items-center gap-4'
+                    >
+                      {settingsData.socialLinks.map((social) => {
+                        const Icon = SOCIAL_ICONS[social.platform || '']
+                        if (!Icon || !social.url) return null
+                        return (
+                          <a
+                            key={social._key}
+                            href={social.url}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            aria-label={
+                              social.label || `Follow us on ${social.platform}`
+                            }
+                            className='text-white/60 transition-colors hover:text-white'
+                          >
+                            <Icon className='size-5' />
+                          </a>
+                        )
+                      })}
+                    </nav>
+                  )}
               </div>
 
               {/* Right column — Nav columns + Contact */}
@@ -382,41 +411,13 @@ export function FooterClient({
                 </p>
               </div>
 
-              {/* Shielded badge — dead centre */}
+              {/* Shielded badge — always centred */}
               <div className='flex justify-center'>
                 <ShieldedBadge />
               </div>
 
-              {/* Social icons */}
-              <div className='flex justify-center md:justify-end'>
-                {footerData.showSocialLinks &&
-                  settingsData.socialLinks &&
-                  settingsData.socialLinks.length > 0 && (
-                    <nav
-                      aria-label='Social media'
-                      className='flex items-center gap-4'
-                    >
-                      {settingsData.socialLinks.map((social) => {
-                        const Icon = SOCIAL_ICONS[social.platform || '']
-                        if (!Icon || !social.url) return null
-                        return (
-                          <a
-                            key={social._key}
-                            href={social.url}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            aria-label={
-                              social.label || `Follow us on ${social.platform}`
-                            }
-                            className='text-fcu-primary-950 transition-colors hover:text-fcu-primary-950'
-                          >
-                            <Icon className='size-6' />
-                          </a>
-                        )
-                      })}
-                    </nav>
-                  )}
-              </div>
+              {/* Empty column to balance the grid */}
+              <div className='hidden md:block' />
             </motion.div>
           </div>
         </div>
