@@ -5,10 +5,10 @@ import Link from 'next/link'
 import { motion } from 'motion/react'
 import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react'
 import {
-  IconBrandFacebook,
-  IconBrandInstagram,
-  IconBrandLinkedin,
-  IconBrandYoutube,
+  IconBrandFacebookFilled,
+  IconBrandInstagramFilled,
+  IconBrandLinkedinFilled,
+  IconBrandYoutubeFilled,
 } from '@tabler/icons-react'
 import type {
   FOOTER_NAVIGATION_QUERY_RESULT,
@@ -53,10 +53,10 @@ const SOCIAL_ICONS: Record<
   string,
   React.ComponentType<{ className?: string; size?: number }>
 > = {
-  facebook: IconBrandFacebook,
-  instagram: IconBrandInstagram,
-  linkedin: IconBrandLinkedin,
-  youtube: IconBrandYoutube,
+  facebook: IconBrandFacebookFilled,
+  instagram: IconBrandInstagramFilled,
+  linkedin: IconBrandLinkedinFilled,
+  youtube: IconBrandYoutubeFilled,
 }
 
 const containerVariants = {
