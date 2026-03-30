@@ -92,6 +92,62 @@ export const footerNavigation = defineType({
         'Smaller text below the headline (e.g. "Locally owned. Member focused. Since 1952.")',
     }),
     defineField({
+      name: 'primaryCta',
+      title: 'Primary CTA',
+      type: 'object',
+      description: 'Main call-to-action button in the headline section.',
+      fields: [
+        defineField({
+          name: 'label',
+          title: 'Button label',
+          type: 'string',
+          initialValue: 'Become a Member',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'url',
+          title: 'URL',
+          type: 'string',
+          initialValue: '/join',
+          description: 'Relative path (e.g. /join) or full URL.',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'openInNewTab',
+          title: 'Open in new tab',
+          type: 'boolean',
+          initialValue: false,
+        }),
+      ],
+    }),
+    defineField({
+      name: 'secondaryCta',
+      title: 'Secondary CTA',
+      type: 'object',
+      description: 'Optional secondary button shown next to the primary CTA.',
+      fields: [
+        defineField({
+          name: 'label',
+          title: 'Button label',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'url',
+          title: 'URL',
+          type: 'string',
+          description: 'Relative path (e.g. /contact) or full URL.',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'openInNewTab',
+          title: 'Open in new tab',
+          type: 'boolean',
+          initialValue: false,
+        }),
+      ],
+    }),
+    defineField({
       name: 'columns',
       title: 'Navigation Columns',
       type: 'array',

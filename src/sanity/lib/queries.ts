@@ -116,6 +116,16 @@ export const FOOTER_NAVIGATION_QUERY = defineQuery(/* groq */ `
     headline,
     headlineFontSizePreset,
     subheadline,
+    primaryCta {
+      label,
+      url,
+      openInNewTab
+    },
+    secondaryCta {
+      label,
+      url,
+      openInNewTab
+    },
     columns[] {
       _key,
       title,

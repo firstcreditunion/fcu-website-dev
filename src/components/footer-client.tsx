@@ -140,13 +140,45 @@ export function FooterClient({
                 {footerData.subheadline}
               </p>
             )}
-            <Link
-              href='/join'
-              className='mt-6 inline-flex items-center gap-2 rounded-full bg-fcu-secondary-500 px-7 py-3 text-sm font-semibold text-fcu-primary-950 transition-colors hover:bg-fcu-secondary-400'
-            >
-              Become a Member
-              <ArrowRight className='size-4' aria-hidden='true' />
-            </Link>
+            <div className='mt-6 flex flex-wrap items-center gap-3'>
+              {footerData.primaryCta?.label && footerData.primaryCta?.url && (
+                <Link
+                  href={footerData.primaryCta.url}
+                  target={
+                    footerData.primaryCta.openInNewTab ? '_blank' : undefined
+                  }
+                  rel={
+                    footerData.primaryCta.openInNewTab
+                      ? 'noopener noreferrer'
+                      : undefined
+                  }
+                  className='inline-flex items-center gap-2 rounded-full bg-fcu-secondary-500 px-7 py-3 text-sm font-semibold text-fcu-primary-950 transition-colors hover:bg-fcu-secondary-400'
+                >
+                  {footerData.primaryCta.label}
+                  <ArrowRight className='size-4' aria-hidden='true' />
+                </Link>
+              )}
+              {footerData.secondaryCta?.label &&
+                footerData.secondaryCta?.url && (
+                  <Link
+                    href={footerData.secondaryCta.url}
+                    target={
+                      footerData.secondaryCta.openInNewTab
+                        ? '_blank'
+                        : undefined
+                    }
+                    rel={
+                      footerData.secondaryCta.openInNewTab
+                        ? 'noopener noreferrer'
+                        : undefined
+                    }
+                    className='inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10'
+                  >
+                    {footerData.secondaryCta.label}
+                    <ArrowRight className='size-4' aria-hidden='true' />
+                  </Link>
+                )}
+            </div>
           </motion.div>
         </div>
 
