@@ -6,6 +6,13 @@ export const footerNavigation = defineType({
   title: 'Footer Navigation',
   type: 'document',
   icon: BlockElementIcon,
+  fieldsets: [
+    {
+      name: 'headlineSection',
+      title: 'Headline',
+      options: { collapsible: false },
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
@@ -18,37 +25,67 @@ export const footerNavigation = defineType({
       name: 'headline',
       title: 'Headline',
       type: 'string',
-      description: 'Large text displayed at the top of the footer (e.g. "Your financial future starts here.")',
+      fieldset: 'headlineSection',
+      description:
+        'Large text displayed at the top of the footer (e.g. "Your financial future starts here.")',
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'headlineFontSize',
-      title: 'Headline font size',
+      name: 'headlineFontSizePreset',
+      title: 'Font size',
       type: 'string',
+      fieldset: 'headlineSection',
       description:
-        'Optional CSS font-size value for the headline. Examples: 2.5rem, 40px, clamp(1.75rem, 4vw, 3.75rem). Leave empty to use the default responsive sizes.',
-      placeholder: 'e.g. clamp(1.75rem, 2vw + 1rem, 3.75rem)',
+        'Choose a responsive Tailwind text scale (radio options below). Matches standard text-* utilities.',
+      initialValue: 'default',
+      options: {
+        layout: 'radio',
+        list: [
+          {
+            title: 'Default (text-3xl → text-6xl)',
+            value: 'default',
+          },
+          {
+            title: 'Smaller (text-2xl → text-5xl)',
+            value: 'scale-2xl',
+          },
+          {
+            title: 'Larger (text-4xl → text-7xl)',
+            value: 'scale-4xl',
+          },
+          {
+            title: 'XL (text-5xl → text-8xl)',
+            value: 'scale-5xl',
+          },
+          {
+            title: 'Hero (text-6xl → text-9xl)',
+            value: 'scale-6xl',
+          },
+        ],
+      },
     }),
     defineField({
       name: 'subheadline',
       title: 'Subheadline',
       type: 'string',
-      description: 'Smaller text below the headline (e.g. "Locally owned. Member focused. Since 1952.")',
+      description:
+        'Smaller text below the headline (e.g. "Locally owned. Member focused. Since 1952.")',
     }),
     defineField({
       name: 'columns',
       title: 'Navigation Columns',
       type: 'array',
       of: [defineArrayMember({ type: 'footerColumn' })],
-      description: 'Link columns displayed in the footer (e.g. Accounts, Loans, About, Help)',
-      validation: (rule) =>
-        rule.min(1).max(5).error('Between 1 and 5 columns'),
+      description:
+        'Link columns displayed in the footer (e.g. Accounts, Loans, About, Help)',
+      validation: (rule) => rule.min(1).max(5).error('Between 1 and 5 columns'),
     }),
     defineField({
       name: 'newsletterCta',
       title: 'Newsletter Signup',
       type: 'object',
-      description: 'Optional newsletter signup section on the left side of the footer',
+      description:
+        'Optional newsletter signup section on the left side of the footer',
       fields: [
         defineField({
           name: 'heading',
@@ -109,14 +146,16 @@ export const footerNavigation = defineType({
       name: 'showSocialLinks',
       title: 'Show Social Links',
       type: 'boolean',
-      description: 'Display social media icons in the bottom bar (pulled from Site Settings)',
+      description:
+        'Display social media icons in the bottom bar (pulled from Site Settings)',
       initialValue: true,
     }),
     defineField({
       name: 'showContactInfo',
       title: 'Show Contact Info',
       type: 'boolean',
-      description: 'Display phone, email, and address in the footer (pulled from Site Settings)',
+      description:
+        'Display phone, email, and address in the footer (pulled from Site Settings)',
       initialValue: true,
     }),
     defineField({

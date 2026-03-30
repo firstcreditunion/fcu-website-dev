@@ -2406,10 +2406,32 @@
         },
         "optional": false
       },
-      "headlineFontSize": {
+      "headlineFontSizePreset": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "default"
+            },
+            {
+              "type": "string",
+              "value": "scale-2xl"
+            },
+            {
+              "type": "string",
+              "value": "scale-4xl"
+            },
+            {
+              "type": "string",
+              "value": "scale-5xl"
+            },
+            {
+              "type": "string",
+              "value": "scale-6xl"
+            }
+          ]
         },
         "optional": true
       },

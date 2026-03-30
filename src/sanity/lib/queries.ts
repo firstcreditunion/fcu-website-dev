@@ -114,7 +114,7 @@ export const HEADER_NAVIGATION_QUERY = defineQuery(/* groq */ `
 export const FOOTER_NAVIGATION_QUERY = defineQuery(/* groq */ `
   *[_id == "footerNavigation"][0] {
     headline,
-    headlineFontSize,
+    headlineFontSizePreset,
     subheadline,
     columns[] {
       _key,
