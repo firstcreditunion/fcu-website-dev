@@ -180,6 +180,22 @@ export const footerNavigation = defineType({
           },
         }),
         defineField({
+          name: 'contentOrder',
+          title: 'Content order',
+          type: 'string',
+          description:
+            'Choose which section appears first: the newsletter or the social links.',
+          initialValue: 'newsletter-first',
+          options: {
+            layout: 'radio',
+            direction: 'horizontal',
+            list: [
+              { title: 'Newsletter first', value: 'newsletter-first' },
+              { title: 'Social links first', value: 'social-first' },
+            ],
+          },
+        }),
+        defineField({
           name: 'heading',
           title: 'Heading',
           type: 'string',

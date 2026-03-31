@@ -2613,6 +2613,23 @@
               },
               "optional": true
             },
+            "contentOrder": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "newsletter-first"
+                  },
+                  {
+                    "type": "string",
+                    "value": "social-first"
+                  }
+                ]
+              },
+              "optional": true
+            },
             "heading": {
               "type": "objectAttribute",
               "value": {

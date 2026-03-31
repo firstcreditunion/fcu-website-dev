@@ -239,6 +239,92 @@ export function FooterClient({
         {/* Newsletter + Social row — full width */}
         {footerData.newsletterCta && (() => {
           const isVertical = footerData.newsletterCta.layout === 'vertical'
+          const socialFirst = footerData.newsletterCta.contentOrder === 'social-first'
+
+          const newsletterBlock = (
+            <div className={cn(isVertical && 'max-w-2xl')}>
+              {footerData.newsletterCta.heading && (
+                <h3 className='mb-4 text-xl font-semibold tracking-tight text-fcu-secondary-500 sm:text-2xl'>
+                  {footerData.newsletterCta.heading}
+                </h3>
+              )}
+              {footerData.newsletterCta.description && (
+                <p className='mb-5 text-sm leading-relaxed text-white/90'>
+                  {footerData.newsletterCta.description}
+                </p>
+              )}
+
+              <div className={cn('mb-4 flex', !isVertical && 'max-w-md')}>
+                <input
+                  type='email'
+                  placeholder={
+                    footerData.newsletterCta.placeholder ||
+                    'Enter your email address'
+                  }
+                  className='flex-1 rounded-l-full border border-r-0 border-white/20 bg-white/5 px-5 py-3 text-sm text-white placeholder-white/40 focus:border-fcu-secondary-500/50 focus:outline-none focus:ring-1 focus:ring-fcu-secondary-500/50'
+                />
+                <button
+                  type='button'
+                  className='flex items-center justify-center rounded-r-full border border-white/20 bg-white/10 px-5 transition-colors hover:bg-white/20'
+                  aria-label={
+                    footerData.newsletterCta.buttonLabel || 'Subscribe'
+                  }
+                >
+                  <ArrowRight
+                    className='size-5 text-white'
+                    aria-hidden='true'
+                  />
+                </button>
+              </div>
+
+              {footerData.newsletterCta.disclaimer && (
+                <p className={cn(
+                  'text-xs leading-relaxed text-white/40',
+                  !isVertical && 'max-w-md',
+                )}>
+                  {footerData.newsletterCta.disclaimer}
+                </p>
+              )}
+            </div>
+          )
+
+          const hasSocial =
+            footerData.showSocialLinks &&
+            settingsData.socialLinks &&
+            settingsData.socialLinks.length > 0
+
+          const socialBlock = hasSocial ? (
+            <div>
+              <h4 className='mb-4 text-xs font-semibold uppercase tracking-wider text-fcu-secondary-500'>
+                Follow Us
+              </h4>
+              <nav
+                aria-label='Social media'
+                className='flex items-center gap-4'
+              >
+                {settingsData.socialLinks!.map((social) => {
+                  const Icon = SOCIAL_ICONS[social.platform || '']
+                  if (!Icon || !social.url) return null
+                  return (
+                    <a
+                      key={social._key}
+                      href={social.url}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      aria-label={
+                        social.label ||
+                        `Follow us on ${social.platform}`
+                      }
+                      className='text-white/60 transition-colors hover:text-white'
+                    >
+                      <Icon className='size-5' />
+                    </a>
+                  )
+                })}
+              </nav>
+            </div>
+          ) : null
+
           return (
           <div className='border-b border-white/10'>
             <div className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8'>
@@ -249,86 +335,17 @@ export function FooterClient({
                   !isVertical && 'md:grid-cols-[1fr_auto]',
                 )}
               >
-                {/* Newsletter content */}
-                <div className={cn(isVertical && 'max-w-2xl')}>
-                  {footerData.newsletterCta.heading && (
-                    <h3 className='mb-4 text-xl font-semibold tracking-tight text-fcu-secondary-500 sm:text-2xl'>
-                      {footerData.newsletterCta.heading}
-                    </h3>
-                  )}
-                  {footerData.newsletterCta.description && (
-                    <p className='mb-5 text-sm leading-relaxed text-white/90'>
-                      {footerData.newsletterCta.description}
-                    </p>
-                  )}
-
-                  <div className={cn('mb-4 flex', !isVertical && 'max-w-md')}>
-                    <input
-                      type='email'
-                      placeholder={
-                        footerData.newsletterCta.placeholder ||
-                        'Enter your email address'
-                      }
-                      className='flex-1 rounded-l-full border border-r-0 border-white/20 bg-white/5 px-5 py-3 text-sm text-white placeholder-white/40 focus:border-fcu-secondary-500/50 focus:outline-none focus:ring-1 focus:ring-fcu-secondary-500/50'
-                    />
-                    <button
-                      type='button'
-                      className='flex items-center justify-center rounded-r-full border border-white/20 bg-white/10 px-5 transition-colors hover:bg-white/20'
-                      aria-label={
-                        footerData.newsletterCta.buttonLabel || 'Subscribe'
-                      }
-                    >
-                      <ArrowRight
-                        className='size-5 text-white'
-                        aria-hidden='true'
-                      />
-                    </button>
-                  </div>
-
-                  {footerData.newsletterCta.disclaimer && (
-                    <p className={cn(
-                      'text-xs leading-relaxed text-white/40',
-                      !isVertical && 'max-w-md',
-                    )}>
-                      {footerData.newsletterCta.disclaimer}
-                    </p>
-                  )}
-                </div>
-
-                {/* Right — Social links */}
-                {footerData.showSocialLinks &&
-                  settingsData.socialLinks &&
-                  settingsData.socialLinks.length > 0 && (
-                    <div>
-                      <h4 className='mb-4 text-xs font-semibold uppercase tracking-wider text-fcu-secondary-500'>
-                        Follow Us
-                      </h4>
-                      <nav
-                        aria-label='Social media'
-                        className='flex items-center gap-4'
-                      >
-                        {settingsData.socialLinks.map((social) => {
-                          const Icon = SOCIAL_ICONS[social.platform || '']
-                          if (!Icon || !social.url) return null
-                          return (
-                            <a
-                              key={social._key}
-                              href={social.url}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                              aria-label={
-                                social.label ||
-                                `Follow us on ${social.platform}`
-                              }
-                              className='text-white/60 transition-colors hover:text-white'
-                            >
-                              <Icon className='size-5' />
-                            </a>
-                          )
-                        })}
-                      </nav>
-                    </div>
-                  )}
+                {socialFirst ? (
+                  <>
+                    {socialBlock}
+                    {newsletterBlock}
+                  </>
+                ) : (
+                  <>
+                    {newsletterBlock}
+                    {socialBlock}
+                  </>
+                )}
               </motion.div>
             </div>
           </div>
