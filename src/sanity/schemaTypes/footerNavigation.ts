@@ -154,7 +154,7 @@ export const footerNavigation = defineType({
       of: [defineArrayMember({ type: 'footerColumn' })],
       description:
         'Link columns displayed in the footer (e.g. Accounts, Loans, About, Help)',
-      validation: (rule) => rule.min(1).max(5).error('Between 1 and 5 columns'),
+      validation: (rule) => rule.min(1).max(6).error('Between 1 and 6 columns'),
     }),
     defineField({
       name: 'newsletterCta',
@@ -195,26 +195,6 @@ export const footerNavigation = defineType({
           rows: 2,
           initialValue:
             '*By completing this form you are signing up to receive our emails and can unsubscribe at any time.',
-        }),
-      ],
-    }),
-    defineField({
-      name: 'appStoreLinks',
-      title: 'App Store Links',
-      type: 'object',
-      description: 'Links to mobile app downloads',
-      fields: [
-        defineField({
-          name: 'iosUrl',
-          title: 'iOS App Store URL',
-          type: 'url',
-          validation: (rule) => rule.uri({ scheme: ['https'] }),
-        }),
-        defineField({
-          name: 'androidUrl',
-          title: 'Google Play Store URL',
-          type: 'url',
-          validation: (rule) => rule.uri({ scheme: ['https'] }),
         }),
       ],
     }),

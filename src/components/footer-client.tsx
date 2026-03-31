@@ -25,6 +25,15 @@ type FooterLink = {
   url: string | null
   externalUrl: string | null
   openInNewTab: boolean | null
+  badgeImage?: {
+    asset: {
+      _id: string
+      url: string
+      metadata: {
+        dimensions: { width: number; height: number } | null
+      } | null
+    } | null
+  } | null
 }
 
 function FooterLinkItem({ link }: { link: FooterLink }) {
@@ -34,6 +43,29 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
   const isExternal = link.linkType === 'external'
   const target = link.openInNewTab || isExternal ? '_blank' : undefined
   const rel = target === '_blank' ? 'noopener noreferrer' : undefined
+  const badge = link.badgeImage?.asset
+  const badgeDims = badge?.metadata?.dimensions
+
+  if (badge) {
+    return (
+      <li>
+        <Link
+          href={href}
+          target={target}
+          rel={rel}
+          className='inline-block overflow-hidden rounded-xl transition-opacity hover:opacity-80'
+        >
+          <Image
+            src={badge.url}
+            alt={link.label}
+            width={badgeDims?.width ?? 135}
+            height={badgeDims?.height ?? 40}
+            className='h-10 w-auto'
+          />
+        </Link>
+      </li>
+    )
+  }
 
   return (
     <li>
@@ -182,154 +214,117 @@ export function FooterClient({
           </motion.div>
         </div>
 
-        {/* Two-column layout with borders */}
+        {/* Navigation columns — full width */}
         <div className='border-y border-white/10'>
           <div className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8'>
-            <motion.div
-              variants={itemVariants}
-              className='grid grid-cols-1 gap-0 lg:grid-cols-[1fr_1.5fr]'
-            >
-              {/* Left column — Newsletter + App Store */}
-              <div className='border-b border-white/10 py-8 lg:border-b-0 lg:border-r lg:py-10 lg:pr-10'>
-                {footerData.newsletterCta && (
-                  <div>
-                    {footerData.newsletterCta.heading && (
-                      <h3 className='mb-4 text-xl font-semibold tracking-tight text-fcu-secondary-500 sm:text-2xl'>
-                        {footerData.newsletterCta.heading}
-                      </h3>
-                    )}
-                    {footerData.newsletterCta.description && (
-                      <p className='mb-5 text-sm leading-relaxed text-white/90'>
-                        {footerData.newsletterCta.description}
-                      </p>
-                    )}
-
-                    <div className='mb-4 flex'>
-                      <input
-                        type='email'
-                        placeholder={
-                          footerData.newsletterCta.placeholder ||
-                          'Enter your email address'
-                        }
-                        className='flex-1 rounded-l-full border border-r-0 border-white/20 bg-white/5 px-5 py-3 text-sm text-white placeholder-white/40 focus:border-fcu-secondary-500/50 focus:outline-none focus:ring-1 focus:ring-fcu-secondary-500/50'
-                      />
-                      <button
-                        type='button'
-                        className='flex items-center justify-center rounded-r-full border border-white/20 bg-white/10 px-5 transition-colors hover:bg-white/20'
-                        aria-label={
-                          footerData.newsletterCta.buttonLabel || 'Subscribe'
-                        }
-                      >
-                        <ArrowRight
-                          className='size-5 text-white'
-                          aria-hidden='true'
-                        />
-                      </button>
-                    </div>
-
-                    {footerData.newsletterCta.disclaimer && (
-                      <p className='text-xs leading-relaxed text-white/40'>
-                        {footerData.newsletterCta.disclaimer}
-                      </p>
-                    )}
+            <motion.div variants={itemVariants} className='py-8 lg:py-10'>
+              <div className='grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
+                {footerData.columns?.map((column) => (
+                  <div key={column._key}>
+                    <h4 className='mb-4 text-xs font-semibold uppercase tracking-wider text-fcu-secondary-500'>
+                      {column.title}
+                    </h4>
+                    <ul className='space-y-3'>
+                      {column.links?.map((link) => (
+                        <FooterLinkItem key={link._key} link={link} />
+                      ))}
+                    </ul>
                   </div>
-                )}
-
-                {/* Social icons */}
-                {footerData.showSocialLinks &&
-                  settingsData.socialLinks &&
-                  settingsData.socialLinks.length > 0 && (
-                    <nav
-                      aria-label='Social media'
-                      className='mt-8 flex items-center gap-4'
-                    >
-                      {settingsData.socialLinks.map((social) => {
-                        const Icon = SOCIAL_ICONS[social.platform || '']
-                        if (!Icon || !social.url) return null
-                        return (
-                          <a
-                            key={social._key}
-                            href={social.url}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            aria-label={
-                              social.label || `Follow us on ${social.platform}`
-                            }
-                            className='text-white/60 transition-colors hover:text-white'
-                          >
-                            <Icon className='size-5' />
-                          </a>
-                        )
-                      })}
-                    </nav>
-                  )}
-
-                {/* App download badges */}
-                {footerData.appStoreLinks &&
-                  (footerData.appStoreLinks.iosUrl ||
-                    footerData.appStoreLinks.androidUrl) && (
-                    <div className='mt-6 border-t border-white/10 pt-6'>
-                      <h4 className='mb-3 text-xs font-semibold uppercase tracking-wider text-fcu-secondary-500'>
-                        Get Our App
-                      </h4>
-                      <div className='flex flex-wrap items-center gap-3'>
-                        {footerData.appStoreLinks.iosUrl && (
-                          <a
-                            href={footerData.appStoreLinks.iosUrl}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='inline-block overflow-hidden rounded-xl transition-opacity hover:opacity-80'
-                          >
-                            <Image
-                              src='/badges/app-store-badge.svg'
-                              alt='Download on the App Store'
-                              width={135}
-                              height={40}
-                              className='h-10 w-auto'
-                            />
-                          </a>
-                        )}
-                        {footerData.appStoreLinks.androidUrl && (
-                          <a
-                            href={footerData.appStoreLinks.androidUrl}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='inline-block overflow-hidden rounded-xl transition-opacity hover:opacity-80'
-                          >
-                            <Image
-                              src='/badges/google-play-badge.svg'
-                              alt='Get it on Google Play'
-                              width={135}
-                              height={40}
-                              className='h-10 w-auto'
-                            />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  )}
-              </div>
-
-              {/* Right column — Nav columns + App downloads */}
-              <div className='py-8 lg:py-10 lg:pl-10'>
-                <div className='grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4'>
-                  {footerData.columns?.map((column) => (
-                    <div key={column._key}>
-                      <h4 className='mb-4 text-xs font-semibold uppercase tracking-wider text-fcu-secondary-500'>
-                        {column.title}
-                      </h4>
-                      <ul className='space-y-3'>
-                        {column.links?.map((link) => (
-                          <FooterLinkItem key={link._key} link={link} />
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
+                ))}
               </div>
             </motion.div>
           </div>
         </div>
+
+        {/* Newsletter + Social row — full width */}
+        {footerData.newsletterCta && (
+          <div className='border-b border-white/10'>
+            <div className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8'>
+              <motion.div
+                variants={itemVariants}
+                className='grid grid-cols-1 gap-8 py-8 md:grid-cols-[1fr_auto] lg:py-10'
+              >
+                {/* Left — Newsletter */}
+                <div>
+                  {footerData.newsletterCta.heading && (
+                    <h3 className='mb-4 text-xl font-semibold tracking-tight text-fcu-secondary-500 sm:text-2xl'>
+                      {footerData.newsletterCta.heading}
+                    </h3>
+                  )}
+                  {footerData.newsletterCta.description && (
+                    <p className='mb-5 text-sm leading-relaxed text-white/90'>
+                      {footerData.newsletterCta.description}
+                    </p>
+                  )}
+
+                  <div className='mb-4 flex max-w-md'>
+                    <input
+                      type='email'
+                      placeholder={
+                        footerData.newsletterCta.placeholder ||
+                        'Enter your email address'
+                      }
+                      className='flex-1 rounded-l-full border border-r-0 border-white/20 bg-white/5 px-5 py-3 text-sm text-white placeholder-white/40 focus:border-fcu-secondary-500/50 focus:outline-none focus:ring-1 focus:ring-fcu-secondary-500/50'
+                    />
+                    <button
+                      type='button'
+                      className='flex items-center justify-center rounded-r-full border border-white/20 bg-white/10 px-5 transition-colors hover:bg-white/20'
+                      aria-label={
+                        footerData.newsletterCta.buttonLabel || 'Subscribe'
+                      }
+                    >
+                      <ArrowRight
+                        className='size-5 text-white'
+                        aria-hidden='true'
+                      />
+                    </button>
+                  </div>
+
+                  {footerData.newsletterCta.disclaimer && (
+                    <p className='max-w-md text-xs leading-relaxed text-white/40'>
+                      {footerData.newsletterCta.disclaimer}
+                    </p>
+                  )}
+                </div>
+
+                {/* Right — Social links */}
+                {footerData.showSocialLinks &&
+                  settingsData.socialLinks &&
+                  settingsData.socialLinks.length > 0 && (
+                    <div>
+                      <h4 className='mb-4 text-xs font-semibold uppercase tracking-wider text-fcu-secondary-500'>
+                        Follow Us
+                      </h4>
+                      <nav
+                        aria-label='Social media'
+                        className='flex items-center gap-4'
+                      >
+                        {settingsData.socialLinks.map((social) => {
+                          const Icon = SOCIAL_ICONS[social.platform || '']
+                          if (!Icon || !social.url) return null
+                          return (
+                            <a
+                              key={social._key}
+                              href={social.url}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              aria-label={
+                                social.label ||
+                                `Follow us on ${social.platform}`
+                              }
+                              className='text-white/60 transition-colors hover:text-white'
+                            >
+                              <Icon className='size-5' />
+                            </a>
+                          )
+                        })}
+                      </nav>
+                    </div>
+                  )}
+              </motion.div>
+            </div>
+          </div>
+        )}
 
         {/* Contact info — full-width row */}
         {footerData.showContactInfo && (

@@ -61,6 +61,14 @@ export const footerLink = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'badgeImage',
+      title: 'Badge Image',
+      type: 'image',
+      description:
+        'Optional badge image (e.g. App Store / Google Play). When set, the image renders instead of the text label.',
+      options: { hotspot: false },
+    }),
   ],
   preview: {
     select: {

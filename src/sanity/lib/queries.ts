@@ -135,7 +135,19 @@ export const FOOTER_NAVIGATION_QUERY = defineQuery(/* groq */ `
         linkType,
         url,
         externalUrl,
-        openInNewTab
+        openInNewTab,
+        badgeImage {
+          asset-> {
+            _id,
+            url,
+            metadata {
+              dimensions {
+                width,
+                height
+              }
+            }
+          }
+        }
       }
     },
     newsletterCta {
@@ -144,10 +156,6 @@ export const FOOTER_NAVIGATION_QUERY = defineQuery(/* groq */ `
       placeholder,
       buttonLabel,
       disclaimer
-    },
-    appStoreLinks {
-      iosUrl,
-      androidUrl
     },
     showSocialLinks,
     showContactInfo,
