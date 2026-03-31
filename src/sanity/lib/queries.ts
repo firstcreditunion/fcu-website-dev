@@ -151,6 +151,7 @@ export const FOOTER_NAVIGATION_QUERY = defineQuery(/* groq */ `
       }
     },
     newsletterCta {
+      layout,
       heading,
       description,
       placeholder,

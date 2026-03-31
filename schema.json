@@ -2596,6 +2596,23 @@
         "value": {
           "type": "object",
           "attributes": {
+            "layout": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "horizontal"
+                  },
+                  {
+                    "type": "string",
+                    "value": "vertical"
+                  }
+                ]
+              },
+              "optional": true
+            },
             "heading": {
               "type": "objectAttribute",
               "value": {

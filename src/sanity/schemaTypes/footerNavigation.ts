@@ -164,6 +164,22 @@ export const footerNavigation = defineType({
         'Optional newsletter signup section on the left side of the footer',
       fields: [
         defineField({
+          name: 'layout',
+          title: 'Layout',
+          type: 'string',
+          description:
+            'Horizontal places heading and input side-by-side. Vertical stacks them.',
+          initialValue: 'horizontal',
+          options: {
+            layout: 'radio',
+            direction: 'horizontal',
+            list: [
+              { title: 'Horizontal (side-by-side)', value: 'horizontal' },
+              { title: 'Vertical (stacked)', value: 'vertical' },
+            ],
+          },
+        }),
+        defineField({
           name: 'heading',
           title: 'Heading',
           type: 'string',

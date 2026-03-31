@@ -237,15 +237,20 @@ export function FooterClient({
         </div>
 
         {/* Newsletter + Social row — full width */}
-        {footerData.newsletterCta && (
+        {footerData.newsletterCta && (() => {
+          const isVertical = footerData.newsletterCta.layout === 'vertical'
+          return (
           <div className='border-b border-white/10'>
             <div className='mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8'>
               <motion.div
                 variants={itemVariants}
-                className='grid grid-cols-1 gap-8 py-8 md:grid-cols-[1fr_auto] lg:py-10'
+                className={cn(
+                  'grid grid-cols-1 gap-8 py-8 lg:py-10',
+                  !isVertical && 'md:grid-cols-[1fr_auto]',
+                )}
               >
-                {/* Left — Newsletter */}
-                <div>
+                {/* Newsletter content */}
+                <div className={cn(isVertical && 'max-w-2xl')}>
                   {footerData.newsletterCta.heading && (
                     <h3 className='mb-4 text-xl font-semibold tracking-tight text-fcu-secondary-500 sm:text-2xl'>
                       {footerData.newsletterCta.heading}
@@ -257,7 +262,7 @@ export function FooterClient({
                     </p>
                   )}
 
-                  <div className='mb-4 flex max-w-md'>
+                  <div className={cn('mb-4 flex', !isVertical && 'max-w-md')}>
                     <input
                       type='email'
                       placeholder={
@@ -281,7 +286,10 @@ export function FooterClient({
                   </div>
 
                   {footerData.newsletterCta.disclaimer && (
-                    <p className='max-w-md text-xs leading-relaxed text-white/40'>
+                    <p className={cn(
+                      'text-xs leading-relaxed text-white/40',
+                      !isVertical && 'max-w-md',
+                    )}>
                       {footerData.newsletterCta.disclaimer}
                     </p>
                   )}
@@ -324,7 +332,8 @@ export function FooterClient({
               </motion.div>
             </div>
           </div>
-        )}
+          )
+        })()}
 
         {/* Contact info — full-width row */}
         {footerData.showContactInfo && (
