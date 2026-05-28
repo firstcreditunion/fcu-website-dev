@@ -15,6 +15,159 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type LegalFinePrintBlock = {
+  _type: "legalFinePrintBlock";
+  content: string;
+};
+
+export type CtaBarBlock = {
+  _type: "ctaBarBlock";
+  heading: string;
+  description: string;
+  primaryAction: ButtonLink;
+  secondaryAction?: ButtonLink;
+};
+
+export type RelatedLinksBlock = {
+  _type: "relatedLinksBlock";
+  heading?: string;
+  items: Array<
+    {
+      _key: string;
+    } & RelatedLinkItem
+  >;
+};
+
+export type FaqBlock = {
+  _type: "faqBlock";
+  heading?: string;
+  items: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
+};
+
+export type DisclaimerSnippetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "disclaimerSnippet";
+};
+
+export type NoticeBlock = {
+  _type: "noticeBlock";
+  tone: "info" | "warning" | "legal";
+  title?: string;
+  content?: string;
+  sharedDisclaimer?: DisclaimerSnippetReference;
+};
+
+export type RatesFeesBlock = {
+  _type: "ratesFeesBlock";
+  heading: string;
+  ratesHeading?: string;
+  rates?: Array<
+    {
+      _key: string;
+    } & KeyValueRow
+  >;
+  feesHeading?: string;
+  fees?: Array<
+    {
+      _key: string;
+    } & KeyValueRow
+  >;
+};
+
+export type LoanExampleBlock = {
+  _type: "loanExampleBlock";
+  heading: string;
+  rows: Array<
+    {
+      _key: string;
+    } & KeyValueRow
+  >;
+  note?: string;
+};
+
+export type FeatureGridBlock = {
+  _type: "featureGridBlock";
+  heading: string;
+  columns: "2" | "3" | "4";
+  items: Array<
+    {
+      _key: string;
+    } & FeatureItem
+  >;
+};
+
+export type TrustStatsBlock = {
+  _type: "trustStatsBlock";
+  heading?: string;
+  items: Array<
+    {
+      _key: string;
+    } & TrustStatItem
+  >;
+};
+
+export type LoanAtAGlanceBlock = {
+  _type: "loanAtAGlanceBlock";
+  title: string;
+  rows?: Array<
+    {
+      _key: string;
+    } & KeyValueRow
+  >;
+};
+
+export type LoanHeroBlock = {
+  _type: "loanHeroBlock";
+  badge?: string;
+  headline: string;
+  summary: string;
+  layout: "split" | "full";
+  primaryAction?: ButtonLink;
+  secondaryAction?: ButtonLink;
+};
+
+export type LoanPageBuilder = Array<
+  | ({
+      _key: string;
+    } & LoanHeroBlock)
+  | ({
+      _key: string;
+    } & LoanAtAGlanceBlock)
+  | ({
+      _key: string;
+    } & TrustStatsBlock)
+  | ({
+      _key: string;
+    } & FeatureGridBlock)
+  | ({
+      _key: string;
+    } & LoanExampleBlock)
+  | ({
+      _key: string;
+    } & RatesFeesBlock)
+  | ({
+      _key: string;
+    } & NoticeBlock)
+  | ({
+      _key: string;
+    } & FaqBlock)
+  | ({
+      _key: string;
+    } & RelatedLinksBlock)
+  | ({
+      _key: string;
+    } & CtaBarBlock)
+  | ({
+      _key: string;
+    } & LegalFinePrintBlock)
+>;
+
 export type VariantGuideline = {
   _type: "variantGuideline";
   variant: string;
@@ -39,6 +192,47 @@ export type ColorPalette = {
       _key: string;
     } & ColorToken
   >;
+};
+
+export type RelatedLinkItem = {
+  _type: "relatedLinkItem";
+  title: string;
+  description?: string;
+  link: ButtonLink;
+};
+
+export type FaqItem = {
+  _type: "faqItem";
+  question: string;
+  answer: string;
+};
+
+export type FeatureItem = {
+  _type: "featureItem";
+  title: string;
+  description: string;
+};
+
+export type TrustStatItem = {
+  _type: "trustStatItem";
+  value: string;
+  label: string;
+};
+
+export type KeyValueRow = {
+  _type: "keyValueRow";
+  label: string;
+  value: string;
+  highlight?: boolean;
+};
+
+export type ButtonLink = {
+  _type: "buttonLink";
+  label: string;
+  linkType: "internal" | "external";
+  url?: string;
+  externalUrl?: string;
+  openInNewTab?: boolean;
 };
 
 export type FooterColumn = {
@@ -149,22 +343,6 @@ export type Seo = {
   noIndex?: boolean;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
-
 export type MainNavItem = {
   _type: "mainNavItem";
   label: string;
@@ -203,6 +381,62 @@ export type Link = {
   url?: string;
   externalUrl?: string;
   openInNewTab?: boolean;
+};
+
+export type LoanProductPage = {
+  _id: string;
+  _type: "loanProductPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  loanProductType:
+    | "personal-loan"
+    | "debt-consolidation-loan"
+    | "car-loan"
+    | "home-loan"
+    | "travel-loan"
+    | "wedding-loan"
+    | "christmas-loan"
+    | "hardship"
+    | "other";
+  status: "draft" | "ready" | "published";
+  pageBuilder: LoanPageBuilder;
+  seo?: Seo;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
+export type DisclaimerSnippet = {
+  _id: string;
+  _type: "disclaimerSnippet";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  tone: "info" | "warning" | "legal";
+  content: string;
 };
 
 export type DesignSystemUser = {
@@ -709,16 +943,29 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
 export type AllSanitySchemaTypes =
+  | LegalFinePrintBlock
+  | CtaBarBlock
+  | RelatedLinksBlock
+  | FaqBlock
+  | DisclaimerSnippetReference
+  | NoticeBlock
+  | RatesFeesBlock
+  | LoanExampleBlock
+  | FeatureGridBlock
+  | TrustStatsBlock
+  | LoanAtAGlanceBlock
+  | LoanHeroBlock
+  | LoanPageBuilder
   | VariantGuideline
   | ColorToken
   | ColorPalette
+  | RelatedLinkItem
+  | FaqItem
+  | FeatureItem
+  | TrustStatItem
+  | KeyValueRow
+  | ButtonLink
   | FooterColumn
   | SanityImageAssetReference
   | FooterLink
@@ -728,11 +975,14 @@ export type AllSanitySchemaTypes =
   | Address
   | SocialLink
   | Seo
-  | SanityImageCrop
-  | SanityImageHotspot
   | MainNavItem
   | NavGroup
   | Link
+  | LoanProductPage
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Slug
+  | DisclaimerSnippet
   | DesignSystemUser
   | ComponentConfig
   | DesignTokens
@@ -760,8 +1010,7 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
-  | Geopoint
-  | Slug;
+  | Geopoint;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: DESIGN_TOKENS_QUERY
@@ -1174,6 +1423,165 @@ export type SITE_SETTINGS_QUERY_RESULT =
     }
   | null;
 
+// Source: src/sanity/lib/queries.ts
+// Variable: LOAN_PRODUCT_PAGE_BY_SLUG_QUERY
+// Query: *[_type == "loanProductPage" && slug.current == $slug][0] {    _id,    _updatedAt,    title,    "slug": slug.current,    loanProductType,    status,    seo {      title,      description,      image,      noIndex    },    pageBuilder[] {      _key,      _type,      ...,      _type == "noticeBlock" => {        ...,        sharedDisclaimer->{          _id,          name,          tone,          content        }      },      _type == "relatedLinksBlock" => {        ...,        items[] {          ...,          link {            ...,            url,            externalUrl          }        }      }    }  }
+export type LOAN_PRODUCT_PAGE_BY_SLUG_QUERY_RESULT = {
+  _id: string;
+  _updatedAt: string;
+  title: string;
+  slug: string;
+  loanProductType:
+    | "car-loan"
+    | "christmas-loan"
+    | "debt-consolidation-loan"
+    | "hardship"
+    | "home-loan"
+    | "other"
+    | "personal-loan"
+    | "travel-loan"
+    | "wedding-loan";
+  status: "draft" | "published" | "ready";
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
+  pageBuilder: Array<
+    | {
+        _key: string;
+        _type: "ctaBarBlock";
+        heading: string;
+        description: string;
+        primaryAction: ButtonLink;
+        secondaryAction?: ButtonLink;
+      }
+    | {
+        _key: string;
+        _type: "faqBlock";
+        heading?: string;
+        items: Array<
+          {
+            _key: string;
+          } & FaqItem
+        >;
+      }
+    | {
+        _key: string;
+        _type: "featureGridBlock";
+        heading: string;
+        columns: "2" | "3" | "4";
+        items: Array<
+          {
+            _key: string;
+          } & FeatureItem
+        >;
+      }
+    | {
+        _key: string;
+        _type: "legalFinePrintBlock";
+        content: string;
+      }
+    | {
+        _key: string;
+        _type: "loanAtAGlanceBlock";
+        title: string;
+        rows?: Array<
+          {
+            _key: string;
+          } & KeyValueRow
+        >;
+      }
+    | {
+        _key: string;
+        _type: "loanExampleBlock";
+        heading: string;
+        rows: Array<
+          {
+            _key: string;
+          } & KeyValueRow
+        >;
+        note?: string;
+      }
+    | {
+        _key: string;
+        _type: "loanHeroBlock";
+        badge?: string;
+        headline: string;
+        summary: string;
+        layout: "full" | "split";
+        primaryAction?: ButtonLink;
+        secondaryAction?: ButtonLink;
+      }
+    | {
+        _key: string;
+        _type: "noticeBlock";
+        tone: "info" | "legal" | "warning";
+        title?: string;
+        content?: string;
+        sharedDisclaimer: {
+          _id: string;
+          name: string;
+          tone: "info" | "legal" | "warning";
+          content: string;
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "ratesFeesBlock";
+        heading: string;
+        ratesHeading?: string;
+        rates?: Array<
+          {
+            _key: string;
+          } & KeyValueRow
+        >;
+        feesHeading?: string;
+        fees?: Array<
+          {
+            _key: string;
+          } & KeyValueRow
+        >;
+      }
+    | {
+        _key: string;
+        _type: "relatedLinksBlock";
+        heading?: string;
+        items: Array<{
+          _key: string;
+          _type: "relatedLinkItem";
+          title: string;
+          description?: string;
+          link: {
+            _type: "buttonLink";
+            label: string;
+            linkType: "external" | "internal";
+            url: string | null;
+            externalUrl: string | null;
+            openInNewTab?: boolean;
+          };
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "trustStatsBlock";
+        heading?: string;
+        items: Array<
+          {
+            _key: string;
+          } & TrustStatItem
+        >;
+      }
+  >;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -1184,5 +1592,6 @@ declare module "@sanity/client" {
     '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      featuredPosition,\n      megaMenu[] {\n        _key,\n        title,\n        isFeatured,\n        items[] {\n          _key,\n          label,\n          description,\n          image {\n            asset-> {\n              _id,\n              url,\n              metadata {\n                lqip,\n                dimensions { width, height }\n              }\n            },\n            hotspot,\n            crop,\n            alt\n          },\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "footerNavigation"][0] {\n    headline,\n    headlineFontSizePreset,\n    subheadline,\n    primaryCta {\n      label,\n      url,\n      openInNewTab\n    },\n    secondaryCta {\n      label,\n      url,\n      openInNewTab\n    },\n    columns[] {\n      _key,\n      title,\n      links[] {\n        _key,\n        label,\n        linkType,\n        url,\n        externalUrl,\n        openInNewTab,\n        badgeImage {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          }\n        }\n      }\n    },\n    newsletterCta {\n      layout,\n      contentOrder,\n      heading,\n      description,\n      placeholder,\n      buttonLabel,\n      disclaimer\n    },\n    showSocialLinks,\n    showContactInfo,\n    legalLinks[] {\n      _key,\n      label,\n      linkType,\n      url,\n      externalUrl,\n      openInNewTab\n    }\n  }\n': FOOTER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    googleMapsUrl,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "loanProductPage" && slug.current == $slug][0] {\n    _id,\n    _updatedAt,\n    title,\n    "slug": slug.current,\n    loanProductType,\n    status,\n    seo {\n      title,\n      description,\n      image,\n      noIndex\n    },\n    pageBuilder[] {\n      _key,\n      _type,\n      ...,\n      _type == "noticeBlock" => {\n        ...,\n        sharedDisclaimer->{\n          _id,\n          name,\n          tone,\n          content\n        }\n      },\n      _type == "relatedLinksBlock" => {\n        ...,\n        items[] {\n          ...,\n          link {\n            ...,\n            url,\n            externalUrl\n          }\n        }\n      }\n    }\n  }\n': LOAN_PRODUCT_PAGE_BY_SLUG_QUERY_RESULT;
   }
 }

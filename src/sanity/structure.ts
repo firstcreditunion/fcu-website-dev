@@ -1,8 +1,21 @@
 import type { StructureResolver } from 'sanity/structure'
-import { CogIcon, MenuIcon, ComponentIcon, ColorWheelIcon, UsersIcon } from '@sanity/icons'
+import {
+  CogIcon,
+  MenuIcon,
+  ComponentIcon,
+  ColorWheelIcon,
+  UsersIcon,
+  DocumentTextIcon,
+} from '@sanity/icons'
 
 const SINGLETONS = ['siteSettings', 'headerNavigation', 'footerNavigation', 'designTokens']
-const HIDDEN_TYPES = [...SINGLETONS, 'componentConfig', 'designSystemUser']
+const HIDDEN_TYPES = [
+  ...SINGLETONS,
+  'componentConfig',
+  'designSystemUser',
+  'loanProductPage',
+  'disclaimerSnippet',
+]
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -71,6 +84,21 @@ export const structure: StructureResolver = (S) =>
                   ),
                 ),
             ]),
+        ),
+
+      S.divider(),
+
+      S.listItem()
+        .title('Loan Product Pages')
+        .icon(DocumentTextIcon)
+        .child(
+          S.documentTypeList('loanProductPage').title('Loan Product Pages'),
+        ),
+      S.listItem()
+        .title('Disclaimer Snippets')
+        .icon(DocumentTextIcon)
+        .child(
+          S.documentTypeList('disclaimerSnippet').title('Disclaimer Snippets'),
         ),
 
       S.divider(),

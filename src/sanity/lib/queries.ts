@@ -223,3 +223,45 @@ export const SITE_SETTINGS_QUERY = defineQuery(/* groq */ `
     footerStyle
   }
 `)
+
+export const LOAN_PRODUCT_PAGE_BY_SLUG_QUERY = defineQuery(/* groq */ `
+  *[_type == "loanProductPage" && slug.current == $slug][0] {
+    _id,
+    _updatedAt,
+    title,
+    "slug": slug.current,
+    loanProductType,
+    status,
+    seo {
+      title,
+      description,
+      image,
+      noIndex
+    },
+    pageBuilder[] {
+      _key,
+      _type,
+      ...,
+      _type == "noticeBlock" => {
+        ...,
+        sharedDisclaimer->{
+          _id,
+          name,
+          tone,
+          content
+        }
+      },
+      _type == "relatedLinksBlock" => {
+        ...,
+        items[] {
+          ...,
+          link {
+            ...,
+            url,
+            externalUrl
+          }
+        }
+      }
+    }
+  }
+`)
