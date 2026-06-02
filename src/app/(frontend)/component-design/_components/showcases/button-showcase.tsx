@@ -605,8 +605,7 @@ const SIZE_LABELS: Record<ButtonSize, string> = {
   'icon-lg': 'LG',
 }
 
-const APPLY_TO_OPTIONS = ['all', ...ALL_VARIANTS] as const
-type ApplyToOption = (typeof APPLY_TO_OPTIONS)[number]
+type ApplyToOption = 'all' | (typeof ALL_VARIANTS)[number]
 
 interface VariantStyle {
   radius: RadiusOption
