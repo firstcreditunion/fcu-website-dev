@@ -61,7 +61,7 @@ export async function syncTokens(): Promise<{
 
     for (const token of tokens) {
       const parts = token.name.split('-')
-      const shade = parts.pop()!
+      parts.pop() // drop the shade suffix; remainder is the palette name
       const paletteName = parts.join('-')
 
       if (!paletteMap.has(paletteName)) {

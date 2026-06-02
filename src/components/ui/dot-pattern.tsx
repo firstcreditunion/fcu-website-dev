@@ -102,7 +102,9 @@ export function DotPattern({
       return {
         x: col * width + cx + x,
         y: row * height + cy + y,
+        // eslint-disable-next-line react-hooks/purity -- decorative random animation offset (vendored magicui)
         delay: Math.random() * 5,
+        // eslint-disable-next-line react-hooks/purity -- decorative random animation duration (vendored magicui)
         duration: Math.random() * 3 + 2,
       }
     }

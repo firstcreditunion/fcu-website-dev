@@ -95,6 +95,7 @@ function Carousel({
 
   React.useEffect(() => {
     if (!api) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time initial scroll-state sync on mount (vendored shadcn carousel)
     onSelect(api)
     api.on("reInit", onSelect)
     api.on("select", onSelect)

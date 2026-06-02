@@ -37,23 +37,29 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   const [submitting, setSubmitting] = React.useState(false)
 
   React.useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY)
-      if (stored) {
-        const parsed: AuthData = JSON.parse(stored)
-        validateUser(parsed.email, parsed.pin).then((valid) => {
+    let cancelled = false
+    async function restoreSession() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY)
+        if (stored) {
+          const parsed: AuthData = JSON.parse(stored)
+          const valid = await validateUser(parsed.email, parsed.pin)
+          if (cancelled) return
           if (valid) {
             setAuth(parsed)
           } else {
             localStorage.removeItem(STORAGE_KEY)
           }
-          setLoading(false)
-        })
-      } else {
-        setLoading(false)
+        }
+      } catch {
+        // ignore malformed stored auth
+      } finally {
+        if (!cancelled) setLoading(false)
       }
-    } catch {
-      setLoading(false)
+    }
+    restoreSession()
+    return () => {
+      cancelled = true
     }
   }, [])
 
