@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Foundations } from './_sections/foundations'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -22,7 +23,7 @@ export default function DesignSystemPage() {
         </p>
       </header>
 
-      <p className='py-12 text-sm text-muted-foreground'>Foundations section coming next…</p>
+      <Foundations />
     </>
   )
 }
