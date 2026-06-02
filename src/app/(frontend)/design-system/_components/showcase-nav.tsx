@@ -37,7 +37,6 @@ export function ShowcaseNav() {
         {UPCOMING.map((label) => (
           <li
             key={label}
-            aria-disabled='true'
             className='cursor-default px-3 py-1.5 text-sm text-foreground-subtle/70'
           >
             {label}
