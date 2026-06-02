@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { PlaygroundShell, ControlRow } from '../playground-shell'
+import { PlaygroundShell } from '../playground-shell'
 import type { ComponentConfigPayload } from '../../_actions/save-component-config'
 
 interface Props { initialConfig: ComponentConfigPayload | null }

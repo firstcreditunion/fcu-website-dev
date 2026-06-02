@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { BlurFade } from '@/components/ui/blur-fade'
 import { NoiseBackground } from '@/components/aceternity/noise-background'
 import { AnimatedShinyText } from '@/components/ui/animated-shiny-text'
-import { DotPattern } from '@/components/ui/dot-pattern'
 import { BillVisual } from './bill-visual'
 
 export function HeroSection() {

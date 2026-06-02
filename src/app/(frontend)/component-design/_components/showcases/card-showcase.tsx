@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
-import { PlaygroundShell, ControlRow } from '../playground-shell'
+import { PlaygroundShell } from '../playground-shell'
 import type { ComponentConfigPayload } from '../../_actions/save-component-config'
 
 interface Props { initialConfig: ComponentConfigPayload | null }

@@ -6,7 +6,7 @@ import {
   Type,
   MousePointerClick,
   Compass,
-  Image,
+  Image as ImageIcon,
   Landmark,
 } from 'lucide-react'
 
@@ -193,12 +193,12 @@ export function MediaSection() {
     >
       <div className='grid gap-3 sm:grid-cols-2'>
         <PlaceholderCard
-          icon={<Image className='size-5' />}
+          icon={<ImageIcon className='size-5' />}
           name='Image Gallery'
           description='Responsive image showcase with lightbox'
         />
         <PlaceholderCard
-          icon={<Image className='size-5' />}
+          icon={<ImageIcon className='size-5' />}
           name='Video Embed'
           description='Embedded video with poster image'
         />
