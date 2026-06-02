@@ -75,6 +75,7 @@ export function MagicCard(props: MagicCardProps) {
   const { theme, systemTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time mount flag to avoid theme hydration mismatch (vendored magicui)
   useEffect(() => setMounted(true), [])
 
   const isDarkTheme = useMemo(() => {
