@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Foundations } from './_sections/foundations'
 import { Buttons } from './_sections/buttons'
+import { Inputs } from './_sections/inputs'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -26,6 +27,7 @@ export default function DesignSystemPage() {
 
       <Foundations />
       <Buttons />
+      <Inputs />
     </>
   )
 }
