@@ -1,26 +1,43 @@
 "use client"
 
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox"
+import { cva, type VariantProps } from "class-variance-authority"
+import { CheckIcon, MinusIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { CheckIcon } from "lucide-react"
 
-function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
+const checkboxVariants = cva(
+  "peer group/checkbox relative flex shrink-0 items-center justify-center rounded-[var(--radius-xs)] border-[1.5px] border-border-strong bg-card text-primary-foreground transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 hover:border-neutral-500 focus-visible:border-ring focus-visible:shadow-[var(--shadow-focus)] disabled:cursor-not-allowed disabled:border-border disabled:bg-surface-muted data-checked:border-primary data-checked:bg-primary data-indeterminate:border-primary data-indeterminate:bg-primary aria-invalid:border-destructive aria-invalid:data-checked:border-destructive aria-invalid:data-checked:bg-destructive",
+  {
+    variants: {
+      size: {
+        sm: "size-4 [&_svg]:size-3",
+        default: "size-[18px] [&_svg]:size-3",
+        lg: "size-5 [&_svg]:size-3.5",
+      },
+    },
+    defaultVariants: { size: "default" },
+  }
+)
+
+function Checkbox({
+  className,
+  size,
+  ...props
+}: CheckboxPrimitive.Root.Props & VariantProps<typeof checkboxVariants>) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
-      className={cn(
-        "peer relative flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input transition-colors outline-none group-has-disabled/field:opacity-50 after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary",
-        className
-      )}
+      className={cn(checkboxVariants({ size }), className)}
       {...props}
     >
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
-        className="grid place-content-center text-current transition-none [&>svg]:size-3.5"
+        keepMounted
+        className="flex items-center justify-center text-current opacity-0 transition-opacity data-checked:opacity-100 data-indeterminate:opacity-100"
       >
-        <CheckIcon
-        />
+        <MinusIcon className="hidden group-data-indeterminate/checkbox:block" />
+        <CheckIcon className="group-data-indeterminate/checkbox:hidden" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )
