@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Foundations } from './_sections/foundations'
 import { Buttons } from './_sections/buttons'
 import { Inputs } from './_sections/inputs'
+import { TextareaSelect } from './_sections/textarea-select'
+import { Selection } from './_sections/selection'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -28,6 +30,8 @@ export default function DesignSystemPage() {
       <Foundations />
       <Buttons />
       <Inputs />
+      <TextareaSelect />
+      <Selection />
     </>
   )
 }
