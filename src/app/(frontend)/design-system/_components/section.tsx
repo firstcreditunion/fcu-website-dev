@@ -1,28 +1,35 @@
 import { type ReactNode } from 'react'
 
 /**
- * Anchored section wrapper for the design-system showcase.
- * One <Section> per component/topic, mirroring the hand-off reference pages.
+ * Top-level showcase section — a numbered editorial head (mirrors the hand-off
+ * `shell.css` .sec-head) + content. One <Section> per component/topic.
  */
 export function Section({
   id,
+  num,
   title,
   description,
   children,
 }: {
   id: string
+  num?: string
   title: string
-  description?: string
+  description?: ReactNode
   children: ReactNode
 }) {
   return (
-    <section id={id} className='scroll-mt-24 border-b border-border py-12 last:border-b-0'>
-      <div className='mb-6'>
-        <h2 className='text-2xl font-semibold tracking-tight text-foreground'>{title}</h2>
+    <section id={id} className='scroll-mt-24 border-b border-border py-14 last:border-b-0'>
+      <div className='mb-8 max-w-[72ch]'>
+        {num ? (
+          <span className='font-mono text-[11.5px] uppercase tracking-[0.05em] text-foreground-subtle'>
+            {num}
+          </span>
+        ) : null}
+        <h2 className='mt-2 text-2xl font-semibold tracking-tight text-foreground md:text-[30px] md:leading-tight'>
+          {title}
+        </h2>
         {description ? (
-          <p className='mt-1.5 max-w-2xl text-sm leading-relaxed text-muted-foreground'>
-            {description}
-          </p>
+          <p className='mt-3 text-[15px] leading-relaxed text-foreground-muted'>{description}</p>
         ) : null}
       </div>
       {children}
