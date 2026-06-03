@@ -4,6 +4,7 @@ import { Buttons } from './_sections/buttons'
 import { Inputs } from './_sections/inputs'
 import { TextareaSelect } from './_sections/textarea-select'
 import { Selection } from './_sections/selection'
+import { CardDialog } from './_sections/card-dialog'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -32,6 +33,7 @@ export default function DesignSystemPage() {
       <Inputs />
       <TextareaSelect />
       <Selection />
+      <CardDialog />
     </>
   )
 }
