@@ -5,11 +5,11 @@ const SECTIONS = [
   { id: 'textarea-select', label: 'Textarea & Select' },
   { id: 'selection', label: 'Checkbox · Radio · Switch' },
   { id: 'card-dialog', label: 'Card & Dialog' },
+  { id: 'table', label: 'Table' },
 ] as const
 
 // Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.
 const UPCOMING = [
-  'Tables & Data',
   'Navigation',
   'Feedback',
   'Overlays & Inputs',

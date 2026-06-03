@@ -5,6 +5,7 @@ import { Inputs } from './_sections/inputs'
 import { TextareaSelect } from './_sections/textarea-select'
 import { Selection } from './_sections/selection'
 import { CardDialog } from './_sections/card-dialog'
+import { TableSection } from './_sections/table'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -34,6 +35,7 @@ export default function DesignSystemPage() {
       <TextareaSelect />
       <Selection />
       <CardDialog />
+      <TableSection />
     </>
   )
 }
