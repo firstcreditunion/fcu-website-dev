@@ -12,6 +12,7 @@ const SECTIONS = [
   { id: 'dropdown-menu', label: 'Dropdown menu' },
   { id: 'hover-card', label: 'Hover card' },
   { id: 'avatar', label: 'Avatar' },
+  { id: 'progress-spinner', label: 'Progress · Spinner' },
 ] as const
 
 // Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.
