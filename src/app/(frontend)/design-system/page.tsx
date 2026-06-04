@@ -24,6 +24,7 @@ import { FileUploadSection } from './_sections/file-upload'
 import { TagInputSection } from './_sections/tag-input'
 import { ComboboxSection } from './_sections/combobox'
 import { CommandSection } from './_sections/command'
+import { DatePickerSection, CalendarSection } from './_sections/date-calendar'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -73,6 +74,8 @@ export default function DesignSystemPage() {
       <TagInputSection />
       <ComboboxSection />
       <CommandSection />
+      <DatePickerSection />
+      <CalendarSection />
     </>
   )
 }
