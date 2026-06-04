@@ -161,37 +161,65 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Surfaces — cool slate, darkest at the base */
+  --background: var(--neutral-950);
+  --foreground: var(--neutral-50);
+  --card: var(--neutral-900);
+  --card-foreground: var(--neutral-50);
+  --popover: var(--neutral-900);
+  --popover-foreground: var(--neutral-50);
+
+  /* Primary — lift to 400 so FCU blue keeps contrast on dark surfaces */
+  --primary: var(--color-fcu-primary-400);
+  --primary-foreground: var(--neutral-950);
+  --primary-hover: var(--color-fcu-primary-300);
+  --primary-active: var(--color-fcu-primary-500);
+  --primary-subtle: oklch(30.48% 0.056 221.59 / 0.25); /* fcu-primary-950 @ 25% */
+
+  /* Secondary stays RESERVED → neutral, never the brand green */
+  --secondary: var(--neutral-800);
+  --secondary-foreground: var(--neutral-50);
+  --muted: var(--neutral-800);
+  --muted-foreground: var(--neutral-400);
+  --accent: var(--neutral-800);
+  --accent-foreground: var(--neutral-50);
+
+  --destructive: var(--status-danger-500);
+  --destructive-foreground: var(--neutral-50);
+
+  /* Borders/inputs lighten so they read on dark */
+  --border: var(--neutral-800);
+  --border-strong: var(--neutral-700);
+  --input: var(--neutral-800);
+  --ring: var(--color-fcu-primary-400);
+
+  /* Extended surface + text tokens */
+  --surface: var(--neutral-900);
+  --surface-muted: var(--neutral-800);
+  --surface-sunken: var(--neutral-800);
+  --foreground-muted: var(--neutral-400);
+  --foreground-subtle: var(--neutral-500);
+
+  /* Brand accent (the green) — lift one step for dark legibility */
+  --brand-accent: var(--color-fcu-secondary-600);
+  --brand-accent-subtle: oklch(26.41% 0.056 109.7 / 0.3); /* fcu-secondary-900 @ 30% */
+
+  /* Chart palette — keep the brand ramp, brightened for dark */
+  --chart-1: var(--color-fcu-primary-400);
+  --chart-2: var(--color-fcu-primary-600);
+  --chart-3: var(--color-fcu-secondary-500);
+  --chart-4: var(--color-fcu-mint-500);
+  --chart-5: var(--neutral-600);
+
+  /* Sidebar (if used) */
+  --sidebar: var(--neutral-900);
+  --sidebar-foreground: var(--neutral-50);
+  --sidebar-primary: var(--color-fcu-primary-400);
+  --sidebar-primary-foreground: var(--neutral-950);
+  --sidebar-accent: var(--neutral-800);
+  --sidebar-accent-foreground: var(--neutral-50);
+  --sidebar-border: var(--neutral-800);
+  --sidebar-ring: var(--color-fcu-primary-400);
 }
 
 @theme inline {
