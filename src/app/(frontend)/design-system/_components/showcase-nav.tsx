@@ -10,6 +10,7 @@ const SECTIONS = [
   { id: 'navigation', label: 'Breadcrumb & Tabs' },
   { id: 'disclosure', label: 'Accordion · Tooltip · Popover' },
   { id: 'dropdown-menu', label: 'Dropdown menu' },
+  { id: 'hover-card', label: 'Hover card' },
 ] as const
 
 // Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.
