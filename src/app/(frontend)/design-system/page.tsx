@@ -15,6 +15,7 @@ import { AvatarSection } from './_sections/avatar'
 import { Indicators } from './_sections/indicators'
 import { SkeletonSection } from './_sections/skeleton'
 import { ToastSection } from './_sections/toast'
+import { EmptyState } from './_sections/empty-state'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -54,6 +55,7 @@ export default function DesignSystemPage() {
       <Indicators />
       <SkeletonSection />
       <ToastSection />
+      <EmptyState />
     </>
   )
 }
