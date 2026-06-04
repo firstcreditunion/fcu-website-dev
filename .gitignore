@@ -19,6 +19,9 @@
 /playwright/.cache/
 /a11y-results/
 
+# prototype references (visual reference only, not app code)
+/reference/
+
 # next.js
 /.next/
 /out/
