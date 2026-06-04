@@ -1,7 +1,7 @@
 "use client"
 
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
@@ -14,40 +14,46 @@ function Tabs({
     <TabsPrimitive.Root
       data-slot="tabs"
       data-orientation={orientation}
-      className={cn(
-        "group/tabs flex gap-2 data-horizontal:flex-col",
-        className
-      )}
+      className={cn("group/tabs flex min-w-0 gap-6 data-horizontal:flex-col", className)}
       {...props}
     />
   )
 }
 
 const tabsListVariants = cva(
-  "group/tabs-list inline-flex w-fit items-center justify-center rounded-lg p-[3px] text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none",
+  "group/tabs-list flex min-w-0 items-stretch overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
   {
     variants: {
       variant: {
-        default: "bg-muted",
-        line: "gap-1 bg-transparent",
+        underline: "gap-1 border-b border-border",
+        pill: "w-fit max-w-full gap-1 rounded-lg border border-border bg-surface p-1 shadow-[var(--shadow-xs)]",
+        enclosed: "gap-0.5 border-b border-border",
       },
     },
-    defaultVariants: {
-      variant: "default",
-    },
+    defaultVariants: { variant: "underline" },
   }
 )
 
+type TabsVariant = "underline" | "pill" | "enclosed"
+type TabsVariantProp = TabsVariant | "default" | "line"
+
+function resolveVariant(v: TabsVariantProp): TabsVariant {
+  if (v === "default") return "pill"
+  if (v === "line") return "underline"
+  return v
+}
+
 function TabsList({
   className,
-  variant = "default",
+  variant = "underline",
   ...props
-}: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
+}: TabsPrimitive.List.Props & { variant?: TabsVariantProp }) {
+  const resolved = resolveVariant(variant)
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
-      data-variant={variant}
-      className={cn(tabsListVariants({ variant }), className)}
+      data-variant={resolved}
+      className={cn(tabsListVariants({ variant: resolved }), className)}
       {...props}
     />
   )
@@ -58,10 +64,14 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-sm group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent",
-        "data-active:bg-background data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground",
-        "after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
+        // base
+        "relative inline-flex h-11 shrink-0 cursor-pointer items-center justify-center gap-2 border-0 bg-transparent px-4 text-[13.5px] font-medium tracking-[-0.005em] whitespace-nowrap text-foreground-muted transition-colors outline-none hover:text-foreground focus-visible:rounded-md focus-visible:shadow-[var(--shadow-focus)] data-disabled:cursor-not-allowed data-disabled:text-foreground-subtle data-disabled:opacity-55 [&_svg]:size-4 [&_svg]:shrink-0",
+        // underline
+        "group-data-[variant=underline]/tabs-list:-mb-px group-data-[variant=underline]/tabs-list:rounded-t-sm group-data-[variant=underline]/tabs-list:border-b-2 group-data-[variant=underline]/tabs-list:border-transparent group-data-[variant=underline]/tabs-list:data-active:border-primary group-data-[variant=underline]/tabs-list:data-active:text-primary group-data-[variant=underline]/tabs-list:not-data-active:hover:bg-surface-muted",
+        // pill
+        "group-data-[variant=pill]/tabs-list:h-8 group-data-[variant=pill]/tabs-list:rounded-md group-data-[variant=pill]/tabs-list:data-active:bg-card group-data-[variant=pill]/tabs-list:data-active:text-foreground group-data-[variant=pill]/tabs-list:data-active:shadow-[var(--shadow-xs)]",
+        // enclosed
+        "group-data-[variant=enclosed]/tabs-list:-mb-px group-data-[variant=enclosed]/tabs-list:rounded-t-md group-data-[variant=enclosed]/tabs-list:border group-data-[variant=enclosed]/tabs-list:border-b-0 group-data-[variant=enclosed]/tabs-list:border-transparent group-data-[variant=enclosed]/tabs-list:data-active:border-border group-data-[variant=enclosed]/tabs-list:data-active:bg-card group-data-[variant=enclosed]/tabs-list:data-active:text-foreground",
         className
       )}
       {...props}
@@ -73,7 +83,7 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   return (
     <TabsPrimitive.Panel
       data-slot="tabs-content"
-      className={cn("flex-1 text-sm outline-none", className)}
+      className={cn("min-w-0 flex-1 text-sm outline-none", className)}
       {...props}
     />
   )
