@@ -6,6 +6,7 @@ const SECTIONS = [
   { id: 'selection', label: 'Checkbox · Radio · Switch' },
   { id: 'card-dialog', label: 'Card & Dialog' },
   { id: 'table', label: 'Table' },
+  { id: 'alert-badge', label: 'Alert & Badge' },
 ] as const
 
 // Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.
