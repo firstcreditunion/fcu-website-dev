@@ -9,6 +9,7 @@ import { urlFor } from '@/sanity/lib/image'
 import { JsonLd, generateOrganizationSchema } from '@/lib/json-ld'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Toaster } from '@/components/ui/sonner'
+import { A11yDevAudit } from '@/components/a11y-dev-audit'
 import { cn } from '@/lib/utils'
 
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' })
@@ -112,6 +113,7 @@ export default async function RootLayout({
           )}
           <TooltipProvider>{children}</TooltipProvider>
           <Toaster />
+          <A11yDevAudit />
         </body>
       </html>
     </ClerkProvider>
