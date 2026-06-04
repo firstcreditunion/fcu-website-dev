@@ -19,6 +19,7 @@ import { EmptyState } from './_sections/empty-state'
 import { ToggleGroupSection, RatingSection } from './_sections/toggle-rating'
 import { SliderSection } from './_sections/slider'
 import { OtpSection } from './_sections/otp'
+import { StepperSection } from './_sections/stepper'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -63,6 +64,7 @@ export default function DesignSystemPage() {
       <RatingSection />
       <SliderSection />
       <OtpSection />
+      <StepperSection />
     </>
   )
 }
