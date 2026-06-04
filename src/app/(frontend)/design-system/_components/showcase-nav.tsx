@@ -16,6 +16,8 @@ const SECTIONS = [
   { id: 'skeleton', label: 'Skeleton' },
   { id: 'toast', label: 'Toast' },
   { id: 'empty-state', label: 'Empty state' },
+  { id: 'toggle-group', label: 'Toggle group' },
+  { id: 'rating', label: 'Rating' },
 ] as const
 
 // Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.

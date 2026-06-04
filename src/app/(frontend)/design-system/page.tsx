@@ -16,6 +16,7 @@ import { Indicators } from './_sections/indicators'
 import { SkeletonSection } from './_sections/skeleton'
 import { ToastSection } from './_sections/toast'
 import { EmptyState } from './_sections/empty-state'
+import { ToggleGroupSection, RatingSection } from './_sections/toggle-rating'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -56,6 +57,8 @@ export default function DesignSystemPage() {
       <SkeletonSection />
       <ToastSection />
       <EmptyState />
+      <ToggleGroupSection />
+      <RatingSection />
     </>
   )
 }
