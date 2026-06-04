@@ -39,7 +39,10 @@ const UPCOMING = [
 
 export function ShowcaseNav() {
   return (
-    <nav aria-label='Design system sections' className='sticky top-24'>
+    <nav
+      aria-label='Design system sections'
+      className='sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto overscroll-contain pr-1'
+    >
       <p className='mb-3 px-3 text-[11px] font-semibold uppercase tracking-widest text-foreground-subtle'>
         FCU Design System
       </p>
