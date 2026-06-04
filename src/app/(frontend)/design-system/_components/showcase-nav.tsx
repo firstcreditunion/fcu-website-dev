@@ -27,14 +27,7 @@ const SECTIONS = [
   { id: 'command', label: 'Command (⌘K)' },
   { id: 'date-picker', label: 'Date picker' },
   { id: 'calendar', label: 'Calendar' },
-] as const
-
-// Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.
-const UPCOMING = [
-  'Navigation',
-  'Feedback',
-  'Overlays & Inputs',
-  'Marketing & Patterns',
+  { id: 'stat-block', label: 'Stat block' },
 ] as const
 
 export function ShowcaseNav() {
@@ -55,19 +48,6 @@ export function ShowcaseNav() {
             >
               {s.label}
             </a>
-          </li>
-        ))}
-      </ul>
-      <p className='mt-6 mb-2 px-3 text-[11px] font-semibold uppercase tracking-widest text-foreground-subtle'>
-        Coming soon
-      </p>
-      <ul className='space-y-0.5'>
-        {UPCOMING.map((label) => (
-          <li
-            key={label}
-            className='cursor-default px-3 py-1.5 text-sm text-foreground-subtle/70'
-          >
-            {label}
           </li>
         ))}
       </ul>
