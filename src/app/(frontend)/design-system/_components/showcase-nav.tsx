@@ -33,6 +33,7 @@ const SECTIONS = [
   { id: 'timeline', label: 'Timeline' },
   { id: 'description-list', label: 'Description list' },
   { id: 'charts', label: 'Charts' },
+  { id: 'carousel', label: 'Carousel' },
 ] as const
 
 export function ShowcaseNav() {

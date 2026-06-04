@@ -31,6 +31,7 @@ import { CtaBannerSection } from './_sections/cta-banner'
 import { TimelineSection } from './_sections/timeline'
 import { DescriptionListSection } from './_sections/description-list'
 import { ChartsSection } from './_sections/charts'
+import { CarouselSection } from './_sections/carousel'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -88,6 +89,7 @@ export default function DesignSystemPage() {
       <TimelineSection />
       <DescriptionListSection />
       <ChartsSection />
+      <CarouselSection />
     </>
   )
 }
