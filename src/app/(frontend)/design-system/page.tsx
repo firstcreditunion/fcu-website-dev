@@ -7,6 +7,7 @@ import { Selection } from './_sections/selection'
 import { CardDialog } from './_sections/card-dialog'
 import { TableSection } from './_sections/table'
 import { AlertBadge } from './_sections/alert-badge'
+import { Navigation } from './_sections/navigation'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -38,6 +39,7 @@ export default function DesignSystemPage() {
       <CardDialog />
       <TableSection />
       <AlertBadge />
+      <Navigation />
     </>
   )
 }
