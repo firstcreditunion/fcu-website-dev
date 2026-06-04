@@ -19,6 +19,7 @@ const SECTIONS = [
   { id: 'toggle-group', label: 'Toggle group' },
   { id: 'rating', label: 'Rating' },
   { id: 'slider', label: 'Slider' },
+  { id: 'otp', label: 'OTP / PIN' },
 ] as const
 
 // Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.
