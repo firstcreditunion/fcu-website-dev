@@ -11,6 +11,7 @@ import { Navigation } from './_sections/navigation'
 import { Disclosure } from './_sections/disclosure'
 import { DropdownMenuSection } from './_sections/dropdown-menu'
 import { HoverCardSection } from './_sections/hover-card'
+import { AvatarSection } from './_sections/avatar'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -46,6 +47,7 @@ export default function DesignSystemPage() {
       <Disclosure />
       <DropdownMenuSection />
       <HoverCardSection />
+      <AvatarSection />
     </>
   )
 }
