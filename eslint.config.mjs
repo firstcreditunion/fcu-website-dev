@@ -16,6 +16,10 @@ const eslintConfig = defineConfig([
     ".agents/**",
     ".cursor/**",
     ".claude/**",
+    // Generated test / audit artifacts:
+    "playwright-report/**",
+    "test-results/**",
+    "a11y-results/**",
   ]),
 ]);
 

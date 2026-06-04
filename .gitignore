@@ -13,6 +13,12 @@
 # testing
 /coverage
 
+# playwright / accessibility audit artifacts
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/a11y-results/
+
 # next.js
 /.next/
 /out/
