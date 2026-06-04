@@ -28,6 +28,7 @@ const SECTIONS = [
   { id: 'date-picker', label: 'Date picker' },
   { id: 'calendar', label: 'Calendar' },
   { id: 'stat-block', label: 'Stat block' },
+  { id: 'testimonial', label: 'Testimonial' },
 ] as const
 
 export function ShowcaseNav() {

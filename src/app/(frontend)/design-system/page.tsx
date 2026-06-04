@@ -26,6 +26,7 @@ import { ComboboxSection } from './_sections/combobox'
 import { CommandSection } from './_sections/command'
 import { DatePickerSection, CalendarSection } from './_sections/date-calendar'
 import { StatBlockSection } from './_sections/stat-block'
+import { TestimonialSection } from './_sections/testimonial'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -78,6 +79,7 @@ export default function DesignSystemPage() {
       <DatePickerSection />
       <CalendarSection />
       <StatBlockSection />
+      <TestimonialSection />
     </>
   )
 }

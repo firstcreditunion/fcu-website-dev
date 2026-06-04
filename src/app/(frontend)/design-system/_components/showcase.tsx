@@ -46,9 +46,13 @@ export function VariantCard({
 }
 
 /** A bordered demo plate. */
-export function Demo({ children }: { children: ReactNode }) {
+export function Demo({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className='overflow-hidden rounded-xl border border-border bg-card p-6 md:p-8'>{children}</div>
+    <div
+      className={cn('overflow-hidden rounded-xl border border-border bg-card p-6 md:p-8', className)}
+    >
+      {children}
+    </div>
   )
 }
 
