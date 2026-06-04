@@ -9,6 +9,7 @@ const SECTIONS = [
   { id: 'alert-badge', label: 'Alert & Badge' },
   { id: 'navigation', label: 'Breadcrumb & Tabs' },
   { id: 'disclosure', label: 'Accordion · Tooltip · Popover' },
+  { id: 'dropdown-menu', label: 'Dropdown menu' },
 ] as const
 
 // Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.

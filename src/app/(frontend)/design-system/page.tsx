@@ -9,6 +9,7 @@ import { TableSection } from './_sections/table'
 import { AlertBadge } from './_sections/alert-badge'
 import { Navigation } from './_sections/navigation'
 import { Disclosure } from './_sections/disclosure'
+import { DropdownMenuSection } from './_sections/dropdown-menu'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -42,6 +43,7 @@ export default function DesignSystemPage() {
       <AlertBadge />
       <Navigation />
       <Disclosure />
+      <DropdownMenuSection />
     </>
   )
 }
