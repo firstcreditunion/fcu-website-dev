@@ -31,6 +31,7 @@ const SECTIONS = [
   { id: 'testimonial', label: 'Testimonial' },
   { id: 'cta-banner', label: 'CTA banner' },
   { id: 'timeline', label: 'Timeline' },
+  { id: 'description-list', label: 'Description list' },
 ] as const
 
 export function ShowcaseNav() {

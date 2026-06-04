@@ -29,6 +29,7 @@ import { StatBlockSection } from './_sections/stat-block'
 import { TestimonialSection } from './_sections/testimonial'
 import { CtaBannerSection } from './_sections/cta-banner'
 import { TimelineSection } from './_sections/timeline'
+import { DescriptionListSection } from './_sections/description-list'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -84,6 +85,7 @@ export default function DesignSystemPage() {
       <TestimonialSection />
       <CtaBannerSection />
       <TimelineSection />
+      <DescriptionListSection />
     </>
   )
 }
