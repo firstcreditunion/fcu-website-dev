@@ -28,6 +28,7 @@ import { DatePickerSection, CalendarSection } from './_sections/date-calendar'
 import { StatBlockSection } from './_sections/stat-block'
 import { TestimonialSection } from './_sections/testimonial'
 import { CtaBannerSection } from './_sections/cta-banner'
+import { TimelineSection } from './_sections/timeline'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -82,6 +83,7 @@ export default function DesignSystemPage() {
       <StatBlockSection />
       <TestimonialSection />
       <CtaBannerSection />
+      <TimelineSection />
     </>
   )
 }

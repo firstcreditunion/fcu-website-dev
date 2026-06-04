@@ -30,6 +30,7 @@ const SECTIONS = [
   { id: 'stat-block', label: 'Stat block' },
   { id: 'testimonial', label: 'Testimonial' },
   { id: 'cta-banner', label: 'CTA banner' },
+  { id: 'timeline', label: 'Timeline' },
 ] as const
 
 export function ShowcaseNav() {
