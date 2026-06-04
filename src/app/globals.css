@@ -284,6 +284,8 @@
   --animate-shine: shine var(--duration) infinite linear;
   --animate-background-position-spin: background-position-spin 3000ms infinite
     alternate;
+  --animate-progress-indeterminate: progress-indeterminate 1.4s ease-in-out infinite;
+  --animate-progress-stripes: progress-stripes 1.2s linear infinite;
   @keyframes shimmer-slide {
     to {
       transform: translate(calc(100cqw - 100%), 0);
@@ -333,6 +335,22 @@
     }
     100% {
       background-position: bottom center;
+    }
+  }
+  @keyframes progress-indeterminate {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(385%);
+    }
+  }
+  @keyframes progress-stripes {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 16px 0;
     }
   }
 }
