@@ -286,6 +286,7 @@
     alternate;
   --animate-progress-indeterminate: progress-indeterminate 1.4s ease-in-out infinite;
   --animate-progress-stripes: progress-stripes 1.2s linear infinite;
+  --animate-skeleton-shimmer: skeleton-shimmer 1.6s ease-in-out infinite;
   @keyframes shimmer-slide {
     to {
       transform: translate(calc(100cqw - 100%), 0);
@@ -351,6 +352,14 @@
     }
     to {
       background-position: 16px 0;
+    }
+  }
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
     }
   }
 }

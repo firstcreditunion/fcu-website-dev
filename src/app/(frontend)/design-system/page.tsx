@@ -13,6 +13,7 @@ import { DropdownMenuSection } from './_sections/dropdown-menu'
 import { HoverCardSection } from './_sections/hover-card'
 import { AvatarSection } from './_sections/avatar'
 import { Indicators } from './_sections/indicators'
+import { SkeletonSection } from './_sections/skeleton'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -50,6 +51,7 @@ export default function DesignSystemPage() {
       <HoverCardSection />
       <AvatarSection />
       <Indicators />
+      <SkeletonSection />
     </>
   )
 }
