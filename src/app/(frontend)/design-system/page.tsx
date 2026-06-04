@@ -22,6 +22,7 @@ import { OtpSection } from './_sections/otp'
 import { StepperSection } from './_sections/stepper'
 import { FileUploadSection } from './_sections/file-upload'
 import { TagInputSection } from './_sections/tag-input'
+import { ComboboxSection } from './_sections/combobox'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -69,6 +70,7 @@ export default function DesignSystemPage() {
       <StepperSection />
       <FileUploadSection />
       <TagInputSection />
+      <ComboboxSection />
     </>
   )
 }

@@ -23,6 +23,7 @@ const SECTIONS = [
   { id: 'stepper', label: 'Stepper' },
   { id: 'file-upload', label: 'File upload' },
   { id: 'tag-input', label: 'Tag input' },
+  { id: 'combobox', label: 'Combobox' },
 ] as const
 
 // Upcoming component phases (Phases 2–7). Shown as a roadmap; wired up as each phase lands.
