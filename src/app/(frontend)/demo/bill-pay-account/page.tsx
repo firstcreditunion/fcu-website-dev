@@ -1,10 +1,11 @@
 import { HeroSection } from './_components/hero-section'
 import { StatsBar } from './_components/stats-bar'
 import { FeaturesSection } from './_components/features-section'
+import { WhyRingfence } from './_components/why-ringfence'
 import { HowItWorks } from './_components/how-it-works'
 import { RatesFees } from './_components/rates-fees'
 import { DebitCardSection } from './_components/debit-card-section'
-import { FaqSection } from './_components/faq-section'
+import { FaqSection } from './_components/faq'
 import { RelatedAccounts } from './_components/related-accounts'
 import { CtaSection } from './_components/cta-section'
 
@@ -19,6 +20,7 @@ export default function BillPayAccountPage() {
     <div className='overflow-x-hidden'>
       <HeroSection />
       <FeaturesSection />
+      <WhyRingfence />
       <HowItWorks />
       <StatsBar />
       <RatesFees />

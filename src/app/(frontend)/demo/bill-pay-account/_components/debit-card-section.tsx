@@ -2,82 +2,58 @@
 
 import Link from 'next/link'
 import { BlurFade } from '@/components/ui/blur-fade'
-import { NeonGradientCard } from '@/components/ui/neon-gradient-card'
-import {
-  CreditCard,
-  CreditCardFlipper,
-  CreditCardFront,
-  CreditCardBack,
-  CreditCardChip,
-  CreditCardName,
-  CreditCardNumber,
-  CreditCardExpiry,
-  CreditCardCvv,
-  CreditCardMagStripe,
-  CreditCardServiceProvider,
-} from '@/components/kibo-ui/credit-card'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Section } from '@/components/marketing'
 
 export function DebitCardSection() {
   return (
-    <section className='bg-gradient-to-b from-white to-fcu-primary-50/30'>
-      <div className='mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28 lg:px-8'>
-        <BlurFade delay={0.1} inView>
-          <NeonGradientCard
-            neonColors={{ firstColor: 'oklch(75.6% 0.138 220.17)', secondColor: 'oklch(47.85% 0.087 220.03)' }}
-            borderSize={2}
-            borderRadius={20}
-            className='mx-auto max-w-3xl'
-          >
-            <div className='flex flex-col items-center gap-8 p-6 sm:flex-row sm:p-8'>
-              <div className='w-full max-w-[280px] shrink-0'>
-                <CreditCard>
-                  <CreditCardFlipper>
-                    <CreditCardFront className='bg-gradient-to-br from-fcu-primary-900 to-fcu-primary-600'>
-                      <CreditCardChip />
-                      <div className='absolute bottom-0 left-0 flex flex-col gap-2'>
-                        <CreditCardNumber>&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4829</CreditCardNumber>
-                        <div className='flex items-center gap-4'>
-                          <CreditCardName>FCU Member</CreditCardName>
-                          <CreditCardExpiry>12/28</CreditCardExpiry>
-                        </div>
-                      </div>
-                      <CreditCardServiceProvider type='Mastercard' />
-                    </CreditCardFront>
-                    <CreditCardBack className='bg-gradient-to-br from-fcu-primary-800 to-fcu-primary-950'>
-                      <CreditCardMagStripe />
-                      <div className='absolute bottom-0 right-0 flex items-center gap-2'>
-                        <span className='text-xs text-white/60'>CVV</span>
-                        <CreditCardCvv className='rounded bg-white/90 px-3 py-1 text-sm text-fcu-primary-950'>
-                          &bull;&bull;&bull;
-                        </CreditCardCvv>
-                      </div>
-                    </CreditCardBack>
-                  </CreditCardFlipper>
-                </CreditCard>
-              </div>
-
-              <div className='text-center sm:text-left'>
-                <h2 className='mb-2 text-lg font-semibold text-foreground'>
-                  Mastercard&reg; Debit Card
-                </h2>
-                <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
-                  Link a debit card to this account for in-store, online, and
-                  contactless payments wherever Mastercard is accepted. Your
-                  first card is issued free and a digital card is available
-                  immediately via the&nbsp;mobile&nbsp;app.
-                </p>
-                <Link
-                  href='/debit-card'
-                  className='group inline-flex items-center gap-1 text-sm font-semibold text-fcu-primary-900 transition-colors hover:text-fcu-primary-700'
-                >
-                  View card details
-                  <span aria-hidden='true' className='transition-transform group-hover:translate-x-0.5'>&rarr;</span>
-                </Link>
+    <Section variant='surface'>
+      <BlurFade delay={0.1} inView>
+        <Card className='mx-auto max-w-3xl'>
+          <CardContent className='flex flex-col items-center gap-8 p-6 sm:flex-row sm:p-8'>
+            {/* Static card visual — a primary-blue gradient panel (represents a physical card, not UI chrome) */}
+            <div className='w-full max-w-[300px] shrink-0'>
+              <div className='relative flex aspect-[1.586/1] flex-col justify-between overflow-hidden rounded-xl bg-[linear-gradient(135deg,var(--color-fcu-primary-900),var(--color-fcu-primary-600))] p-5 text-white shadow-[var(--shadow-lg)] ring-1 ring-inset ring-white/10'>
+                <div className='flex items-start justify-between'>
+                  {/* chip */}
+                  <div className='h-7 w-10 rounded-md bg-[linear-gradient(135deg,oklch(88%_0.06_90),oklch(70%_0.09_85))] ring-1 ring-inset ring-black/10' />
+                  {/* Mastercard mark */}
+                  <div className='flex items-center' aria-hidden='true'>
+                    <span className='size-6 rounded-full bg-[oklch(64%_0.2_25)]' />
+                    <span className='-ml-2.5 size-6 rounded-full bg-[oklch(78%_0.17_60)]' />
+                  </div>
+                </div>
+                <div>
+                  <div className='font-mono text-[15px] tracking-[0.14em]'>
+                    &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4829
+                  </div>
+                  <div className='mt-2 flex items-center justify-between'>
+                    <span className='text-[11px] font-medium tracking-wide text-white/85 uppercase'>
+                      FCU Member
+                    </span>
+                    <span className='font-mono text-[11px] text-white/85'>12/28</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </NeonGradientCard>
-        </BlurFade>
-      </div>
-    </section>
+
+            <div className='text-center sm:text-left'>
+              <h2 className='mb-2 text-[18px] font-semibold text-foreground'>
+                Mastercard&reg; Debit Card
+              </h2>
+              <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
+                Link a debit card to this account for in-store, online, and contactless payments
+                wherever Mastercard is accepted. Your first card is issued free and a digital card is
+                available immediately via the&nbsp;mobile&nbsp;app.
+              </p>
+              <Button variant='link' render={<Link href='/debit-card' />} nativeButton={false}>
+                View card details &rarr;
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </BlurFade>
+    </Section>
   )
 }

@@ -2,6 +2,7 @@
 
 import { CreditCard, ListChecks, Clock, Wallet } from 'lucide-react'
 import { BlurFade } from '@/components/ui/blur-fade'
+import { FeatureItem } from '@/components/marketing'
 
 const features = [
   {
@@ -12,7 +13,7 @@ const features = [
   {
     icon: ListChecks,
     title: 'Bills stay ringfenced',
-    desc: 'Committed funds are separated from everyday spending so you always know what\u2019s left.',
+    desc: 'Committed funds are separated from everyday spending so you always know what’s left.',
   },
   {
     icon: Clock,
@@ -22,40 +23,35 @@ const features = [
   {
     icon: Wallet,
     title: 'Debit card eligible',
-    desc: 'Link a Mastercard\u00AE Debit Card for in-store, online, and contactless payments.',
+    desc: 'Link a Mastercard® Debit Card for in-store, online, and contactless payments.',
   },
 ]
 
 export function FeaturesSection() {
   return (
     <section className='relative z-10 -mt-28 px-6 sm:-mt-32 md:-mt-40 lg:px-8'>
-      <div className='mx-auto max-w-7xl rounded-3xl bg-white px-8 py-14 shadow-lg ring-1 ring-black/5 sm:px-12 sm:py-16 md:px-16 md:py-20'>
+      <div className='mx-auto max-w-7xl rounded-3xl border border-border bg-card px-8 py-14 shadow-[var(--shadow-lg)] sm:px-12 sm:py-16 md:px-16 md:py-20'>
         <BlurFade delay={0} inView>
-          <h2 className='mb-12 text-center text-2xl font-semibold tracking-tight text-fcu-primary-950 md:mb-14 md:text-3xl'>
+          <h2 className='mb-12 text-center text-[clamp(24px,3vw,34px)] font-semibold tracking-[-0.02em] text-balance text-foreground md:mb-14'>
             What&apos;s included
           </h2>
         </BlurFade>
 
         <div className='grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4'>
-          {features.map((feat, i) => (
-            <BlurFade key={feat.title} delay={0.08 + i * 0.08} inView>
-              <div className='flex flex-col items-center text-center'>
-                <div className='mb-5 flex size-14 items-center justify-center rounded-2xl bg-fcu-primary-100'>
-                  <feat.icon
-                    className='size-6 text-fcu-primary-900'
-                    strokeWidth={1.6}
-                    aria-hidden='true'
-                  />
-                </div>
-                <h3 className='mb-2 text-lg font-semibold text-fcu-primary-950'>
-                  {feat.title}
-                </h3>
-                <p className='max-w-xs text-sm leading-relaxed text-muted-foreground'>
+          {features.map((feat, i) => {
+            const Icon = feat.icon
+            return (
+              <BlurFade key={feat.title} delay={0.08 + i * 0.08} inView>
+                <FeatureItem
+                  className='items-center text-center'
+                  icon={<Icon strokeWidth={1.8} aria-hidden='true' />}
+                  title={feat.title}
+                >
                   {feat.desc}
-                </p>
-              </div>
-            </BlurFade>
-          ))}
+                </FeatureItem>
+              </BlurFade>
+            )
+          })}
         </div>
       </div>
     </section>

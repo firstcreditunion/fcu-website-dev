@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { BlurFade } from '@/components/ui/blur-fade'
-import { NoiseBackground } from '@/components/aceternity/noise-background'
+import { Button } from '@/components/ui/button'
 import { AnimatedShinyText } from '@/components/ui/animated-shiny-text'
 import { BillVisual } from './bill-visual'
 
@@ -57,7 +57,7 @@ export function HeroSection() {
           <div className='grid items-center gap-16 pt-16 pb-48 sm:pt-24 sm:pb-56 md:pt-32 md:pb-72 lg:grid-cols-2 lg:gap-20'>
             <div>
               <BlurFade delay={0} inView>
-                <div className='mb-6 inline-flex items-center rounded-full border border-fcu-secondary-500/30 bg-white/60 px-4 py-1.5 shadow-xs backdrop-blur-sm'>
+                <div className='mb-6 inline-flex items-center rounded-full border border-primary/20 bg-white/60 px-4 py-1.5 shadow-xs backdrop-blur-sm'>
                   <AnimatedShinyText className='text-xs font-semibold tracking-wide text-fcu-primary-900'>
                     $0 monthly fees
                   </AnimatedShinyText>
@@ -80,31 +80,17 @@ export function HeroSection() {
 
               <BlurFade delay={0.3} inView>
                 <div className='mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row'>
-                  <Link href='/contact'>
-                    <NoiseBackground
-                      containerClassName='w-fit rounded-full p-[3px]'
-                      gradientColors={[
-                        'oklch(75.6% 0.138 220.17)',
-                        'oklch(47.85% 0.087 220.03)',
-                        'oklch(64.66% 0.117 219.68)',
-                      ]}
-                      speed={0.06}
-                      noiseIntensity={0.15}
-                    >
-                      <button
-                        type='button'
-                        className='cursor-pointer rounded-full bg-fcu-primary-900 px-8 py-3.5 text-base font-semibold text-white shadow-md transition-all active:scale-[0.98] hover:bg-fcu-primary-800'
-                      >
-                        Open an account
-                      </button>
-                    </NoiseBackground>
-                  </Link>
-                  <Link
-                    href='/branches'
-                    className='inline-flex items-center justify-center rounded-full border border-transparent bg-white/15 px-8 py-3.5 text-base font-semibold text-fcu-primary-950 shadow-md ring-1 ring-fcu-primary-900/10 backdrop-blur-sm transition-all hover:bg-white/30 hover:ring-fcu-primary-900/20'
+                  <Button render={<Link href='/contact' />} nativeButton={false} size='lg'>
+                    Open an account
+                  </Button>
+                  <Button
+                    render={<Link href='/branches' />}
+                    nativeButton={false}
+                    variant='outline'
+                    size='lg'
                   >
                     Find a branch
-                  </Link>
+                  </Button>
                 </div>
               </BlurFade>
             </div>
