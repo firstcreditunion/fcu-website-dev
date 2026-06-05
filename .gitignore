@@ -22,6 +22,9 @@
 # prototype references (visual reference only, not app code)
 /reference/
 
+# local screenshot captures
+/_shots/
+
 # next.js
 /.next/
 /out/
