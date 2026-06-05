@@ -10,11 +10,14 @@ import { cn } from "@/lib/utils"
 function Split({
   image,
   reverse,
+  blob,
   children,
   className,
 }: {
   image: { src: string; alt: string }
   reverse?: boolean
+  /** Render the illustration over a soft neutral radial "blob" (hero-art treatment). */
+  blob?: boolean
   children: ReactNode
   className?: string
 }) {
@@ -25,7 +28,18 @@ function Split({
         className
       )}
     >
-      <div className={cn("grid place-items-center", reverse && "order-2 max-[880px]:order-none")}>
+      <div
+        className={cn(
+          "relative grid place-items-center",
+          reverse && "order-2 max-[880px]:order-none"
+        )}
+      >
+        {blob ? (
+          <span
+            aria-hidden="true"
+            className="absolute inset-[6%_4%] z-0 rounded-[42%_58%_56%_44%/52%_44%_56%_48%] bg-[radial-gradient(circle_at_50%_40%,var(--surface-muted),transparent_72%)]"
+          />
+        ) : null}
         <Image
           src={image.src}
           alt={image.alt}
@@ -33,7 +47,7 @@ function Split({
           height={2000}
           loading="lazy"
           sizes="(max-width: 880px) 90vw, 480px"
-          className="h-auto w-full max-w-[480px]"
+          className={cn("h-auto w-full max-w-[480px]", blob && "relative z-[1]")}
         />
       </div>
       <div className="min-w-0">{children}</div>
