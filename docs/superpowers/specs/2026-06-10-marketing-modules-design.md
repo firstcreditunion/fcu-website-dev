@@ -21,7 +21,7 @@ page builder** (authoring), and **React renderers built on the existing design s
 | Rollout | Recreate all three hand-coded pages as Sanity content; retire the hand-coded routes after visual parity is verified |
 | Sequencing | **Figma first**: build and sign off the Figma kit before the Sanity/render tracks |
 | Figma scope | **Marketing modules kit** (~14-15 components + tokens + foundations docs), not the full ~36-component DS |
-| Block set size | Lean v1: 12 blocks (exactly what the three target pages need); charts/timeline/carousel deferred — additive later, no migrations |
+| Block set size | Lean v1: **14 blocks** — the 12 from the brainstorm plus `stepsBlock` and `widgetBlock`, discovered during plan-writing because `/loans/home` uses the DS `Stepper` and an interactive repayment calculator (parity requires them). Charts/timeline/carousel deferred — additive later, no migrations |
 
 ## 3. Module registry (the spine)
 
@@ -41,8 +41,22 @@ One module = one name in all three systems.
 | Rich text | — (type styles) | `richTextBlock` | Portable Text components |
 | Notice | `Alert` | `noticeBlock` | `Alert` (info/warning/legal tones) |
 | CTA banner | `Cta` | `ctaBannerBlock` | `Cta` |
+| Steps | `Stepper` | `stepsBlock` | `Stepper` |
+| Widget | — (placeholder frame) | `widgetBlock` | Curated widget registry (v1: `repaymentCalculator`) |
 
 Atoms consumed by the modules (also in the Figma kit): `Button`, `Badge`, `Checklist`.
+
+Registry amendments discovered during plan-writing (target-page parity):
+- `splitBlock` carries optional content slots — `checklist[]`, key-value `rows[]` (+ `footnote`),
+  stat cards `stats[]`, and an `action` button — because all three Split usages on the target
+  pages embed one of these (home-loan: checklist; everyday: rates rows + footnote; homepage:
+  stat cards + action).
+- `faqItem.answer` upgrades from plain text to minimal rich text (strong/em/link) — home-loan
+  FAQ answers use bold.
+- Hero `meta` items are `{ value, unit?, label }` so "6.45% p.a." renders with the muted unit
+  suffix.
+- Breadcrumbs are **not a block**: the route derives them from slug segments on every
+  non-homepage page, matching the hand-coded pages.
 
 ## 4. Track 1 — Figma kit (first)
 
@@ -91,7 +105,7 @@ every `use_figma` call; state ledger maintained for resumability.
 - **Untouched (out of scope)** — `designTokens`, `componentConfig`, `designSystemUser`.
 
 ### Blocks
-All 12 are objects (`defineType`/`defineField`/`defineArrayMember`), each with an
+All 14 are objects (`defineType`/`defineField`/`defineArrayMember`), each with an
 `@sanity/icons` icon, a non-engineer-friendly preview (title + block-name subtitle +
 media/icon fallback), and an insert-menu group: Structure / Content / Social proof /
 Conversion / Compliance.
