@@ -31,14 +31,14 @@ const buttonVariants = cva(
       },
       size: {
         default:
-          "h-10 gap-2 px-4 text-sm rounded-lg [&_svg:not([class*='size-'])]:size-[18px]",
-        sm: "h-8 gap-1.5 px-3 text-[13px] rounded-md [&_svg:not([class*='size-'])]:size-4",
-        lg: "h-12 gap-2.5 px-[22px] text-[15px] rounded-lg [&_svg:not([class*='size-'])]:size-5",
-        xs: "h-6 gap-1 px-2 text-xs rounded-md [&_svg:not([class*='size-'])]:size-3.5",
-        icon: "size-10 rounded-lg [&_svg:not([class*='size-'])]:size-[18px]",
-        "icon-sm": "size-8 rounded-md [&_svg:not([class*='size-'])]:size-4",
-        "icon-lg": "size-12 rounded-lg [&_svg:not([class*='size-'])]:size-5",
-        "icon-xs": "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3.5",
+          "h-10 gap-2 px-4 text-sm rounded-xl [&_svg:not([class*='size-'])]:size-[18px]",
+        sm: "h-8 gap-1.5 px-3 text-[13px] rounded-lg [&_svg:not([class*='size-'])]:size-4",
+        lg: "h-12 gap-2.5 px-[22px] text-[15px] rounded-xl [&_svg:not([class*='size-'])]:size-5",
+        xs: "h-6 gap-1 px-2 text-xs rounded-lg [&_svg:not([class*='size-'])]:size-3.5",
+        icon: "size-10 rounded-xl [&_svg:not([class*='size-'])]:size-[18px]",
+        "icon-sm": "size-8 rounded-lg [&_svg:not([class*='size-'])]:size-4",
+        "icon-lg": "size-12 rounded-xl [&_svg:not([class*='size-'])]:size-5",
+        "icon-xs": "size-6 rounded-lg [&_svg:not([class*='size-'])]:size-3.5",
       },
       block: {
         true: "w-full",
