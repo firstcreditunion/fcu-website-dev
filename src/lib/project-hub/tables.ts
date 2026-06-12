@@ -74,10 +74,14 @@ function entry(table: string) {
 
 export function validatePatch(table: EditableTable, patch: unknown) {
   const parsed = entry(table).patch.partial().strict().parse(patch)
-  if (Object.keys(parsed).length === 0) throw new Error('empty patch')
-  return parsed
+  const meaningful = Object.entries(parsed).filter(([, v]) => v !== undefined)
+  if (meaningful.length === 0) throw new Error('empty patch')
+  return Object.fromEntries(meaningful) as typeof parsed
 }
 
+// Returns Record<string, unknown>: infer<> can't escape the REGISTRY union under
+// `as const` + the null sentinel. Create schemas deliberately omit project_id and
+// server-owned columns — the server action injects project_id from session context.
 export function validateCreate(table: EditableTable, values: unknown): Record<string, unknown> {
   const schema = entry(table).create
   if (!schema) throw new Error(`creates not allowed on ${table}`)

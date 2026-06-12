@@ -30,6 +30,14 @@ describe('table registry', () => {
     })
     expect(ok.name).toBe('x')
   })
+  it('rejects unknown fields on create (mass-assignment guard)', () => {
+    expect(() => validateCreate('pt_tasks', {
+      group_id: '7c9e6679-7425-40de-944b-e07fc1f90ae7', name: 'x', project_id: 'evil',
+    })).toThrow()
+  })
+  it('treats explicit-undefined patches as empty', () => {
+    expect(() => validatePatch('pt_tasks', { name: undefined })).toThrow()
+  })
   it('exposes the full editable table list', () => {
     expect(EDITABLE_TABLES).toContain('pt_deliverables')
     expect(EDITABLE_TABLES).not.toContain('pt_revisions')
