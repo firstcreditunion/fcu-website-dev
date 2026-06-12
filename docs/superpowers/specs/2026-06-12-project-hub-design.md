@@ -78,7 +78,7 @@ Accepted trade-off (stated to user): a holder of the anon key can observe that e
 ### Route, deps, data flow
 
 - `src/app/(frontend)/project-hub/page.tsx` + `/project-hub(.*)` added to the Clerk protected matcher in `src/proxy.ts`.
-- New deps (only these): `@supabase/supabase-js`, `@tanstack/react-query`, `zod`.
+- New deps (only these): `@supabase/supabase-js`, `@tanstack/react-query`, `zod`, `server-only` (build-time guard for the service-role module); dev: `vitest` (repo has Playwright only).
 - One server query (`getProjectHub`) returns the full hub payload (~200 small rows) into a single React Query key. Mutations are per-entity server actions validated with zod: optimistic update → server write (actor stamped from Clerk session) → trigger writes revision + broadcasts → other clients debounce-refetch (~500 ms). Failures roll back optimistic state and show a DS toast.
 - Concurrency: last-write-wins per field; both values land in history. Documented, acceptable for this team size.
 - Realtime: browser joins public broadcast channel `pt:{project_id}` with the anon key; payloads are used only as an invalidation signal.
