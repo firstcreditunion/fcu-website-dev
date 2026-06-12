@@ -17,7 +17,10 @@ export function useHubRealtime(projectId: string, onChange: () => void) {
   const [live, setLive] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const cb = useRef(onChange)
-  cb.current = onChange
+
+  useEffect(() => {
+    cb.current = onChange
+  }, [onChange])
 
   useEffect(() => {
     const sb = supabaseBrowser()
