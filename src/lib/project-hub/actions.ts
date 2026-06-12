@@ -115,9 +115,16 @@ export async function revertRevision(revisionIdIn: number): Promise<Result<unkno
       return await softDeleteRow(table, rev.row_id)
     }
     if (!rev.old_data) throw new Error('nothing to revert to')
+    // Restore deleted_at ONLY when this revision actually changed it (i.e. it
+    // captured a soft delete or a restore). Otherwise reverting an old content
+    // edit would silently resurrect a row that was soft-deleted later.
+    const deletedChanged =
+      (rev.old_data.deleted_at ?? null) !== (rev.new_data?.deleted_at ?? null)
     const restore: Record<string, unknown> = {}
     for (const [k, v] of Object.entries(rev.old_data)) {
-      if (!REVERT_META.has(k)) restore[k] = v
+      if (REVERT_META.has(k)) continue
+      if (k === 'deleted_at' && !deletedChanged) continue
+      restore[k] = v
     }
     const { data, error } = await supabaseAdmin()
       .from(table)
@@ -166,7 +173,12 @@ export async function moveRow(tableIn: string, idIn: string, direction: 'up' | '
     const { error: e1 } = await sb.from(table).update({ sort_order: b.sort_order, ...stamp }).eq('id', a.id)
     if (e1) throw new Error(e1.message)
     const { error: e2 } = await sb.from(table).update({ sort_order: a.sort_order, ...stamp }).eq('id', b.id)
-    if (e2) throw new Error(e2.message)
+    if (e2) {
+      // best-effort compensation so a half-applied swap can't leave two rows
+      // sharing a sort_order
+      await sb.from(table).update({ sort_order: a.sort_order, ...stamp }).eq('id', a.id)
+      throw new Error(e2.message)
+    }
     return { ok: true, data: null }
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : 'move failed' }
@@ -175,13 +187,17 @@ export async function moveRow(tableIn: string, idIn: string, direction: 'up' | '
 
 export async function fetchActivity(limit = 100): Promise<Result<PtRevision[]>> {
   if (!(await actor())) return { ok: false, error: 'Not signed in' }
-  const { data, error } = await supabaseAdmin()
-    .from('pt_revisions')
-    .select('*')
-    .order('id', { ascending: false })
-    .limit(Math.min(limit, 300))
-  if (error) return { ok: false, error: error.message }
-  return { ok: true, data: data as PtRevision[] }
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from('pt_revisions')
+      .select('*')
+      .order('id', { ascending: false })
+      .limit(Math.min(limit, 300))
+    if (error) throw new Error(error.message)
+    return { ok: true, data: data as PtRevision[] }
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : 'activity failed' }
+  }
 }
 
 export async function fetchRowHistory(tableIn: string, idIn: string): Promise<Result<PtRevision[]>> {
