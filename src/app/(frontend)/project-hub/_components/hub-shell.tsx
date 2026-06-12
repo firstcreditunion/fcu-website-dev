@@ -6,9 +6,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { HeaderBand } from './header-band'
 import { useHub, useHubInvalidate } from './use-hub'
 import { useHubRealtime } from './use-realtime'
+import { OverviewTab } from './overview-tab'
+import { RisksTab } from './risks-tab'
+import { TechStackTab } from './tech-stack-tab'
+import { DeliverablesTab } from './deliverables-tab'
 import type { HubPayload } from '@/lib/project-hub/types'
-
-const TABS = ['overview', 'timeline', 'milestones', 'risks', 'tech-stack', 'deliverables', 'activity'] as const
 
 function HubInner({ initial }: { initial: HubPayload }) {
   const { data } = useHub(initial)
@@ -31,11 +33,19 @@ function HubInner({ initial }: { initial: HubPayload }) {
           <TabsTrigger value="deliverables">Deliverables</TabsTrigger>
           <TabsTrigger value="activity">Activity</TabsTrigger>
         </TabsList>
-        {TABS.map((t) => (
-          <TabsContent key={t} value={t} className="mt-6">
-            <p className="text-sm text-foreground-muted">({t} — coming in a later task)</p>
-          </TabsContent>
-        ))}
+        <TabsContent value="overview" className="mt-6"><OverviewTab payload={payload} /></TabsContent>
+        <TabsContent value="timeline" className="mt-6">
+          <p className="text-sm text-foreground-muted">(timeline — coming in a later task)</p>
+        </TabsContent>
+        <TabsContent value="milestones" className="mt-6">
+          <p className="text-sm text-foreground-muted">(milestones — coming in a later task)</p>
+        </TabsContent>
+        <TabsContent value="risks" className="mt-6"><RisksTab payload={payload} /></TabsContent>
+        <TabsContent value="tech-stack" className="mt-6"><TechStackTab payload={payload} /></TabsContent>
+        <TabsContent value="deliverables" className="mt-6"><DeliverablesTab payload={payload} /></TabsContent>
+        <TabsContent value="activity" className="mt-6">
+          <p className="text-sm text-foreground-muted">(activity — coming in a later task)</p>
+        </TabsContent>
       </Tabs>
     </div>
   )
