@@ -21,16 +21,14 @@ async function run(query) {
   return res.json()
 }
 
-const BOOTSTRAP = `
-create table if not exists api.pt_migrations (
+// three separate idempotent calls: a partial first run can never leave the
+// table created but unsecured
+await run(`create table if not exists api.pt_migrations (
   version text primary key,
   applied_at timestamptz not null default now()
-);
-alter table api.pt_migrations enable row level security;
-revoke all on api.pt_migrations from anon, authenticated;
-`
-
-await run(BOOTSTRAP)
+)`)
+await run('alter table api.pt_migrations enable row level security')
+await run('revoke all on api.pt_migrations from anon, authenticated')
 const appliedRows = await run('select version from api.pt_migrations order by version')
 const applied = new Set(appliedRows.map((r) => r.version))
 
