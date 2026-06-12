@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { TIMELINE_START, TIMELINE_END, pct, barGeometry, computedDurationLabel, monthTicks } from './dates'
+import { TIMELINE_START, TIMELINE_END, pct, barGeometry, computedDurationLabel, monthTicks, todayPct } from './dates'
 
 describe('timeline math', () => {
   it('bounds: Feb 1 is 0%, end of window is 100%', () => {
@@ -14,9 +14,16 @@ describe('timeline math', () => {
     expect(g.leftPct).toBeLessThan(54)
     expect(g.widthPct).toBeGreaterThan(1.5)
   })
-  it('returns null when either date missing', () => {
+  it('returns null when either date missing or dates inverted', () => {
     expect(barGeometry(null, '2026-06-12')).toBeNull()
     expect(barGeometry('2026-06-12', null)).toBeNull()
+    expect(barGeometry('2026-06-12', '2026-06-08')).toBeNull()
+  })
+  it('today line: inside window only', () => {
+    expect(todayPct('2026-06-12')).toBeGreaterThan(50)
+    expect(todayPct('2026-02-01')).toBeNull() // boundary: invisible at 0%
+    expect(todayPct('2025-12-25')).toBeNull()
+    expect(todayPct('2026-10-15')).toBeNull()
   })
   it('duration labels match the workbook conventions', () => {
     expect(computedDurationLabel('2026-04-13', '2026-04-17')).toBe('1 week')   // 5 workdays

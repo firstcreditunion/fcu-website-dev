@@ -11,7 +11,7 @@ export function pct(iso: string): number {
 }
 
 export function barGeometry(start: string | null, end: string | null): { leftPct: number; widthPct: number } | null {
-  if (!start || !end) return null
+  if (!start || !end || parseISO(end) < parseISO(start)) return null
   const left = pct(start)
   const right = pct(format(addDays(parseISO(end), 1), 'yyyy-MM-dd')) // inclusive end date
   return { leftPct: left, widthPct: Math.max(right - left, 0.6) }
@@ -40,8 +40,9 @@ export function computedDurationLabel(start: string | null, end: string | null):
 
 export function monthTicks(): { label: string; leftPct: number }[] {
   const ticks: { label: string; leftPct: number }[] = []
+  const end = parseISO(TIMELINE_END)
   let m = startOfMonth(START)
-  while (m <= parseISO(TIMELINE_END)) {
+  while (m <= end) {
     ticks.push({ label: format(m, 'MMM'), leftPct: pct(format(m, 'yyyy-MM-dd')) })
     m = addMonths(m, 1)
   }
