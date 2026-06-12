@@ -46,7 +46,7 @@ export function TechStackTab({ payload }: { payload: HubPayload }) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="ghost" size="sm" className="mt-3"
+      <Button variant="ghost" size="sm" className="mt-3" disabled={create.isPending}
         onClick={() => create.mutate({ table: 'pt_tech_stack', values: { technology: 'New technology', sort_order: payload.techStack.length } })}>
         <Plus /> Add technology
       </Button>

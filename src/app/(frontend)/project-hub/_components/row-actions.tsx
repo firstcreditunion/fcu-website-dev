@@ -9,7 +9,7 @@ export function RowActions({ table, id, name }: { table: EditableTable; id: stri
   const move = useMoveRow()
   const del = useDeleteRow()
   return (
-    <span className="inline-flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+    <span className="inline-flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
       <Button variant="ghost" size="icon-xs" aria-label={`Move ${name} up`}
         onClick={() => move.mutate({ table, id, direction: 'up' })}><ArrowUp /></Button>
       <Button variant="ghost" size="icon-xs" aria-label={`Move ${name} down`}

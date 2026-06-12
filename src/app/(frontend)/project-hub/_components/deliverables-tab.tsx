@@ -36,7 +36,7 @@ export function DeliverablesTab({ payload }: { payload: HubPayload }) {
           </li>
         ))}
       </ul>
-      <Button variant="ghost" size="sm" className="mt-3"
+      <Button variant="ghost" size="sm" className="mt-3" disabled={create.isPending}
         onClick={() => create.mutate({ table: 'pt_deliverables', values: { description: 'New deliverable', sort_order: payload.deliverables.length } })}>
         <Plus /> Add deliverable
       </Button>

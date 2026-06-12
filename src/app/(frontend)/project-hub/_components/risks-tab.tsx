@@ -57,7 +57,7 @@ export function RisksTab({ payload }: { payload: HubPayload }) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="ghost" size="sm" className="mt-3"
+      <Button variant="ghost" size="sm" className="mt-3" disabled={create.isPending}
         onClick={() => create.mutate({ table: 'pt_risks', values: { risk: 'New risk', sort_order: payload.risks.length } })}>
         <Plus /> Add risk
       </Button>

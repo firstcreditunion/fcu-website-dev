@@ -35,7 +35,7 @@ function FactList({ payload, section, title }: { payload: HubPayload; section: P
             </div>
           ))}
         </dl>
-        <Button variant="ghost" size="sm" className="mt-3"
+        <Button variant="ghost" size="sm" className="mt-3" disabled={create.isPending}
           onClick={() => create.mutate({ table: 'pt_facts', values: { section, label: 'New item', value: '', sort_order: facts.length } })}>
           <Plus /> Add item
         </Button>
