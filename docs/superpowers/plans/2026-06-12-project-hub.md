@@ -496,22 +496,24 @@ git commit -m "feat(project-hub): pt_* schema, revision/notify triggers, deny-al
 ```powershell
 $tok = (Get-Content .mcp.json -Raw | ConvertFrom-Json).mcpServers.'supabase-fcu'.env.SUPABASE_ACCESS_TOKEN
 $keys = Invoke-RestMethod -Uri "https://api.supabase.com/v1/projects/hojrhcbubaafsqjqvezq/api-keys?reveal=true" -Headers @{Authorization="Bearer $tok"}
-$anon = ($keys | Where-Object { $_.name -eq 'anon' }).api_key
-$svc  = ($keys | Where-Object { $_.name -eq 'service_role' }).api_key
+# Supabase's current API keys: publishable (sb_publishable_…) replaces the legacy
+# anon JWT; secret (sb_secret_…) replaces service_role. Match on type, not name.
+$pub    = ($keys | Where-Object { $_.type -eq 'publishable' -and -not $_.disabled }).api_key
+$secret = ($keys | Where-Object { $_.type -eq 'secret' -and -not $_.disabled }).api_key
 Add-Content .env.local "`n# Project Hub (fcu-forms)"
 Add-Content .env.local "SUPABASE_URL=https://hojrhcbubaafsqjqvezq.supabase.co"
-Add-Content .env.local "SUPABASE_SERVICE_ROLE_KEY=$svc"
+Add-Content .env.local "SUPABASE_SECRET_KEY=$secret"
 Add-Content .env.local "NEXT_PUBLIC_SUPABASE_URL=https://hojrhcbubaafsqjqvezq.supabase.co"
-Add-Content .env.local "NEXT_PUBLIC_SUPABASE_ANON_KEY=$anon"
+Add-Content .env.local "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$pub"
 ```
 
-Do NOT echo `$svc`. Verify presence only:
+Do NOT echo `$secret`. Verify presence only:
 
 ```powershell
-Select-String -Path .env.local -Pattern 'SUPABASE_(URL|SERVICE_ROLE_KEY)|NEXT_PUBLIC_SUPABASE' | ForEach-Object { ($_.Line -split '=')[0] }
+Select-String -Path .env.local -Pattern 'SUPABASE' | ForEach-Object { ($_.Line -split '=')[0] }
 ```
 
-Expected: the four variable names. No commit (env is local). Note for rollout: the same four vars must be added in Vercel before deploy.
+Expected: the four variable names (`SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`). No commit (env is local). Note for rollout: the same four vars must be added in Vercel before deploy.
 
 ---
 
@@ -1272,8 +1274,8 @@ let client: SupabaseClient | null = null
 export function supabaseAdmin(): SupabaseClient {
   if (!client) {
     const url = process.env.SUPABASE_URL
-    const key = process.env.SUPABASE_SERVICE_ROLE_KEY
-    if (!url || !key) throw new Error('SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY not set')
+    const key = process.env.SUPABASE_SECRET_KEY
+    if (!url || !key) throw new Error('SUPABASE_URL / SUPABASE_SECRET_KEY not set')
     client = createClient(url, key, {
       db: { schema: 'api' },
       auth: { persistSession: false, autoRefreshToken: false },
@@ -1780,7 +1782,7 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 let browserClient: SupabaseClient | null = null
 function supabaseBrowser(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
   if (!url || !key) return null
   if (!browserClient) browserClient = createClient(url, key, { auth: { persistSession: false } })
   return browserClient

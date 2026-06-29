@@ -121,6 +121,6 @@ Gantt bar drag/resize; drag-reorder; private realtime channels; multi-project na
 ## Rollout
 
 1. Migration `0001` + `0002` applied to fcu-forms `api` schema (verify with read-only queries).
-2. Env vars added locally + Vercel: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (server-only), `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+2. Env vars added locally + Vercel: `SUPABASE_URL`, `SUPABASE_SECRET_KEY` (server-only `sb_secret_…`), `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (`sb_publishable_…`). These are Supabase's current API keys; the legacy `service_role`/`anon` JWTs are deprecated.
 3. Frontend shipped behind Clerk; `/project-hub` linked nowhere publicly.
 4. Excel workbook retired; this tool becomes the source of truth.
