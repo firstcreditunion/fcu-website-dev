@@ -12,6 +12,7 @@ import { TechStackTab } from './tech-stack-tab'
 import { DeliverablesTab } from './deliverables-tab'
 import { TimelineTab } from './timeline-tab'
 import { MilestonesTab } from './milestones-tab'
+import { ActivityTab } from './activity-tab'
 import { TaskPanel } from './task-panel'
 import type { HubPayload, PtTask } from '@/lib/project-hub/types'
 
@@ -45,9 +46,7 @@ function HubInner({ initial }: { initial: HubPayload }) {
         <TabsContent value="risks" className="mt-6"><RisksTab payload={payload} /></TabsContent>
         <TabsContent value="tech-stack" className="mt-6"><TechStackTab payload={payload} /></TabsContent>
         <TabsContent value="deliverables" className="mt-6"><DeliverablesTab payload={payload} /></TabsContent>
-        <TabsContent value="activity" className="mt-6">
-          <p className="text-sm text-foreground-muted">(activity — coming in a later task)</p>
-        </TabsContent>
+        <TabsContent value="activity" className="mt-6"><ActivityTab /></TabsContent>
       </Tabs>
       <TaskPanel task={openTask} payload={payload} onClose={() => setOpenTask(null)} />
     </div>
