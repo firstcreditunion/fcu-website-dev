@@ -10,13 +10,17 @@ import { OverviewTab } from './overview-tab'
 import { RisksTab } from './risks-tab'
 import { TechStackTab } from './tech-stack-tab'
 import { DeliverablesTab } from './deliverables-tab'
-import type { HubPayload } from '@/lib/project-hub/types'
+import { TimelineTab } from './timeline-tab'
+import type { HubPayload, PtTask } from '@/lib/project-hub/types'
 
 function HubInner({ initial }: { initial: HubPayload }) {
   const { data } = useHub(initial)
   const invalidate = useHubInvalidate()
   const { viewers, live } = useHubRealtime(initial.project.id, invalidate)
   const payload = data ?? initial
+  // openTask wired to TimelineTab; TaskPanel (Task 14) will consume it
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [openTask, setOpenTask] = useState<PtTask | null>(null)
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
       <HeaderBand payload={payload} viewers={viewers} live={live} />
@@ -35,7 +39,7 @@ function HubInner({ initial }: { initial: HubPayload }) {
         </TabsList>
         <TabsContent value="overview" className="mt-6"><OverviewTab payload={payload} /></TabsContent>
         <TabsContent value="timeline" className="mt-6">
-          <p className="text-sm text-foreground-muted">(timeline — coming in a later task)</p>
+          <TimelineTab payload={payload} onOpenTask={setOpenTask} />
         </TabsContent>
         <TabsContent value="milestones" className="mt-6">
           <p className="text-sm text-foreground-muted">(milestones — coming in a later task)</p>
