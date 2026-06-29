@@ -9,6 +9,7 @@ import { designSystemUser } from './designSystemUser'
 import { disclaimerSnippet } from './disclaimerSnippet'
 import { loanPageBuilder } from './loanPageBuilder'
 import { loanProductPage } from './loanProductPage'
+import { brandMolecule } from './brandMolecule'
 
 import { loanHeroBlock } from './blocks/loanHeroBlock'
 import { loanAtAGlanceBlock } from './blocks/loanAtAGlanceBlock'
@@ -46,6 +47,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     headerNavigation,
     footerNavigation,
     siteSettings,
+    brandMolecule,
     designTokens,
     componentConfig,
     designSystemUser,

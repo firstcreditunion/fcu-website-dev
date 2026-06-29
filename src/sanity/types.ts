@@ -508,6 +508,85 @@ export type DesignTokens = {
   >;
 };
 
+export type BrandMolecule = {
+  _id: string;
+  _type: "brandMolecule";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  intro?: string;
+  defaultVariant: "focus" | "expand" | "tour";
+  centerKicker?: string;
+  centerLabel: string;
+  groups?: Array<{
+    key: Slug;
+    label: string;
+    colorToken:
+      | "fcu-primary-400"
+      | "fcu-primary-600"
+      | "fcu-primary-700"
+      | "fcu-primary-800"
+      | "fcu-primary-900"
+      | "fcu-secondary-400"
+      | "fcu-secondary-500"
+      | "fcu-secondary-600"
+      | "fcu-mint-400"
+      | "fcu-mint-500"
+      | "fcu-mint-600"
+      | "fcu-green-faded-500"
+      | "status-warning-500"
+      | "status-warning-700"
+      | "neutral-700";
+    _type: "group";
+    _key: string;
+  }>;
+  segments?: Array<{
+    key: Slug;
+    label: string;
+    groupKey: string;
+    annotationTitle: string;
+    attributes?: string;
+    detail?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    colorToken:
+      | "fcu-primary-400"
+      | "fcu-primary-600"
+      | "fcu-primary-700"
+      | "fcu-primary-800"
+      | "fcu-primary-900"
+      | "fcu-secondary-400"
+      | "fcu-secondary-500"
+      | "fcu-secondary-600"
+      | "fcu-mint-400"
+      | "fcu-mint-500"
+      | "fcu-mint-600"
+      | "fcu-green-faded-500"
+      | "status-warning-500"
+      | "status-warning-700"
+      | "neutral-700";
+    icon?: string;
+    _type: "segment";
+    _key: string;
+  }>;
+};
+
 export type SanityFileAssetReference = {
   _ref: string;
   _type: "reference";
@@ -986,6 +1065,7 @@ export type AllSanitySchemaTypes =
   | DesignSystemUser
   | ComponentConfig
   | DesignTokens
+  | BrandMolecule
   | SanityFileAssetReference
   | SiteSettings
   | FooterNavigation

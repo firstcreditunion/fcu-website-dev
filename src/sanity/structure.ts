@@ -8,7 +8,7 @@ import {
   DocumentTextIcon,
 } from '@sanity/icons'
 
-const SINGLETONS = ['siteSettings', 'headerNavigation', 'footerNavigation', 'designTokens']
+const SINGLETONS = ['siteSettings', 'headerNavigation', 'footerNavigation', 'designTokens', 'brandMolecule']
 const HIDDEN_TYPES = [
   ...SINGLETONS,
   'componentConfig',
@@ -108,6 +108,16 @@ export const structure: StructureResolver = (S) =>
       ),
 
       S.divider(),
+
+      S.listItem()
+        .title('Brand Molecule')
+        .icon(ColorWheelIcon)
+        .child(
+          S.document()
+            .schemaType('brandMolecule')
+            .documentId('brandMolecule')
+            .title('Brand Molecule'),
+        ),
 
       S.listItem()
         .title('Site Settings')
