@@ -7,10 +7,12 @@ import { Drawer } from 'vaul'
 import { MoleculeWheel } from './MoleculeWheel'
 import { MoleculeDetail } from './MoleculeDetail'
 import { MoleculeA11yList } from './MoleculeA11yList'
+import { useIsMobile } from './lib/use-is-mobile'
 import type { MoleculeData, MoleculeVariant } from './lib/types'
 
 export function BrandMolecule({ data, variant }: { data: MoleculeData; variant: MoleculeVariant }) {
   const reduce = useReducedMotion()
+  const isMobile = useIsMobile()
   const expandable = variant === 'expand'
   const autoTour = variant === 'tour'
   const [active, setActive] = useState<string | null>(null)
@@ -46,7 +48,7 @@ export function BrandMolecule({ data, variant }: { data: MoleculeData; variant: 
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: [0.2, 0.7, 0.3, 1] }}
         >
-          <MoleculeWheel data={data} activeKey={active} onFocus={setActive} onSelect={onSelect} />
+          <MoleculeWheel data={data} activeKey={active} compact={isMobile} onFocus={setActive} onSelect={onSelect} />
         </motion.div>
 
         {/* desktop side card (V2) */}
@@ -82,6 +84,8 @@ export function BrandMolecule({ data, variant }: { data: MoleculeData; variant: 
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 z-40 bg-black/40 lg:hidden" />
             <Drawer.Content className="fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border-t border-border bg-card p-5 lg:hidden">
+              <Drawer.Title className="sr-only">{selectedSeg?.annotationTitle ?? 'Segment detail'}</Drawer.Title>
+              <Drawer.Description className="sr-only">Details for the selected brand molecule segment.</Drawer.Description>
               <div className="mx-auto mb-4 h-1.5 w-10 rounded-full bg-border" />
               {selectedSeg && <MoleculeDetail segment={selectedSeg} onClose={() => setSelected(null)} />}
             </Drawer.Content>
