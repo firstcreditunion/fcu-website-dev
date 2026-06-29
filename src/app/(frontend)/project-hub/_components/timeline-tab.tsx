@@ -30,12 +30,15 @@ function phaseColor(token: string): string {
   return `var(--color-${token}, var(--${token}))`
 }
 
+// NAME_COL width classes — must match the today-line overlay left offset below
+const NAME_COL = 'w-[260px] min-w-[260px] sm:w-[300px] sm:min-w-[300px]'
+
 export function TimelineTab({ payload, onOpenTask }: { payload: HubPayload; onOpenTask: (task: PtTask) => void }) {
   const patch = usePatchRow()
   const create = useCreateRow(payload.project.id)
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set())
   const ticks = useMemo(() => monthTicks(), [])
-  const today = todayPct(format(new Date(), 'yyyy-MM-dd'))
+  const today = useMemo(() => todayPct(format(new Date(), 'yyyy-MM-dd')), [])
 
   function cycleStatus(t: PtTask) {
     const next = TASK_STATUSES[(TASK_STATUSES.indexOf(t.status) + 1) % TASK_STATUSES.length]
@@ -49,9 +52,6 @@ export function TimelineTab({ payload, onOpenTask }: { payload: HubPayload; onOp
       return n
     })
   }
-
-  // NAME_COL width classes — must match the overlay left offset below
-  const NAME_COL = 'w-[260px] min-w-[260px] sm:w-[300px] sm:min-w-[300px]'
 
   return (
     <div className="overflow-x-auto">
