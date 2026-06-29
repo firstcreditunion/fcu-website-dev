@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { format, parseISO } from 'date-fns'
 import { Skeleton } from '@/components/ui/skeleton'
 import { fetchActivity } from '@/lib/project-hub/actions'
+import { humanizeRevision } from '@/lib/project-hub/diff'
 import type { PtRevision } from '@/lib/project-hub/types'
 import { ACTIVITY_KEY } from './use-hub'
 import { RevisionItem } from './history-list'
@@ -19,8 +20,11 @@ export function ActivityTab() {
   })
   if (isLoading) return <Skeleton className="h-40 w-full max-w-3xl" />
   if (error) return <p className="text-sm text-status-danger-700">Couldn&apos;t load activity: {error.message}</p>
+  // Drop revisions that humanize to nothing (e.g. meta-only changes) so a day
+  // never renders as an empty bordered box.
+  const visible = (data ?? []).filter((rev) => humanizeRevision(rev).length > 0)
   const byDay = new Map<string, PtRevision[]>()
-  for (const rev of data ?? []) {
+  for (const rev of visible) {
     const day = format(parseISO(rev.created_at), 'EEEE d MMMM yyyy')
     byDay.set(day, [...(byDay.get(day) ?? []), rev])
   }
@@ -34,7 +38,7 @@ export function ActivityTab() {
           </div>
         </section>
       ))}
-      {(data ?? []).length === 0 ? <p className="text-sm text-foreground-subtle">No activity yet.</p> : null}
+      {visible.length === 0 ? <p className="text-sm text-foreground-subtle">No activity yet.</p> : null}
     </div>
   )
 }

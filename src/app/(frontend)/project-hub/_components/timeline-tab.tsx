@@ -156,12 +156,16 @@ export function TimelineTab({ payload, onOpenTask }: { payload: HubPayload; onOp
                                 aria-label={`Status: ${STATUS_LABELS[t.status]}. Click to change.`}
                                 title={STATUS_LABELS[t.status]}
                                 onClick={() => cycleStatus(t)}
-                                className={cn('size-2.5 shrink-0 rounded-full focus-visible:outline-2 focus-visible:outline-ring', STATUS_PIP[t.status])}
+                                // before:-inset-2 grows the tap target to ~26px without
+                                // affecting layout (pseudo-element stays out of flow)
+                                className={cn('relative size-2.5 shrink-0 rounded-full before:absolute before:-inset-2 before:content-[\'\'] focus-visible:outline-2 focus-visible:outline-ring', STATUS_PIP[t.status])}
                               />
                               <button
                                 type="button"
                                 onClick={() => onOpenTask(t)}
-                                className="truncate text-left text-sm text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-ring"
+                                // z-10 keeps the name clickable in the strip where the pip's
+                                // expanded tap target overlaps (opening the drawer wins, not a status change)
+                                className="relative z-10 truncate text-left text-sm text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-ring"
                               >
                                 {t.name}
                               </button>

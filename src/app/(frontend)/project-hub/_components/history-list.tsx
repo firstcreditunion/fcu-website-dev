@@ -28,7 +28,7 @@ export function RevisionItem({ rev, showTable = false }: { rev: PtRevision; show
         ))}
         <p className="mt-0.5 text-xs text-foreground-subtle">
           {rev.actor_name ?? 'System'} · {format(parseISO(rev.created_at), 'd MMM, HH:mm')}
-          {showTable ? ` · ${rev.table_name.replace('pt_', '').replace('_', ' ')}` : ''}
+          {showTable ? ` · ${rev.table_name.replace('pt_', '').replaceAll('_', ' ')}` : ''}
         </p>
       </div>
       {canRevert ? (
