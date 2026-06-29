@@ -4,6 +4,7 @@ import { client } from '@/sanity/lib/client'
 import { BRAND_MOLECULE_QUERY } from '@/sanity/lib/queries'
 import { adaptMolecule } from '@/components/brand-molecule/lib/adapt-molecule'
 import { BrandMolecule } from '@/components/brand-molecule/BrandMolecule'
+import { VersionSwitcher } from '@/components/brand-molecule/VersionSwitcher'
 import type { MoleculeVariant } from '@/components/brand-molecule/lib/types'
 
 export const metadata = { title: 'Brand Molecule' }
@@ -32,7 +33,8 @@ export default async function BrandMoleculePage({
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">{data.title}</h1>
         {data.intro ? <p className="mx-auto mt-3 max-w-[60ch] text-foreground-muted">{data.intro}</p> : null}
       </header>
-      <BrandMolecule data={data} variant={variant} />
+      <div className="mb-8 flex justify-center"><VersionSwitcher current={variant} /></div>
+      <BrandMolecule key={variant} data={data} variant={variant} />
     </main>
   )
 }
