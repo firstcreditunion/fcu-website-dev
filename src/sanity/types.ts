@@ -1662,6 +1662,125 @@ export type LOAN_PRODUCT_PAGE_BY_SLUG_QUERY_RESULT = {
   >;
 } | null;
 
+// Source: src/sanity/lib/queries.ts
+// Variable: BRAND_MOLECULE_QUERY
+// Query: *[_id == "brandMolecule"][0] {    title,    intro,    defaultVariant,    centerKicker,    centerLabel,    groups[] { "key": key.current, label, colorToken },    segments[] {      "key": key.current,      label,      groupKey,      annotationTitle,      attributes,      detail,      colorToken,      icon    }  }
+export type BRAND_MOLECULE_QUERY_RESULT =
+  | {
+      title: null;
+      intro: null;
+      defaultVariant: null;
+      centerKicker: null;
+      centerLabel: null;
+      groups: null;
+      segments: null;
+    }
+  | {
+      title: string;
+      intro: null;
+      defaultVariant: null;
+      centerKicker: null;
+      centerLabel: null;
+      groups: null;
+      segments: null;
+    }
+  | {
+      title: string | null;
+      intro: null;
+      defaultVariant: null;
+      centerKicker: null;
+      centerLabel: null;
+      groups: null;
+      segments: null;
+    }
+  | {
+      title: null;
+      intro: null;
+      defaultVariant: string | null;
+      centerKicker: null;
+      centerLabel: null;
+      groups: null;
+      segments: null;
+    }
+  | {
+      title: string;
+      intro: string | null;
+      defaultVariant: "expand" | "focus" | "tour";
+      centerKicker: string | null;
+      centerLabel: string;
+      groups: Array<{
+        key: string;
+        label: string;
+        colorToken:
+          | "fcu-green-faded-500"
+          | "fcu-mint-400"
+          | "fcu-mint-500"
+          | "fcu-mint-600"
+          | "fcu-primary-400"
+          | "fcu-primary-600"
+          | "fcu-primary-700"
+          | "fcu-primary-800"
+          | "fcu-primary-900"
+          | "fcu-secondary-400"
+          | "fcu-secondary-500"
+          | "fcu-secondary-600"
+          | "neutral-700"
+          | "status-warning-500"
+          | "status-warning-700";
+      }> | null;
+      segments: Array<{
+        key: string;
+        label: string;
+        groupKey: string;
+        annotationTitle: string;
+        attributes: string | null;
+        detail: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?:
+            | "blockquote"
+            | "h1"
+            | "h2"
+            | "h3"
+            | "h4"
+            | "h5"
+            | "h6"
+            | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        colorToken:
+          | "fcu-green-faded-500"
+          | "fcu-mint-400"
+          | "fcu-mint-500"
+          | "fcu-mint-600"
+          | "fcu-primary-400"
+          | "fcu-primary-600"
+          | "fcu-primary-700"
+          | "fcu-primary-800"
+          | "fcu-primary-900"
+          | "fcu-secondary-400"
+          | "fcu-secondary-500"
+          | "fcu-secondary-600"
+          | "neutral-700"
+          | "status-warning-500"
+          | "status-warning-700";
+        icon: string | null;
+      }> | null;
+    }
+  | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -1673,5 +1792,6 @@ declare module "@sanity/client" {
     '\n  *[_id == "footerNavigation"][0] {\n    headline,\n    headlineFontSizePreset,\n    subheadline,\n    primaryCta {\n      label,\n      url,\n      openInNewTab\n    },\n    secondaryCta {\n      label,\n      url,\n      openInNewTab\n    },\n    columns[] {\n      _key,\n      title,\n      links[] {\n        _key,\n        label,\n        linkType,\n        url,\n        externalUrl,\n        openInNewTab,\n        badgeImage {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          }\n        }\n      }\n    },\n    newsletterCta {\n      layout,\n      contentOrder,\n      heading,\n      description,\n      placeholder,\n      buttonLabel,\n      disclaimer\n    },\n    showSocialLinks,\n    showContactInfo,\n    legalLinks[] {\n      _key,\n      label,\n      linkType,\n      url,\n      externalUrl,\n      openInNewTab\n    }\n  }\n': FOOTER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    googleMapsUrl,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "loanProductPage" && slug.current == $slug][0] {\n    _id,\n    _updatedAt,\n    title,\n    "slug": slug.current,\n    loanProductType,\n    status,\n    seo {\n      title,\n      description,\n      image,\n      noIndex\n    },\n    pageBuilder[] {\n      _key,\n      _type,\n      ...,\n      _type == "noticeBlock" => {\n        ...,\n        sharedDisclaimer->{\n          _id,\n          name,\n          tone,\n          content\n        }\n      },\n      _type == "relatedLinksBlock" => {\n        ...,\n        items[] {\n          ...,\n          link {\n            ...,\n            url,\n            externalUrl\n          }\n        }\n      }\n    }\n  }\n': LOAN_PRODUCT_PAGE_BY_SLUG_QUERY_RESULT;
+    '\n  *[_id == "brandMolecule"][0] {\n    title,\n    intro,\n    defaultVariant,\n    centerKicker,\n    centerLabel,\n    groups[] { "key": key.current, label, colorToken },\n    segments[] {\n      "key": key.current,\n      label,\n      groupKey,\n      annotationTitle,\n      attributes,\n      detail,\n      colorToken,\n      icon\n    }\n  }\n': BRAND_MOLECULE_QUERY_RESULT;
   }
 }

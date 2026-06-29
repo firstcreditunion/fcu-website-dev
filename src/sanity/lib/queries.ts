@@ -265,3 +265,24 @@ export const LOAN_PRODUCT_PAGE_BY_SLUG_QUERY = defineQuery(/* groq */ `
     }
   }
 `)
+
+export const BRAND_MOLECULE_QUERY = defineQuery(/* groq */ `
+  *[_id == "brandMolecule"][0] {
+    title,
+    intro,
+    defaultVariant,
+    centerKicker,
+    centerLabel,
+    groups[] { "key": key.current, label, colorToken },
+    segments[] {
+      "key": key.current,
+      label,
+      groupKey,
+      annotationTitle,
+      attributes,
+      detail,
+      colorToken,
+      icon
+    }
+  }
+`)
