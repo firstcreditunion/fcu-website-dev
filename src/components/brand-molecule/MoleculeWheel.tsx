@@ -22,7 +22,7 @@ export function MoleculeWheel({ data, activeKey, compact = false, onFocus, onSel
   return (
     <svg
       viewBox="0 0 1180 720"
-      role="img"
+      role="group"
       aria-label="First Credit Union brand molecule"
       className="h-auto w-full select-none overflow-visible"
       onMouseLeave={() => onFocus(null)}
