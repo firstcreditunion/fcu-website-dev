@@ -1,7 +1,7 @@
 // src/components/brand-molecule/BrandMolecule.tsx
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { Drawer } from 'vaul'
 import { MoleculeWheel } from './MoleculeWheel'
@@ -12,8 +12,11 @@ import type { MoleculeData, MoleculeVariant } from './lib/types'
 export function BrandMolecule({ data, variant }: { data: MoleculeData; variant: MoleculeVariant }) {
   const reduce = useReducedMotion()
   const expandable = variant === 'expand'
+  const autoTour = variant === 'tour'
   const [active, setActive] = useState<string | null>(null)
   const [selected, setSelected] = useState<string | null>(null)
+  const [playing, setPlaying] = useState(autoTour && !reduce)
+  const [paused, setPaused] = useState(false)
 
   const selectedSeg = data.segments.find((s) => s.key === selected) ?? null
 
@@ -22,10 +25,23 @@ export function BrandMolecule({ data, variant }: { data: MoleculeData; variant: 
     else setActive(k)
   }
 
+  useEffect(() => {
+    if (!autoTour || !playing || paused) return
+    const id = setInterval(() => {
+      setActive((cur) => {
+        const i = data.segments.findIndex((s) => s.key === cur)
+        return data.segments[(i + 1) % data.segments.length].key
+      })
+    }, 2800)
+    return () => clearInterval(id)
+  }, [autoTour, playing, paused, data.segments])
+
   return (
     <div className="relative w-full">
       <div className="grid items-center gap-6 lg:grid-cols-[1fr_auto]">
         <motion.div
+          onPointerEnter={() => autoTour && setPaused(true)}
+          onPointerLeave={() => autoTour && setPaused(false)}
           initial={reduce ? false : { opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: [0.2, 0.7, 0.3, 1] }}
@@ -49,6 +65,16 @@ export function BrandMolecule({ data, variant }: { data: MoleculeData; variant: 
           </div>
         )}
       </div>
+
+      {autoTour && (
+        <div className="mt-4 flex justify-center">
+          <button type="button" onClick={() => setPlaying((p) => !p)}
+            className="rounded-lg border border-border px-3 py-1.5 text-sm text-foreground-muted hover:bg-surface-muted"
+            aria-pressed={playing}>
+            {playing ? 'Pause tour' : 'Play tour'}
+          </button>
+        </div>
+      )}
 
       {/* mobile bottom sheet (V2) */}
       {expandable && (
