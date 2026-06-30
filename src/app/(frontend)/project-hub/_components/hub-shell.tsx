@@ -77,7 +77,7 @@ function HubInner({ initial }: { initial: HubPayload }) {
       {health.atRisk ? (
         <div
           role="alert"
-          className="border-b px-[max(16px,calc((100vw-1440px)/2))] py-[9px]"
+          className="border-b px-4 py-[9px] sm:px-6 lg:px-8"
           style={{ background: 'var(--status-warning-50)', borderColor: 'color-mix(in oklab, var(--status-warning-500) 35%, var(--border))' }}
         >
           <div className="flex items-center gap-2.5 text-[12.5px] font-medium" style={{ color: 'var(--status-warning-700)' }}>
@@ -94,7 +94,7 @@ function HubInner({ initial }: { initial: HubPayload }) {
         Project data updates automatically while teammates edit.
       </div>
 
-      <main className="mx-auto max-w-[1440px] px-[max(16px,calc((100vw-1440px)/2))] pb-16 pt-[22px]">
+      <main className="w-full px-4 pb-16 pt-[22px] sm:px-6 lg:px-8">
         {activeTab === 'overview' ? <OverviewTab payload={payload} /> : null}
         {activeTab === 'timeline' ? <TimelineTab payload={payload} onOpenTask={setOpenTask} /> : null}
         {activeTab === 'milestones' ? <MilestonesTab payload={payload} /> : null}

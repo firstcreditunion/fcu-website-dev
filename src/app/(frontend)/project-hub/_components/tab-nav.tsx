@@ -56,7 +56,7 @@ export function TabNav({
         role="tablist"
         aria-label="Project Hub views"
         onKeyDown={onKeyDown}
-        className="flex max-w-full items-stretch gap-0.5 overflow-x-auto px-[max(16px,calc((100vw-1440px)/2))] [scrollbar-width:thin]"
+        className="flex items-stretch gap-0.5 overflow-x-auto px-4 sm:px-6 lg:px-8 [scrollbar-width:thin]"
       >
         {tabs.map((t) => {
           const Icon = ICON[t.id]

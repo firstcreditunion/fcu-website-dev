@@ -52,7 +52,7 @@ export function HeaderBand({
       style={{ background: 'color-mix(in oklab, var(--background) 88%, transparent)', backdropFilter: 'blur(10px)' }}
     >
       <div
-        className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-[max(16px,calc((100vw-1440px)/2))] transition-[padding] duration-200"
+        className="flex w-full items-center justify-between gap-4 px-4 transition-[padding] duration-200 sm:px-6 lg:px-8"
         style={{ paddingTop: scrolled ? 8 : 14, paddingBottom: scrolled ? 8 : 14 }}
       >
         {/* identity */}
