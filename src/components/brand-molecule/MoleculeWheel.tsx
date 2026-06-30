@@ -91,7 +91,7 @@ export function MoleculeWheel({ data, activeKey, compact = false, onFocus, onSel
 
       {/* hub */}
       <g>
-        <circle cx={d.cx} cy={d.cy} r={d.hubR} fill="var(--color-neutral-900, #2D393B)" />
+        <circle cx={d.cx} cy={d.cy} r={d.hubR} fill="var(--color-molecule-hub, #2D393B)" />
         <text x={d.cx} y={d.cy - 8} textAnchor="middle" fontSize={9} letterSpacing="1.2" fontWeight={600} fill="var(--color-neutral-400, #9fb0b5)">{data.centerKicker}</text>
         <text x={d.cx} y={d.cy + 14} textAnchor="middle" fontSize={20} fontWeight={700} fill="var(--color-neutral-0)">{data.centerLabel}</text>
       </g>

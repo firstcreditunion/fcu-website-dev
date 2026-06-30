@@ -162,18 +162,19 @@
   /* ── Brand Molecule — printed brand-standards artifact colours ──
      Literal hex (not @theme) so they survive prod tree-shaking and resolve in
      inline SVG fills. Identical in light & dark (brand artifact). */
-  --color-molecule-hh-band: #c9551f;
-  --color-molecule-hh-vision: #e2731d;
+  --color-molecule-hh-band: #cd5a26;
+  --color-molecule-hh-vision: #e07b1e;
   --color-molecule-hh-values: #ee9a2e;
-  --color-molecule-hh-belief: #f2b33d;
-  --color-molecule-wt-band: #1f7ca8;
-  --color-molecule-wt-behave: #45a7d4;
-  --color-molecule-wt-talk: #2c90bc;
-  --color-molecule-wt-look: #2380ac;
-  --color-molecule-pp-band: #5e9a3e;
-  --color-molecule-pp-proof: #7db143;
-  --color-molecule-pp-products: #8dc24a;
-  --color-molecule-pp-position: #9ac95b;
+  --color-molecule-hh-belief: #f0ad33;
+  --color-molecule-wt-band: #1e76a3;
+  --color-molecule-wt-behave: #54b0dc;
+  --color-molecule-wt-talk: #2e93bd;
+  --color-molecule-wt-look: #2682b0;
+  --color-molecule-pp-band: #6ba644;
+  --color-molecule-pp-proof: #80b848;
+  --color-molecule-pp-products: #8fc24e;
+  --color-molecule-pp-position: #a0cb5c;
+  --color-molecule-hub: #2d393b;
 }
 
 .dark {
@@ -238,18 +239,19 @@
   --sidebar-ring: var(--color-fcu-primary-400);
 
   /* ── Brand Molecule — identical to light (brand artifact) ── */
-  --color-molecule-hh-band: #c9551f;
-  --color-molecule-hh-vision: #e2731d;
+  --color-molecule-hh-band: #cd5a26;
+  --color-molecule-hh-vision: #e07b1e;
   --color-molecule-hh-values: #ee9a2e;
-  --color-molecule-hh-belief: #f2b33d;
-  --color-molecule-wt-band: #1f7ca8;
-  --color-molecule-wt-behave: #45a7d4;
-  --color-molecule-wt-talk: #2c90bc;
-  --color-molecule-wt-look: #2380ac;
-  --color-molecule-pp-band: #5e9a3e;
-  --color-molecule-pp-proof: #7db143;
-  --color-molecule-pp-products: #8dc24a;
-  --color-molecule-pp-position: #9ac95b;
+  --color-molecule-hh-belief: #f0ad33;
+  --color-molecule-wt-band: #1e76a3;
+  --color-molecule-wt-behave: #54b0dc;
+  --color-molecule-wt-talk: #2e93bd;
+  --color-molecule-wt-look: #2682b0;
+  --color-molecule-pp-band: #6ba644;
+  --color-molecule-pp-proof: #80b848;
+  --color-molecule-pp-products: #8fc24e;
+  --color-molecule-pp-position: #a0cb5c;
+  --color-molecule-hub: #2d393b;
 }
 
 @theme inline {
