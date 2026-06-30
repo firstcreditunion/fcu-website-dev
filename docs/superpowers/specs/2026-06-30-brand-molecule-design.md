@@ -135,3 +135,10 @@ Segment **angles are derived from array order + count** (drag to reorder in Stud
 ## 15. Open questions
 
 - None blocking. Confirm V3 should remain tour-only (no expand) — current assumption.
+
+## 16. Post-review notes
+
+Two intentional deviations surfaced in review that are correct as-built — recorded here so they are not "fixed" by mistake:
+
+- **Wheel SVG uses `role="group"`, not `role="img"`.** The wheel is not an opaque image: it contains focusable segment children (`<g role="button" tabIndex={0}>`) that users tab through and activate. `role="img"` would hide that interactive subtree from assistive tech, so `role="group"` (with `aria-label`) is the correct container role.
+- **Segments use all-Tab-stops, not roving-tabindex arrow navigation.** Each segment is an independently tabbable button rather than a single composite widget navigated with arrow keys. This keeps every segment directly keyboard-reachable (verified by the a11y suite) and matches the non-grouped, button-per-segment interaction model; a roving-tabindex pattern is intentionally not used here.

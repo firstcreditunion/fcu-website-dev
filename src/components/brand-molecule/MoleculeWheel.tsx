@@ -47,7 +47,7 @@ export function MoleculeWheel({ data, activeKey, compact = false, onFocus, onSel
         return (
           <g key={'b' + b.groupKey} transform={`translate(${d.cx} ${d.cy})`} style={{ opacity: op, transition: 'opacity .25s' }}>
             <path d={b.path} fill={group.colorVar} />
-            <text fontSize={13} fontWeight={700} letterSpacing="0.04em" fill="#fff" style={{ textTransform: 'uppercase', opacity: 0.92 }}>
+            <text fontSize={13} fontWeight={700} letterSpacing="0.04em" fill="var(--color-neutral-0)" style={{ textTransform: 'uppercase', opacity: 0.92 }}>
               <textPath href={`#bandlabel-${b.groupKey}`} startOffset="50%" textAnchor="middle">{group.label}</textPath>
             </text>
           </g>
@@ -68,7 +68,7 @@ export function MoleculeWheel({ data, activeKey, compact = false, onFocus, onSel
         const ty = -Math.cos((g.centerAngle * Math.PI) / 180) * 8
         return (
           <g key={'s' + g.key}
-            role="button" tabIndex={0}
+            role="button" tabIndex={0} data-bm-segment
             aria-label={`${seg.annotationTitle} — ${seg.attributes}`}
             onMouseEnter={() => onFocus(g.key)}
             onFocus={() => onFocus(g.key)}
@@ -82,7 +82,7 @@ export function MoleculeWheel({ data, activeKey, compact = false, onFocus, onSel
               transition: 'transform .28s cubic-bezier(.2,.7,.3,1), opacity .25s',
             }}>
             <g transform={`translate(${d.cx} ${d.cy})`}><path d={g.path} fill={seg.colorVar} /></g>
-            <text fontSize={11} fontWeight={600} fill="#fff" style={{ pointerEvents: 'none' }}>
+            <text fontSize={11} fontWeight={600} fill="var(--color-neutral-0)" style={{ pointerEvents: 'none' }}>
               <textPath href={`#seglabel-${g.key}`} startOffset="50%" textAnchor="middle">{seg.label}</textPath>
             </text>
           </g>
@@ -92,20 +92,21 @@ export function MoleculeWheel({ data, activeKey, compact = false, onFocus, onSel
       {/* hub */}
       <g>
         <circle cx={d.cx} cy={d.cy} r={d.hubR} fill="var(--color-neutral-900, #2D393B)" />
-        <text x={d.cx} y={d.cy - 8} textAnchor="middle" fontSize={9} letterSpacing="1.2" fontWeight={600} fill="#9fb0b5">{data.centerKicker}</text>
-        <text x={d.cx} y={d.cy + 14} textAnchor="middle" fontSize={20} fontWeight={700} fill="#fff">{data.centerLabel}</text>
+        <text x={d.cx} y={d.cy - 8} textAnchor="middle" fontSize={9} letterSpacing="1.2" fontWeight={600} fill="var(--color-neutral-400, #9fb0b5)">{data.centerKicker}</text>
+        <text x={d.cx} y={d.cy + 14} textAnchor="middle" fontSize={20} fontWeight={700} fill="var(--color-neutral-0)">{data.centerLabel}</text>
       </g>
 
       {/* annotations (hidden in compact) */}
       {!compact && segGeo.map((g) => {
         const seg = data.segments.find((s) => s.key === g.key)!
         const isActive = activeKey === g.key
-        const titleOpacity = activeKey === null ? 0.5 : isActive ? 1 : 0.22
+        // AA contrast via DS tokens at full opacity (not alpha): active title is
+        // full foreground + bold; non-active / at-rest is an AA-safe muted token.
         return (
           <g key={'a' + g.key} transform={`translate(${g.annotation.x} ${g.annotation.y})`}
             onMouseEnter={() => onFocus(g.key)} onClick={() => onSelect(g.key)} style={{ cursor: 'pointer' }}>
             <text textAnchor={g.annotation.anchor} fontSize={13}
-              style={{ fill: 'var(--text-foreground, currentColor)', fontWeight: isActive ? 700 : 600, opacity: titleOpacity, transition: 'opacity .25s' }}>
+              style={{ fill: isActive ? 'var(--color-foreground)' : 'var(--color-foreground-muted)', fontWeight: isActive ? 700 : 600, transition: 'fill .25s' }}>
               {seg.annotationTitle}
             </text>
             <text textAnchor={g.annotation.anchor} y={15} fontSize={11}

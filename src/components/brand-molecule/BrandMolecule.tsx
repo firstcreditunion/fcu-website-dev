@@ -17,10 +17,16 @@ export function BrandMolecule({ data, variant }: { data: MoleculeData; variant: 
   const autoTour = variant === 'tour'
   const [active, setActive] = useState<string | null>(null)
   const [selected, setSelected] = useState<string | null>(null)
-  const [playing, setPlaying] = useState(autoTour && !reduce)
+  // Start paused so SSR and first client paint match (useReducedMotion is null on
+  // the server, boolean on the client). The tour starts a tick after mount.
+  const [playing, setPlaying] = useState(false)
   const [paused, setPaused] = useState(false)
 
   const selectedSeg = data.segments.find((s) => s.key === selected) ?? null
+
+  useEffect(() => {
+    if (autoTour && !reduce) setPlaying(true)
+  }, [autoTour, reduce])
 
   const onSelect = (k: string) => {
     if (expandable) setSelected(k)
@@ -44,6 +50,8 @@ export function BrandMolecule({ data, variant }: { data: MoleculeData; variant: 
         <motion.div
           onPointerEnter={() => autoTour && setPaused(true)}
           onPointerLeave={() => autoTour && setPaused(false)}
+          onFocusCapture={() => autoTour && setPaused(true)}
+          onBlurCapture={() => autoTour && setPaused(false)}
           initial={reduce ? false : { opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: [0.2, 0.7, 0.3, 1] }}

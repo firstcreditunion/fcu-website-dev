@@ -13,11 +13,11 @@ const OPTIONS: { v: string; variant: MoleculeVariant; label: string }[] = [
 export function VersionSwitcher({ current }: { current: MoleculeVariant }) {
   const router = useRouter()
   return (
-    <div role="tablist" aria-label="Molecule version" className="inline-flex gap-1 rounded-lg border border-border bg-surface-muted p-1">
+    <div role="group" aria-label="Molecule version" className="inline-flex gap-1 rounded-lg border border-border bg-surface-muted p-1">
       {OPTIONS.map((o) => {
         const isActive = o.variant === current
         return (
-          <button key={o.v} type="button" role="tab" aria-selected={isActive}
+          <button key={o.v} type="button" aria-pressed={isActive}
             onClick={() => router.push(`?v=${o.v}`, { scroll: false })}
             className={isActive
               ? 'rounded-md bg-card px-3 py-1.5 text-sm font-medium text-foreground shadow-[var(--shadow-xs)]'

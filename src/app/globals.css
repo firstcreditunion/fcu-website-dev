@@ -403,3 +403,11 @@
     @apply font-sans;
   }
 }
+
+/* Brand Molecule: visible keyboard focus indicator on each segment control
+   (WCAG 2.4.7). The segment <g role="button"> has no native focus ring. */
+[data-bm-segment]:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
