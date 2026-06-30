@@ -58,7 +58,8 @@ export function EditableText({
         aria-label={`Edit ${label}`}
         onClick={startEditing}
         className={cn(
-          'rounded-md px-1.5 py-0.5 text-left hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-ring',
+          // design inline-edit affordance: sunken bg + inset border ring on hover
+          'rounded-md px-1.5 py-0.5 text-left transition-colors hover:bg-[var(--surface-sunken)] hover:shadow-[inset_0_0_0_1px_var(--border)] focus-visible:outline-2 focus-visible:outline-ring',
           !value && 'italic text-foreground-subtle',
           className,
         )}
