@@ -18,7 +18,7 @@ export function ActivityTab() {
       return res.data
     },
   })
-  if (isLoading) return <Skeleton className="h-40 w-full max-w-3xl" />
+  if (isLoading) return <Skeleton className="h-40 w-full" />
   if (error) return <p className="text-sm text-status-danger-700">Couldn&apos;t load activity: {error.message}</p>
   // Drop revisions that humanize to nothing (e.g. meta-only changes) so a day
   // never renders as an empty bordered box.
@@ -29,7 +29,7 @@ export function ActivityTab() {
     byDay.set(day, [...(byDay.get(day) ?? []), rev])
   }
   return (
-    <div className="max-w-3xl">
+    <div className="w-full">
       {[...byDay.entries()].map(([day, revs]) => (
         <section key={day} className="mb-6">
           <h3 className="mb-1 text-xs font-medium uppercase tracking-wide text-foreground-subtle">{day}</h3>

@@ -23,7 +23,7 @@ function HubInner({ initial }: { initial: HubPayload }) {
   const payload = data ?? initial
   const [openTask, setOpenTask] = useState<PtTask | null>(null)
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-8">
       <HeaderBand payload={payload} viewers={viewers} live={live} />
       <div aria-live="polite" className="sr-only">
         Project data updates automatically while others edit.

@@ -15,7 +15,7 @@ export function DeliverablesTab({ payload }: { payload: HubPayload }) {
   const done = payload.deliverables.filter((d) => d.done).length
   const pctDone = payload.deliverables.length ? Math.round((done / payload.deliverables.length) * 100) : 0
   return (
-    <div className="max-w-3xl">
+    <div className="w-full">
       <div className="mb-4 flex items-center gap-3">
         <Progress value={pctDone} size="sm" className="w-48" />
         <span className="text-sm tabular-nums text-foreground-muted">{done}/{payload.deliverables.length} delivered</span>

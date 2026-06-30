@@ -17,7 +17,7 @@ export function MilestonesTab({ payload }: { payload: HubPayload }) {
   const today = startOfToday()
   const sorted = [...payload.milestones].sort((a, b) => a.date.localeCompare(b.date))
   return (
-    <div className="max-w-3xl">
+    <div className="w-full">
       <ol className="relative ml-3 border-l-2 border-border">
         {sorted.map((m) => {
           const overdue = !m.achieved && isBefore(parseISO(m.date), today)
