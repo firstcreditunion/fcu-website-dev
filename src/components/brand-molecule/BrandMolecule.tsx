@@ -184,7 +184,7 @@ export function BrandMolecule({
       <main
         className="relative z-[1] mx-auto"
         style={{
-          maxWidth: 1200,
+          maxWidth: 'min(1340px, 95vw)',
           padding: 'clamp(30px,5vw,68px) clamp(18px,4vw,40px) clamp(56px,8vw,104px)',
         }}
       >
@@ -193,23 +193,12 @@ export function BrandMolecule({
           ref={heroRef}
           style={{ y: heroY, maxWidth: 780, margin: '0 auto clamp(26px,4.5vw,54px)', textAlign: 'center' }}
         >
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: HERO_EASE }}
-            className="inline-flex items-center gap-[11px] text-[12px] font-semibold uppercase"
-            style={{ letterSpacing: '.2em', color: 'var(--primary)' }}
-          >
-            <span aria-hidden="true" className="inline-block h-[1.5px] w-[22px] opacity-55" style={{ background: 'var(--primary)' }} />
-            Brand Guidelines
-            <span aria-hidden="true" className="inline-block h-[1.5px] w-[22px] opacity-55" style={{ background: 'var(--primary)' }} />
-          </motion.div>
           <motion.h1
             initial={reduce ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: HERO_EASE, delay: 0.08 }}
+            transition={{ duration: 0.7, ease: HERO_EASE }}
             className="font-semibold text-foreground"
-            style={{ margin: '18px 0 0', fontSize: 'clamp(33px,5.2vw,54px)', lineHeight: 1.04, letterSpacing: '-.022em' }}
+            style={{ margin: '0', fontSize: 'clamp(33px,5.2vw,54px)', lineHeight: 1.04, letterSpacing: '-.022em' }}
           >
             {data.title}
           </motion.h1>
@@ -217,7 +206,7 @@ export function BrandMolecule({
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: HERO_EASE, delay: 0.16 }}
+              transition={{ duration: 0.7, ease: HERO_EASE, delay: 0.08 }}
               className="text-foreground-muted"
               style={{ margin: '20px auto 0', maxWidth: '60ch', fontSize: 'clamp(16px,2.1vw,19px)', lineHeight: 1.62 }}
             >
@@ -237,7 +226,7 @@ export function BrandMolecule({
           <div
             ref={wheelColRef}
             onPointerLeave={onWheelLeave}
-            style={{ position: 'relative', flex: '1 1 auto', minWidth: 0, maxWidth: 740, margin: '0 auto' }}
+            style={{ position: 'relative', flex: '1 1 auto', minWidth: 0, maxWidth: 900, margin: '0 auto' }}
           >
             {/* soft glow (doubles as cursor-following light) */}
             <motion.div
