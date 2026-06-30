@@ -28,8 +28,8 @@ export default async function BrandMoleculePage({
   const variant = fromQuery ?? data.defaultVariant
 
   return (
-    <main className="mx-auto max-w-[1200px] px-6 py-16">
-      <header className="mb-10 text-center">
+    <main className="mx-auto max-w-[1500px] px-4 py-10">
+      <header className="mb-6 text-center">
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">{data.title}</h1>
         {data.intro ? <p className="mx-auto mt-3 max-w-[60ch] text-foreground-muted">{data.intro}</p> : null}
       </header>

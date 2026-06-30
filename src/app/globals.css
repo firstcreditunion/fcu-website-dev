@@ -158,6 +158,22 @@
   --sidebar-accent-foreground: var(--neutral-900);
   --sidebar-border: var(--neutral-200);
   --sidebar-ring: var(--color-fcu-primary-700);
+
+  /* ── Brand Molecule — printed brand-standards artifact colours ──
+     Literal hex (not @theme) so they survive prod tree-shaking and resolve in
+     inline SVG fills. Identical in light & dark (brand artifact). */
+  --color-molecule-hh-band: #c9551f;
+  --color-molecule-hh-vision: #e2731d;
+  --color-molecule-hh-values: #ee9a2e;
+  --color-molecule-hh-belief: #f2b33d;
+  --color-molecule-wt-band: #1f7ca8;
+  --color-molecule-wt-behave: #45a7d4;
+  --color-molecule-wt-talk: #2c90bc;
+  --color-molecule-wt-look: #2380ac;
+  --color-molecule-pp-band: #5e9a3e;
+  --color-molecule-pp-proof: #7db143;
+  --color-molecule-pp-products: #8dc24a;
+  --color-molecule-pp-position: #9ac95b;
 }
 
 .dark {
@@ -220,6 +236,20 @@
   --sidebar-accent-foreground: var(--neutral-50);
   --sidebar-border: var(--neutral-800);
   --sidebar-ring: var(--color-fcu-primary-400);
+
+  /* ── Brand Molecule — identical to light (brand artifact) ── */
+  --color-molecule-hh-band: #c9551f;
+  --color-molecule-hh-vision: #e2731d;
+  --color-molecule-hh-values: #ee9a2e;
+  --color-molecule-hh-belief: #f2b33d;
+  --color-molecule-wt-band: #1f7ca8;
+  --color-molecule-wt-behave: #45a7d4;
+  --color-molecule-wt-talk: #2c90bc;
+  --color-molecule-wt-look: #2380ac;
+  --color-molecule-pp-band: #5e9a3e;
+  --color-molecule-pp-proof: #7db143;
+  --color-molecule-pp-products: #8dc24a;
+  --color-molecule-pp-position: #9ac95b;
 }
 
 @theme inline {

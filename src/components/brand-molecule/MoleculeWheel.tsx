@@ -21,7 +21,7 @@ export function MoleculeWheel({ data, activeKey, compact = false, onFocus, onSel
 
   return (
     <svg
-      viewBox="0 0 1180 720"
+      viewBox="70 78 1080 534"
       role="group"
       aria-label="First Credit Union brand molecule"
       className="h-auto w-full select-none overflow-visible"
@@ -45,8 +45,8 @@ export function MoleculeWheel({ data, activeKey, compact = false, onFocus, onSel
         const group = data.groups.find((g) => g.key === b.groupKey)!
         const op = activeGroupKey === null ? 1 : activeGroupKey === b.groupKey ? 1 : 0.4
         return (
-          <g key={'b' + b.groupKey} transform={`translate(${d.cx} ${d.cy})`} style={{ opacity: op, transition: 'opacity .25s' }}>
-            <path d={b.path} fill={group.colorVar} />
+          <g key={'b' + b.groupKey} style={{ opacity: op, transition: 'opacity .25s' }}>
+            <g transform={`translate(${d.cx} ${d.cy})`}><path d={b.path} fill={group.colorVar} /></g>
             <text fontSize={13} fontWeight={700} letterSpacing="0.04em" fill="var(--color-neutral-0)" style={{ textTransform: 'uppercase', opacity: 0.92 }}>
               <textPath href={`#bandlabel-${b.groupKey}`} startOffset="50%" textAnchor="middle">{group.label}</textPath>
             </text>

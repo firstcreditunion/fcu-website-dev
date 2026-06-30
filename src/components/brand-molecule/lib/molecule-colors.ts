@@ -8,6 +8,10 @@ export const COLOR_TOKENS = [
   'fcu-green-faded-500',
   'status-warning-500', 'status-warning-700',
   'neutral-700',
+  // Brand Molecule artifact colours (printed brand-standards diagram)
+  'molecule-hh-band', 'molecule-hh-vision', 'molecule-hh-values', 'molecule-hh-belief',
+  'molecule-wt-band', 'molecule-wt-behave', 'molecule-wt-talk', 'molecule-wt-look',
+  'molecule-pp-band', 'molecule-pp-proof', 'molecule-pp-products', 'molecule-pp-position',
 ] as const
 
 export type ColorTokenName = (typeof COLOR_TOKENS)[number]

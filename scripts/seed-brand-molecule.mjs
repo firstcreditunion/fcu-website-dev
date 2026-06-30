@@ -18,24 +18,24 @@ const client = createClient({
 })
 
 const groups = [
-  { _key: 'hh', _type: 'group', key: { _type: 'slug', current: 'hh' }, label: 'Head & Hearts', colorToken: 'fcu-primary-700' },
-  { _key: 'wt', _type: 'group', key: { _type: 'slug', current: 'wt' }, label: 'Walk & Talk', colorToken: 'fcu-primary-600' },
-  { _key: 'pp', _type: 'group', key: { _type: 'slug', current: 'pp' }, label: 'Proof & Pudding', colorToken: 'fcu-mint-600' },
+  { _key: 'hh', _type: 'group', key: { _type: 'slug', current: 'hh' }, label: 'Head & Hearts', colorToken: 'molecule-hh-band' },
+  { _key: 'wt', _type: 'group', key: { _type: 'slug', current: 'wt' }, label: 'Walk & Talk', colorToken: 'molecule-wt-band' },
+  { _key: 'pp', _type: 'group', key: { _type: 'slug', current: 'pp' }, label: 'Proof & Pudding', colorToken: 'molecule-pp-band' },
 ]
 const seg = (key, label, groupKey, title, attrs, colorToken) => ({
   _key: key, _type: 'segment', key: { _type: 'slug', current: key },
   label, groupKey, annotationTitle: title, attributes: attrs, colorToken, detail: null, icon: null,
 })
 const segments = [
-  seg('vision', 'Our Vision', 'hh', 'Our Vision', 'To help everyday Kiwis succeed.', 'fcu-secondary-500'),
-  seg('values', 'Our Values', 'hh', 'Our Values', 'Honesty · Transparency · Fairness · Supportive', 'fcu-secondary-600'),
-  seg('belief', 'Belief', 'hh', 'Our Belief', 'Help Kiwis achieve their goals within their means.', 'fcu-secondary-400'),
-  seg('behave', 'How we Behave', 'wt', 'How we Behave', 'Professional · Proactive · Open · Community-minded · Thrifty', 'fcu-primary-400'),
-  seg('talk', 'How we Talk', 'wt', 'How we Talk', 'Welcoming · Considerate · Straight-forward · Knowledgeable', 'fcu-primary-600'),
-  seg('look', 'How we Look', 'wt', 'How we Look', 'Modern · Fresh · Welcoming · Clear · Human · Kiwi', 'fcu-primary-700'),
-  seg('proof', 'Proof', 'pp', 'Proof', 'World-class CU · 65+ years people helping people.', 'fcu-mint-500'),
-  seg('products', 'Products', 'pp', 'Products & Services', 'Value for money, inclusive, easy to understand.', 'fcu-mint-400'),
-  seg('position', 'Position', 'pp', 'Position', 'You come first — not profits. A real alternative for life.', 'fcu-mint-600'),
+  seg('vision', 'Our Vision', 'hh', 'Our Vision', 'To help everyday Kiwis succeed.', 'molecule-hh-vision'),
+  seg('values', 'Our Values', 'hh', 'Our Values', 'Honesty · Transparency · Fairness · Supportive', 'molecule-hh-values'),
+  seg('belief', 'Belief', 'hh', 'Our Belief', 'Help Kiwis achieve their goals within their means.', 'molecule-hh-belief'),
+  seg('behave', 'How we Behave', 'wt', 'How we Behave', 'Professional · Proactive · Open · Community-minded · Thrifty', 'molecule-wt-behave'),
+  seg('talk', 'How we Talk', 'wt', 'How we Talk', 'Welcoming · Considerate · Straight-forward · Knowledgeable', 'molecule-wt-talk'),
+  seg('look', 'How we Look', 'wt', 'How we Look', 'Modern · Fresh · Welcoming · Clear · Human · Kiwi', 'molecule-wt-look'),
+  seg('proof', 'Proof', 'pp', 'Proof', 'World-class CU · 65+ years people helping people.', 'molecule-pp-proof'),
+  seg('products', 'Products', 'pp', 'Products & Services', 'Value for money, inclusive, easy to understand.', 'molecule-pp-products'),
+  seg('position', 'Position', 'pp', 'Position', 'You come first — not profits. A real alternative for life.', 'molecule-pp-position'),
 ]
 
 await client.createOrReplace({

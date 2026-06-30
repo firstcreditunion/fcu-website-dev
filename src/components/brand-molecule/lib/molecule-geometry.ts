@@ -113,7 +113,7 @@ export function buildSegmentGeometry(segments: MoleculeSegment[], dims: WheelDim
     const dx = anchor === 'start' ? 6 : anchor === 'end' ? -6 : 0
     return {
       key: seg.key,
-      path: arcPath({ innerRadius: dims.segR0, outerRadius: dims.segR1, startDeg: a0, endDeg: a1, padDeg: 1.4, cornerRadius: 3 }),
+      path: arcPath({ innerRadius: dims.segR0, outerRadius: dims.segR1, startDeg: a0, endDeg: a1, padDeg: 1.8, cornerRadius: 6 }),
       labelPath: labelArcPath(dims.cx, dims.cy, dims.segLabelR, a0, a1, flip, 4),
       centerAngle: center,
       leader: { x1: li.x, y1: li.y, x2: lo.x, y2: lo.y },
@@ -140,7 +140,7 @@ export function buildBandGeometry(
       const center = (a0 + a1) / 2
       return {
         groupKey: g.key,
-        path: arcPath({ innerRadius: dims.bandR0, outerRadius: dims.bandR1, startDeg: a0, endDeg: a1, padDeg: 0.8, cornerRadius: 3 }),
+        path: arcPath({ innerRadius: dims.bandR0, outerRadius: dims.bandR1, startDeg: a0, endDeg: a1, padDeg: 1.2, cornerRadius: 6 }),
         labelPath: labelArcPath(dims.cx, dims.cy, dims.bandLabelR, a0, a1, shouldFlip(center), 8),
       }
     })
