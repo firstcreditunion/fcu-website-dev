@@ -61,7 +61,7 @@ export function TimelineTab({ payload, onOpenTask }: { payload: HubPayload; onOp
   const patch = usePatchRow()
   const create = useCreateRow(payload.project.id)
   const today = localTodayIso()
-  const ticks = monthTicks().filter((t) => t.label !== 'Feb') // Feb is the chart origin (0%); start labels at Mar
+  const ticks = monthTicks().filter((t) => t.leftPct > 0) // the origin month sits at 0% under the name-column border
   const tPct = todayPct(today)
 
   const phases = [...payload.phases].sort((a, b) => a.phase_number - b.phase_number)
