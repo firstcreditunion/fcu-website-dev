@@ -1,0 +1,26 @@
+/* Project Hub redesign — route-scoped keyframes (referenced from inline styles).
+   Names are hub-prefixed to avoid collisions; loaded only on /project-hub. */
+@keyframes hubPulse {
+  0% { box-shadow: 0 0 0 0 oklch(58% 0.11 160 / 0.5); }
+  70% { box-shadow: 0 0 0 5px oklch(58% 0.11 160 / 0); }
+  100% { box-shadow: 0 0 0 0 oklch(58% 0.11 160 / 0); }
+}
+@keyframes hubShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@keyframes hubRecent {
+  0% { background-color: var(--editHi); }
+  100% { background-color: transparent; }
+}
+@keyframes hubSlideIn {
+  from { transform: translateX(24px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes hubFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-hub-anim] { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

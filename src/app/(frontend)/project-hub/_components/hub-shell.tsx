@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { HeaderBand } from './header-band'
+import { TriangleAlert } from 'lucide-react'
+import { HeaderBand, type HeaderModel } from './header-band'
+import { TabNav, type TabId, type TabDef } from './tab-nav'
 import { useHub, useHubInvalidate } from './use-hub'
 import { useHubRealtime } from './use-realtime'
 import { OverviewTab } from './overview-tab'
@@ -14,6 +15,10 @@ import { TimelineTab } from './timeline-tab'
 import { MilestonesTab } from './milestones-tab'
 import { ActivityTab } from './activity-tab'
 import { TaskPanel } from './task-panel'
+import {
+  taskCounts, goLiveIso, daysBetween, formatDate, localTodayIso, deriveHealth,
+} from '@/lib/project-hub/hub-model'
+import { TIMELINE_END } from '@/lib/project-hub/dates'
 import type { HubPayload, PtTask } from '@/lib/project-hub/types'
 
 function HubInner({ initial }: { initial: HubPayload }) {
@@ -21,33 +26,84 @@ function HubInner({ initial }: { initial: HubPayload }) {
   const invalidate = useHubInvalidate()
   const { viewers, live } = useHubRealtime(initial.project.id, invalidate)
   const payload = data ?? initial
+
+  const [activeTab, setActiveTab] = useState<TabId>('timeline')
   const [openTask, setOpenTask] = useState<PtTask | null>(null)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  function navigate(id: TabId) {
+    setActiveTab(id)
+    window.scrollTo({ top: 0 })
+  }
+
+  // React Compiler auto-memoizes; manual useMemo is unnecessary (and lint-flagged) here.
+  const today = localTodayIso()
+  const overall = taskCounts(payload.tasks)
+  const goLive = goLiveIso(payload.milestones) ?? TIMELINE_END
+  const health = deriveHealth(payload, today)
+
+  const model: HeaderModel = {
+    daysToGoLive: daysBetween(today, goLive),
+    goLiveLabel: formatDate(goLive, 'dMMM'),
+    overallPct: overall.pct,
+    doneCount: overall.complete,
+    totalCount: overall.total,
+    health,
+  }
+
+  const highRisks = payload.risks.filter((r) => r.impact === 'high').length
+  const delDone = payload.deliverables.filter((d) => d.done).length
+  const tabs: TabDef[] = [
+    { id: 'overview', label: 'Overview', badge: null },
+    { id: 'timeline', label: 'Timeline', badge: String(payload.tasks.length) },
+    { id: 'milestones', label: 'Milestones', badge: String(payload.milestones.length) },
+    { id: 'risks', label: 'Risks', badge: highRisks ? `${highRisks} high` : String(payload.risks.length), badgeTone: highRisks ? 'danger' : 'default' },
+    { id: 'tech', label: 'Tech stack', badge: String(payload.techStack.length) },
+    { id: 'deliverables', label: 'Deliverables', badge: `${delDone}/${payload.deliverables.length}` },
+    { id: 'activity', label: 'Activity', badge: null },
+  ]
+
   return (
-    <div className="w-full px-4 py-8 sm:px-6 lg:px-8">
-      <HeaderBand payload={payload} viewers={viewers} live={live} />
+    <div className="min-h-screen bg-[var(--surface)] text-foreground">
+      <HeaderBand payload={payload} viewers={viewers} live={live} scrolled={scrolled} model={model} />
+      <TabNav tabs={tabs} active={activeTab} onSelect={navigate} top={scrolled ? 47 : 65} />
+
+      {health.atRisk ? (
+        <div
+          role="alert"
+          className="border-b px-[max(16px,calc((100vw-1440px)/2))] py-[9px]"
+          style={{ background: 'var(--status-warning-50)', borderColor: 'color-mix(in oklab, var(--status-warning-500) 35%, var(--border))' }}
+        >
+          <div className="flex items-center gap-2.5 text-[12.5px] font-medium" style={{ color: 'var(--status-warning-700)' }}>
+            <TriangleAlert aria-hidden size={15} className="flex-none" />
+            <span className="font-semibold">Attention needed</span>
+            <span style={{ color: 'color-mix(in oklab, var(--status-warning-700) 80%, var(--foreground))' }}>
+              {health.reasons.join(' · ')}
+            </span>
+          </div>
+        </div>
+      ) : null}
+
       <div aria-live="polite" className="sr-only">
-        Project data updates automatically while others edit.
+        Project data updates automatically while teammates edit.
       </div>
-      <Tabs defaultValue="timeline" className="mt-6">
-        <TabsList variant="underline" className="w-full justify-start overflow-x-auto">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="timeline">Timeline</TabsTrigger>
-          <TabsTrigger value="milestones">Milestones</TabsTrigger>
-          <TabsTrigger value="risks">Risks</TabsTrigger>
-          <TabsTrigger value="tech-stack">Tech stack</TabsTrigger>
-          <TabsTrigger value="deliverables">Deliverables</TabsTrigger>
-          <TabsTrigger value="activity">Activity</TabsTrigger>
-        </TabsList>
-        <TabsContent value="overview" className="mt-6"><OverviewTab payload={payload} /></TabsContent>
-        <TabsContent value="timeline" className="mt-6">
-          <TimelineTab payload={payload} onOpenTask={setOpenTask} />
-        </TabsContent>
-        <TabsContent value="milestones" className="mt-6"><MilestonesTab payload={payload} /></TabsContent>
-        <TabsContent value="risks" className="mt-6"><RisksTab payload={payload} /></TabsContent>
-        <TabsContent value="tech-stack" className="mt-6"><TechStackTab payload={payload} /></TabsContent>
-        <TabsContent value="deliverables" className="mt-6"><DeliverablesTab payload={payload} /></TabsContent>
-        <TabsContent value="activity" className="mt-6"><ActivityTab /></TabsContent>
-      </Tabs>
+
+      <main className="mx-auto max-w-[1440px] px-[max(16px,calc((100vw-1440px)/2))] pb-16 pt-[22px]">
+        {activeTab === 'overview' ? <OverviewTab payload={payload} /> : null}
+        {activeTab === 'timeline' ? <TimelineTab payload={payload} onOpenTask={setOpenTask} /> : null}
+        {activeTab === 'milestones' ? <MilestonesTab payload={payload} /> : null}
+        {activeTab === 'risks' ? <RisksTab payload={payload} /> : null}
+        {activeTab === 'tech' ? <TechStackTab payload={payload} /> : null}
+        {activeTab === 'deliverables' ? <DeliverablesTab payload={payload} /> : null}
+        {activeTab === 'activity' ? <ActivityTab /> : null}
+      </main>
+
       <TaskPanel task={openTask} payload={payload} onClose={() => setOpenTask(null)} />
     </div>
   )

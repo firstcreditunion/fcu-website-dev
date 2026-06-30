@@ -1,6 +1,7 @@
 import { auth } from '@clerk/nextjs/server'
 import { getProjectHub } from '@/lib/project-hub/queries'
 import { HubShell } from './_components/hub-shell'
+import './hub-animations.css'
 
 export const metadata = { title: 'Project Hub — FCU website rebuild', robots: { index: false, follow: false } }
 export const dynamic = 'force-dynamic'
