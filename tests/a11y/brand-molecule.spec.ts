@@ -14,23 +14,22 @@ function axe(page: Page) {
 }
 
 test.describe("brand molecule a11y", () => {
-  for (const v of ["1", "2", "3"]) {
-    test(`no axe violations (v=${v})`, async ({ page }) => {
-      await page.goto(`/brand-molecule?v=${v}`, { waitUntil: "load" })
-      // Settle client hydration / entrance animation before scanning.
-      await page.locator('svg [role="button"]').first().waitFor({ state: "attached", timeout: 120_000 })
-      await page.waitForTimeout(700)
+  // The page is now a single experience (focus + click-to-expand) — no ?v= switch.
+  test("no axe violations", async ({ page }) => {
+    await page.goto("/brand-molecule", { waitUntil: "load" })
+    // Settle client hydration / entrance animation before scanning.
+    await page.locator('svg [role="button"]').first().waitFor({ state: "attached", timeout: 120_000 })
+    await page.waitForTimeout(700)
 
-      const results = await axe(page).analyze()
-      expect(
-        results.violations,
-        `axe WCAG A/AA violations on /brand-molecule?v=${v}`
-      ).toEqual([])
-    })
-  }
+    const results = await axe(page).analyze()
+    expect(
+      results.violations,
+      "axe WCAG A/AA violations on /brand-molecule"
+    ).toEqual([])
+  })
 
   test("every segment is keyboard reachable", async ({ page }) => {
-    await page.goto("/brand-molecule?v=1", { waitUntil: "load" })
+    await page.goto("/brand-molecule", { waitUntil: "load" })
     const segments = page.locator('svg [role="button"]')
     await expect(segments).toHaveCount(9)
   })

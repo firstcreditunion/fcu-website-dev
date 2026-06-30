@@ -1,7 +1,32 @@
 // src/components/brand-molecule/lib/types.ts
 import type { PortableTextBlock } from '@portabletext/types'
 
+// Retained for the (now unused) Sanity `defaultVariant` field + adaptMolecule;
+// the page renders a single experience (focus + click-to-expand).
 export type MoleculeVariant = 'focus' | 'expand' | 'tour'
+
+export type EntranceDirection = 'clockwise' | 'radiate'
+
+/**
+ * Per-deployment motion toggles. Each defaults ON; every one is hard-disabled
+ * under `prefers-reduced-motion`. Mirrors the design prototype's toggles.
+ */
+export interface MoleculeMotionProps {
+  /** Idle breathing + pointer parallax of the wheel. */
+  ambientLife?: boolean
+  /** Hero/stage drift on scroll. */
+  scrollParallax?: boolean
+  /** Soft glow follows the cursor (desktop). */
+  cursorLight?: boolean
+  /** Order segments build in: clockwise stagger or near-simultaneous radiate. */
+  entranceDirection?: EntranceDirection
+  /** Radiating pulse from the central hub. */
+  hubPulse?: boolean
+  /** Floating background motes in the three group colours. */
+  motes?: boolean
+  /** Close-button hover/press micro-interaction polish. */
+  microPolish?: boolean
+}
 
 export interface MoleculeGroup {
   key: string
