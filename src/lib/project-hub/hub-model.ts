@@ -33,9 +33,26 @@ export const IMPACT: Record<PtRiskImpact, SwatchTokens> = {
 
 export const IMPACT_ORDER: PtRiskImpact[] = ['low', 'medium', 'high']
 
-/** Phase swimlane colour from the DB token (e.g. `color-fcu-primary-700`). */
+/** Phase swimlane colour from a DB token (e.g. `color-fcu-primary-700`). */
 export function phaseColorVar(colorToken: string): string {
   return `var(--${colorToken})`
+}
+
+// The approved design assigns each phase a distinct brand-ramp colour by number.
+// Kept in the frontend (not the shared DB) so the palette ships atomically with
+// the redesign and doesn't alter the current live tracker.
+export const PHASE_COLOR_TOKEN: Record<number, string> = {
+  1: 'color-fcu-primary-700',
+  2: 'color-fcu-primary-400',
+  3: 'color-fcu-secondary-600',
+  4: 'color-fcu-mint-600',
+  5: 'color-fcu-green-faded-700',
+  6: 'color-fcu-primary-900',
+}
+/** Phase colour by phase_number, with a stable fallback for any extra phases. */
+export function phaseColor(phaseNumber: number): string {
+  const token = PHASE_COLOR_TOKEN[phaseNumber] ?? 'color-fcu-primary-700'
+  return `var(--${token})`
 }
 
 // ---- dates ----

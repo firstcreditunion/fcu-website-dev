@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   taskCounts, phaseState, goLiveIso, overdueMilestones, nextMilestone,
   statusSegments, deriveHealth, daysBetween, formatDate, localTodayIso,
-  phaseColorVar, milestoneState, STATUS_ORDER, IMPACT_ORDER,
+  phaseColorVar, phaseColor, milestoneState, STATUS_ORDER, IMPACT_ORDER,
 } from './hub-model'
 import type { HubPayload, PtTask, PtMilestone } from './types'
 
@@ -124,6 +124,11 @@ describe('misc helpers', () => {
   })
   it('phaseColorVar wraps the token', () => {
     expect(phaseColorVar('color-fcu-primary-700')).toBe('var(--color-fcu-primary-700)')
+  })
+  it('phaseColor maps by phase number with fallback', () => {
+    expect(phaseColor(1)).toBe('var(--color-fcu-primary-700)')
+    expect(phaseColor(6)).toBe('var(--color-fcu-primary-900)')
+    expect(phaseColor(99)).toBe('var(--color-fcu-primary-700)')
   })
   it('orders are stable', () => {
     expect(STATUS_ORDER).toEqual(['not_started', 'in_progress', 'complete', 'blocked', 'na'])
