@@ -44,8 +44,6 @@ export function arcPath(opts: {
   return generator({
     startAngle: (opts.startDeg + opts.padDeg) * TAU,
     endAngle: (opts.endDeg - opts.padDeg) * TAU,
-    innerRadius: opts.innerRadius,
-    outerRadius: opts.outerRadius,
   } as never) ?? ''
 }
 
@@ -131,15 +129,19 @@ export function buildBandGeometry(
   dims: WheelDims = DEFAULT_DIMS,
 ): BandGeometry[] {
   const spans = segmentSpans(segments.length, 0, dims.startDeg)
-  return groups.map((g) => {
-    const idxs = segments.map((s, i) => (s.groupKey === g.key ? i : -1)).filter((i) => i >= 0)
-    const a0 = spans[idxs[0]].a0
-    const a1 = spans[idxs[idxs.length - 1]].a1
-    const center = (a0 + a1) / 2
-    return {
-      groupKey: g.key,
-      path: arcPath({ innerRadius: dims.bandR0, outerRadius: dims.bandR1, startDeg: a0, endDeg: a1, padDeg: 0.8, cornerRadius: 3 }),
-      labelPath: labelArcPath(dims.cx, dims.cy, dims.bandLabelR, a0, a1, shouldFlip(center), 8),
-    }
-  })
+  return groups
+    // Skip groups whose key matches no segment so a content typo degrades gracefully
+    // instead of indexing spans[undefined] and crashing (e.g. during SSR).
+    .filter((g) => segments.some((s) => s.groupKey === g.key))
+    .map((g) => {
+      const idxs = segments.map((s, i) => (s.groupKey === g.key ? i : -1)).filter((i) => i >= 0)
+      const a0 = spans[idxs[0]].a0
+      const a1 = spans[idxs[idxs.length - 1]].a1
+      const center = (a0 + a1) / 2
+      return {
+        groupKey: g.key,
+        path: arcPath({ innerRadius: dims.bandR0, outerRadius: dims.bandR1, startDeg: a0, endDeg: a1, padDeg: 0.8, cornerRadius: 3 }),
+        labelPath: labelArcPath(dims.cx, dims.cy, dims.bandLabelR, a0, a1, shouldFlip(center), 8),
+      }
+    })
 }

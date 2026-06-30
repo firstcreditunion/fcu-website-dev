@@ -61,7 +61,17 @@ export const brandMolecule = defineType({
           fields: [
             defineField({ name: 'key', title: 'Key', type: 'slug', validation: (r) => r.required() }),
             defineField({ name: 'label', title: 'Segment Label', type: 'string', validation: (r) => r.required() }),
-            defineField({ name: 'groupKey', title: 'Group', type: 'string', description: 'Must match a group key above.', validation: (r) => r.required() }),
+            defineField({
+              name: 'groupKey',
+              title: 'Group',
+              type: 'string',
+              description: 'Must match a group key above.',
+              validation: (rule) =>
+                rule.required().custom((val, ctx) => {
+                  const keys = ((ctx.document?.groups as Array<{ key?: { current?: string } }>) ?? []).map((g) => g?.key?.current)
+                  return !val || keys.includes(val as string) ? true : 'Must match a group key above'
+                }),
+            }),
             defineField({ name: 'annotationTitle', title: 'Annotation Title', type: 'string', validation: (r) => r.required() }),
             defineField({ name: 'attributes', title: 'Attributes (focus line)', type: 'string', description: 'Short line shown when the segment is focused, e.g. "Honesty · Transparency · Fairness".' }),
             defineField({ name: 'detail', title: 'Detail (expand body)', type: 'array', of: [defineArrayMember({ type: 'block' })], description: 'Richer copy shown in V2 when the segment is clicked.' }),

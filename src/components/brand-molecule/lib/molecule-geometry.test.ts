@@ -6,7 +6,26 @@ import {
   annotationAnchor,
   arcPath,
   labelArcPath,
+  buildBandGeometry,
 } from './molecule-geometry'
+import type { MoleculeSegment, MoleculeGroup } from './types'
+
+function makeSegment(key: string, groupKey: string): MoleculeSegment {
+  return {
+    key,
+    label: key,
+    groupKey,
+    annotationTitle: key,
+    attributes: '',
+    detail: null,
+    colorVar: 'var(--color-foreground)',
+    icon: null,
+  }
+}
+
+function makeGroup(key: string): MoleculeGroup {
+  return { key, label: key, colorVar: 'var(--color-foreground)' }
+}
 
 describe('pointOnCircle', () => {
   it('places angle 0 directly above the center', () => {
@@ -55,5 +74,24 @@ describe('labelArcPath', () => {
     const flipped = labelArcPath(100, 100, 80, 0, 40, true, 2)
     expect(normal).not.toEqual(flipped)
     expect(flipped.startsWith('M')).toBe(true)
+  })
+})
+
+describe('buildBandGeometry', () => {
+  it('builds a band for each group whose key matches segments', () => {
+    const segments = [makeSegment('a', 'g1'), makeSegment('b', 'g1'), makeSegment('c', 'g2')]
+    const groups = [makeGroup('g1'), makeGroup('g2')]
+    const bands = buildBandGeometry(segments, groups)
+    expect(bands).toHaveLength(2)
+    expect(bands.map((b) => b.groupKey)).toEqual(['g1', 'g2'])
+  })
+
+  it('omits a group with no matching segments without throwing (content typo)', () => {
+    const segments = [makeSegment('a', 'g1'), makeSegment('b', 'g1')]
+    // "g2" matches no segment (e.g. a typo'd groupKey on the group/segment side).
+    const groups = [makeGroup('g1'), makeGroup('g2')]
+    expect(() => buildBandGeometry(segments, groups)).not.toThrow()
+    const bands = buildBandGeometry(segments, groups)
+    expect(bands.map((b) => b.groupKey)).toEqual(['g1'])
   })
 })
