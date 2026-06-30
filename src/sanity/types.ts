@@ -537,7 +537,19 @@ export type BrandMolecule = {
       | "fcu-green-faded-500"
       | "status-warning-500"
       | "status-warning-700"
-      | "neutral-700";
+      | "neutral-700"
+      | "molecule-hh-band"
+      | "molecule-hh-vision"
+      | "molecule-hh-values"
+      | "molecule-hh-belief"
+      | "molecule-wt-band"
+      | "molecule-wt-behave"
+      | "molecule-wt-talk"
+      | "molecule-wt-look"
+      | "molecule-pp-band"
+      | "molecule-pp-proof"
+      | "molecule-pp-products"
+      | "molecule-pp-position";
     _type: "group";
     _key: string;
   }>;
@@ -580,7 +592,19 @@ export type BrandMolecule = {
       | "fcu-green-faded-500"
       | "status-warning-500"
       | "status-warning-700"
-      | "neutral-700";
+      | "neutral-700"
+      | "molecule-hh-band"
+      | "molecule-hh-vision"
+      | "molecule-hh-values"
+      | "molecule-hh-belief"
+      | "molecule-wt-band"
+      | "molecule-wt-behave"
+      | "molecule-wt-talk"
+      | "molecule-wt-look"
+      | "molecule-pp-band"
+      | "molecule-pp-proof"
+      | "molecule-pp-products"
+      | "molecule-pp-position";
     icon?: string;
     _type: "segment";
     _key: string;
@@ -1724,6 +1748,18 @@ export type BRAND_MOLECULE_QUERY_RESULT =
           | "fcu-secondary-400"
           | "fcu-secondary-500"
           | "fcu-secondary-600"
+          | "molecule-hh-band"
+          | "molecule-hh-belief"
+          | "molecule-hh-values"
+          | "molecule-hh-vision"
+          | "molecule-pp-band"
+          | "molecule-pp-position"
+          | "molecule-pp-products"
+          | "molecule-pp-proof"
+          | "molecule-wt-band"
+          | "molecule-wt-behave"
+          | "molecule-wt-look"
+          | "molecule-wt-talk"
           | "neutral-700"
           | "status-warning-500"
           | "status-warning-700";
@@ -1773,6 +1809,18 @@ export type BRAND_MOLECULE_QUERY_RESULT =
           | "fcu-secondary-400"
           | "fcu-secondary-500"
           | "fcu-secondary-600"
+          | "molecule-hh-band"
+          | "molecule-hh-belief"
+          | "molecule-hh-values"
+          | "molecule-hh-vision"
+          | "molecule-pp-band"
+          | "molecule-pp-position"
+          | "molecule-pp-products"
+          | "molecule-pp-proof"
+          | "molecule-wt-band"
+          | "molecule-wt-behave"
+          | "molecule-wt-look"
+          | "molecule-wt-talk"
           | "neutral-700"
           | "status-warning-500"
           | "status-warning-700";

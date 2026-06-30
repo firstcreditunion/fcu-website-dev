@@ -2966,6 +2966,54 @@
                     {
                       "type": "string",
                       "value": "neutral-700"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-hh-band"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-hh-vision"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-hh-values"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-hh-belief"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-wt-band"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-wt-behave"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-wt-talk"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-wt-look"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-pp-band"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-pp-proof"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-pp-products"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-pp-position"
                     }
                   ]
                 },
@@ -3280,6 +3328,54 @@
                     {
                       "type": "string",
                       "value": "neutral-700"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-hh-band"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-hh-vision"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-hh-values"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-hh-belief"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-wt-band"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-wt-behave"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-wt-talk"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-wt-look"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-pp-band"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-pp-proof"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-pp-products"
+                    },
+                    {
+                      "type": "string",
+                      "value": "molecule-pp-position"
                     }
                   ]
                 },
