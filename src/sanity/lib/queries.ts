@@ -93,8 +93,28 @@ export const HEADER_NAVIGATION_QUERY = defineQuery(/* groq */ `
           linkType,
           url,
           externalUrl,
-          openInNewTab
+          openInNewTab,
+          icon,
+          badge
         }
+      },
+      introCard { icon, title, blurb },
+      featuredCard {
+        eyebrow,
+        headline,
+        subtext,
+        image {
+          asset-> { _id, url, metadata { lqip, dimensions { width, height } } },
+          hotspot,
+          crop,
+          alt
+        },
+        link { label, linkType, url, externalUrl, openInNewTab, icon, badge }
+      },
+      campaignStrip {
+        badge,
+        text,
+        link { label, linkType, url, externalUrl, openInNewTab }
       }
     },
     utilityNav {

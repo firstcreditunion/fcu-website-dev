@@ -32,6 +32,37 @@ export const link = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'icon',
+      title: 'Icon',
+      type: 'string',
+      description: 'Icon chip shown before the label in mega-menu link rows',
+      options: {
+        list: [
+          { title: 'Credit card', value: 'credit-card' },
+          { title: 'Globe', value: 'globe' },
+          { title: 'Send', value: 'send' },
+          { title: 'Wallet', value: 'wallet' },
+          { title: 'File text', value: 'file-text' },
+          { title: 'Home', value: 'home' },
+          { title: 'Calculator', value: 'calculator' },
+          { title: 'Percent', value: 'percent' },
+          { title: 'Shield', value: 'shield' },
+          { title: 'Help', value: 'help-circle' },
+          { title: 'Phone', value: 'phone' },
+          { title: 'Map pin', value: 'map-pin' },
+          { title: 'Trending up', value: 'trending-up' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'badge',
+      title: 'Badge',
+      type: 'string',
+      description: 'Small pill next to the label, e.g. "New" or "Popular"',
+      validation: (rule) =>
+        rule.max(14).warning('Keep badges short (≤14 characters)'),
+    }),
+    defineField({
       name: 'linkType',
       title: 'Link Type',
       type: 'string',

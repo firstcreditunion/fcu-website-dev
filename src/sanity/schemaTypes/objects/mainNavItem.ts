@@ -50,6 +50,70 @@ export const mainNavItem = defineType({
         return !groups?.some((g) => g.isFeatured)
       },
     }),
+    defineField({
+      name: 'introCard',
+      title: 'Intro Card',
+      type: 'object',
+      description: 'Audience intro shown at the left of the mega panel',
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        defineField({ name: 'icon', title: 'Icon / Glyph', type: 'string' }),
+        defineField({ name: 'title', title: 'Title', type: 'string' }),
+        defineField({
+          name: 'blurb',
+          title: 'Blurb',
+          type: 'text',
+          rows: 2,
+          validation: (rule) => rule.max(140),
+        }),
+      ],
+    }),
+    defineField({
+      name: 'featuredCard',
+      title: 'Featured Card',
+      type: 'object',
+      description: 'Promo card at the right of the mega panel (rate, media, or story)',
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        defineField({
+          name: 'eyebrow',
+          title: 'Eyebrow',
+          type: 'string',
+          description: 'Small label, e.g. "FEATURED RATE"',
+        }),
+        defineField({
+          name: 'headline',
+          title: 'Headline',
+          type: 'string',
+          description: 'e.g. "4.85% p.a." or a short promo title',
+        }),
+        defineField({ name: 'subtext', title: 'Subtext', type: 'string' }),
+        defineField({
+          name: 'image',
+          title: 'Image (optional)',
+          type: 'image',
+          options: { hotspot: true },
+        }),
+        defineField({ name: 'link', title: 'Link', type: 'link' }),
+      ],
+    }),
+    defineField({
+      name: 'campaignStrip',
+      title: 'Campaign Strip',
+      type: 'object',
+      description: 'Full-width promo strip at the bottom of the mega panel',
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        defineField({
+          name: 'badge',
+          title: 'Badge',
+          type: 'string',
+          description: 'e.g. "NEW"',
+        }),
+        defineField({ name: 'text', title: 'Text', type: 'string' }),
+        defineField({ name: 'link', title: 'Link', type: 'link' }),
+      ],
+    }),
   ],
   preview: {
     select: {

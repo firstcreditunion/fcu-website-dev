@@ -15,6 +15,41 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type IntroCard = {
+  icon?: string;
+  title?: string;
+  blurb?: string;
+};
+
+export type FeaturedCard = {
+  eyebrow?: string;
+  headline?: string;
+  subtext?: string;
+  image?: FeaturedCardImage;
+  link?: Link;
+};
+
+export type CampaignStrip = {
+  badge?: string;
+  text?: string;
+  link?: Link;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type FeaturedCardImage = {
+  asset?: SanityImageAssetReference;
+  media?: unknown; // Unable to locate the referenced type "image.media" in schema
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  _type: "image";
+};
+
 export type LegalFinePrintBlock = {
   _type: "legalFinePrintBlock";
   content: string;
@@ -245,13 +280,6 @@ export type FooterColumn = {
   >;
 };
 
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-};
-
 export type FooterLink = {
   _type: "footerLink";
   label: string;
@@ -353,6 +381,9 @@ export type MainNavItem = {
     } & NavGroup
   >;
   featuredPosition?: "left" | "right";
+  introCard?: IntroCard;
+  featuredCard?: FeaturedCard;
+  campaignStrip?: CampaignStrip;
 };
 
 export type NavGroup = {
@@ -377,6 +408,21 @@ export type Link = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  icon?:
+    | "credit-card"
+    | "globe"
+    | "send"
+    | "wallet"
+    | "file-text"
+    | "home"
+    | "calculator"
+    | "percent"
+    | "shield"
+    | "help-circle"
+    | "phone"
+    | "map-pin"
+    | "trending-up";
+  badge?: string;
   linkType: "internal" | "external";
   url?: string;
   externalUrl?: string;
@@ -1047,6 +1093,11 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | IntroCard
+  | FeaturedCard
+  | CampaignStrip
+  | SanityImageAssetReference
+  | FeaturedCardImage
   | LegalFinePrintBlock
   | CtaBarBlock
   | RelatedLinksBlock
@@ -1070,7 +1121,6 @@ export type AllSanitySchemaTypes =
   | KeyValueRow
   | ButtonLink
   | FooterColumn
-  | SanityImageAssetReference
   | FooterLink
   | DisputeResolutionScheme
   | AnnouncementBar
@@ -1149,13 +1199,7 @@ export type ALL_COMPONENT_CONFIGS_QUERY_RESULT = Array<{
   componentName: string;
   displayName: string;
   category:
-    | "actions"
-    | "data"
-    | "forms"
-    | "layout"
-    | "navigation"
-    | "overlay"
-    | null;
+    "actions" | "data" | "forms" | "layout" | "navigation" | "overlay" | null;
   approvedVariants: Array<string> | null;
   disabledVariants: Array<string> | null;
   approvedSizes: Array<string> | null;
@@ -1198,13 +1242,7 @@ export type COMPONENT_CONFIG_QUERY_RESULT = {
   componentName: string;
   displayName: string;
   category:
-    | "actions"
-    | "data"
-    | "forms"
-    | "layout"
-    | "navigation"
-    | "overlay"
-    | null;
+    "actions" | "data" | "forms" | "layout" | "navigation" | "overlay" | null;
   approvedVariants: Array<string> | null;
   disabledVariants: Array<string> | null;
   approvedSizes: Array<string> | null;
@@ -1241,7 +1279,7 @@ export type COMPONENT_CONFIG_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: HEADER_NAVIGATION_QUERY
-// Query: *[_id == "headerNavigation"][0] {    mainNav[] {      _key,      label,      url,      featuredPosition,      megaMenu[] {        _key,        title,        isFeatured,        items[] {          _key,          label,          description,          image {            asset-> {              _id,              url,              metadata {                lqip,                dimensions { width, height }              }            },            hotspot,            crop,            alt          },          linkType,          url,          externalUrl,          openInNewTab        }      }    },    utilityNav {      primaryAction {        label,        url      },      secondaryAction {        label,        url      },      showSearch    }  }
+// Query: *[_id == "headerNavigation"][0] {    mainNav[] {      _key,      label,      url,      featuredPosition,      megaMenu[] {        _key,        title,        isFeatured,        items[] {          _key,          label,          description,          image {            asset-> {              _id,              url,              metadata {                lqip,                dimensions { width, height }              }            },            hotspot,            crop,            alt          },          linkType,          url,          externalUrl,          openInNewTab,          icon,          badge        }      },      introCard { icon, title, blurb },      featuredCard {        eyebrow,        headline,        subtext,        image {          asset-> { _id, url, metadata { lqip, dimensions { width, height } } },          hotspot,          crop,          alt        },        link { label, linkType, url, externalUrl, openInNewTab, icon, badge }      },      campaignStrip {        badge,        text,        link { label, linkType, url, externalUrl, openInNewTab }      }    },    utilityNav {      primaryAction {        label,        url      },      secondaryAction {        label,        url      },      showSearch    }  }
 export type HEADER_NAVIGATION_QUERY_RESULT =
   | {
       mainNav: null;
@@ -1281,8 +1319,84 @@ export type HEADER_NAVIGATION_QUERY_RESULT =
             url: string | null;
             externalUrl: string | null;
             openInNewTab: boolean | null;
+            icon:
+              | "calculator"
+              | "credit-card"
+              | "file-text"
+              | "globe"
+              | "help-circle"
+              | "home"
+              | "map-pin"
+              | "percent"
+              | "phone"
+              | "send"
+              | "shield"
+              | "trending-up"
+              | "wallet"
+              | null;
+            badge: string | null;
           }> | null;
         }> | null;
+        introCard: {
+          icon: string | null;
+          title: string | null;
+          blurb: string | null;
+        } | null;
+        featuredCard: {
+          eyebrow: string | null;
+          headline: string | null;
+          subtext: string | null;
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+            alt: null;
+          } | null;
+          link: {
+            label: string;
+            linkType: "external" | "internal";
+            url: string | null;
+            externalUrl: string | null;
+            openInNewTab: boolean | null;
+            icon:
+              | "calculator"
+              | "credit-card"
+              | "file-text"
+              | "globe"
+              | "help-circle"
+              | "home"
+              | "map-pin"
+              | "percent"
+              | "phone"
+              | "send"
+              | "shield"
+              | "trending-up"
+              | "wallet"
+              | null;
+            badge: string | null;
+          } | null;
+        } | null;
+        campaignStrip: {
+          badge: string | null;
+          text: string | null;
+          link: {
+            label: string;
+            linkType: "external" | "internal";
+            url: string | null;
+            externalUrl: string | null;
+            openInNewTab: boolean | null;
+          } | null;
+        } | null;
       }> | null;
       utilityNav: {
         primaryAction: {
@@ -1778,14 +1892,7 @@ export type BRAND_MOLECULE_QUERY_RESULT =
             _key: string;
           }>;
           style?:
-            | "blockquote"
-            | "h1"
-            | "h2"
-            | "h3"
-            | "h4"
-            | "h5"
-            | "h6"
-            | "normal";
+            "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
           listItem?: "bullet" | "number";
           markDefs?: Array<{
             href?: string;
@@ -1836,7 +1943,7 @@ declare module "@sanity/client" {
     '\n  *[_id == "designTokens"][0] {\n    lastSyncedAt,\n    palettes[] {\n      _key,\n      paletteName,\n      tokens[] {\n        _key,\n        name,\n        cssVariable,\n        oklch,\n        hex,\n        rgb\n      }\n    }\n  }\n': DESIGN_TOKENS_QUERY_RESULT;
     '\n  *[_type == "componentConfig"] | order(displayName asc) {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': ALL_COMPONENT_CONFIGS_QUERY_RESULT;
     '\n  *[_type == "componentConfig" && componentName == $componentName][0] {\n    _id,\n    componentName,\n    displayName,\n    category,\n    approvedVariants,\n    disabledVariants,\n    approvedSizes,\n    defaultVariant,\n    defaultSize,\n    variantGuidelines[] {\n      _key,\n      variant,\n      colorToken,\n      usageNote\n    },\n    componentSpecificConfig,\n    previewConfig\n  }\n': COMPONENT_CONFIG_QUERY_RESULT;
-    '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      featuredPosition,\n      megaMenu[] {\n        _key,\n        title,\n        isFeatured,\n        items[] {\n          _key,\n          label,\n          description,\n          image {\n            asset-> {\n              _id,\n              url,\n              metadata {\n                lqip,\n                dimensions { width, height }\n              }\n            },\n            hotspot,\n            crop,\n            alt\n          },\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab\n        }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
+    '\n  *[_id == "headerNavigation"][0] {\n    mainNav[] {\n      _key,\n      label,\n      url,\n      featuredPosition,\n      megaMenu[] {\n        _key,\n        title,\n        isFeatured,\n        items[] {\n          _key,\n          label,\n          description,\n          image {\n            asset-> {\n              _id,\n              url,\n              metadata {\n                lqip,\n                dimensions { width, height }\n              }\n            },\n            hotspot,\n            crop,\n            alt\n          },\n          linkType,\n          url,\n          externalUrl,\n          openInNewTab,\n          icon,\n          badge\n        }\n      },\n      introCard { icon, title, blurb },\n      featuredCard {\n        eyebrow,\n        headline,\n        subtext,\n        image {\n          asset-> { _id, url, metadata { lqip, dimensions { width, height } } },\n          hotspot,\n          crop,\n          alt\n        },\n        link { label, linkType, url, externalUrl, openInNewTab, icon, badge }\n      },\n      campaignStrip {\n        badge,\n        text,\n        link { label, linkType, url, externalUrl, openInNewTab }\n      }\n    },\n    utilityNav {\n      primaryAction {\n        label,\n        url\n      },\n      secondaryAction {\n        label,\n        url\n      },\n      showSearch\n    }\n  }\n': HEADER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "footerNavigation"][0] {\n    headline,\n    headlineFontSizePreset,\n    subheadline,\n    primaryCta {\n      label,\n      url,\n      openInNewTab\n    },\n    secondaryCta {\n      label,\n      url,\n      openInNewTab\n    },\n    columns[] {\n      _key,\n      title,\n      links[] {\n        _key,\n        label,\n        linkType,\n        url,\n        externalUrl,\n        openInNewTab,\n        badgeImage {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          }\n        }\n      }\n    },\n    newsletterCta {\n      layout,\n      contentOrder,\n      heading,\n      description,\n      placeholder,\n      buttonLabel,\n      disclaimer\n    },\n    showSocialLinks,\n    showContactInfo,\n    legalLinks[] {\n      _key,\n      label,\n      linkType,\n      url,\n      externalUrl,\n      openInNewTab\n    }\n  }\n': FOOTER_NAVIGATION_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0] {\n    siteName,\n    siteTagline,\n    siteDescription,\n    siteUrl,\n    logo,\n    logoAlt,\n    titleTemplate,\n    defaultSeoTitle,\n    defaultSeoDescription,\n    defaultOgImage,\n    twitterHandle,\n    twitterCardType,\n    googleSiteVerification,\n    bingSiteVerification,\n    noIndexSite,\n    enableJsonLd,\n    enableAnalytics,\n    googleAnalyticsId,\n    googleTagManagerId,\n    socialLinks[] { _key, platform, url, label },\n    primaryPhone,\n    tollFreePhone,\n    primaryEmail,\n    headOfficeAddress,\n    googleMapsUrl,\n    postalAddress,\n    businessHours[] { _key, day, openTime, closeTime, isClosed },\n    holidayNotice,\n    announcementBar,\n    registeredName,\n    nzbn,\n    fspNumber,\n    copyrightNotice,\n    disputeResolutionScheme,\n    regulatoryBody,\n    privacyPolicyUrl,\n    termsUrl,\n    disclosureStatementUrl,\n    complaintsUrl,\n    accessibilityStatementUrl,\n    cookieConsentEnabled,\n    cookieConsentMessage,\n    locale,\n    maintenanceMode,\n    maintenanceMessage,\n    headerStyle,\n    footerStyle\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "loanProductPage" && slug.current == $slug][0] {\n    _id,\n    _updatedAt,\n    title,\n    "slug": slug.current,\n    loanProductType,\n    status,\n    seo {\n      title,\n      description,\n      image,\n      noIndex\n    },\n    pageBuilder[] {\n      _key,\n      _type,\n      ...,\n      _type == "noticeBlock" => {\n        ...,\n        sharedDisclaimer->{\n          _id,\n          name,\n          tone,\n          content\n        }\n      },\n      _type == "relatedLinksBlock" => {\n        ...,\n        items[] {\n          ...,\n          link {\n            ...,\n            url,\n            externalUrl\n          }\n        }\n      }\n    }\n  }\n': LOAN_PRODUCT_PAGE_BY_SLUG_QUERY_RESULT;
