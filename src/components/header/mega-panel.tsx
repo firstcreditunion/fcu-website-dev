@@ -1,8 +1,11 @@
 // src/components/header/mega-panel.tsx
-// Mega-menu sheet per Figma "Navbar / Panel" (node 259:44): sits flush under
-// the nav bar — audience intro card · link columns with mono eyebrows +
+// Mega-menu sheet per Figma "Option 3.1 — Detached floating panel"
+// (node 266:519, chosen by Isaac 2026-07-02 over the flush 259:44 variant):
+// floats 16px below the bar, rounded-3xl (22px) all corners, full border,
+// Shadow/xl — audience intro card · link columns with mono eyebrows +
 // hairlines · featured card (rate or media) · optional campaign strip.
 // All slots are optional; hairlines only separate rendered sections.
+// (The 16px gap itself lives on the wrapper in header-client.tsx.)
 import { createElement, Fragment } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -165,7 +168,7 @@ export function MegaPanel({
   return (
     <div
       id={panelId}
-      className='mx-auto flex w-full max-w-[1200px] flex-col gap-5 rounded-b-2xl border border-t-0 border-border bg-popover px-7 pt-7 pb-6 shadow-[var(--shadow-lg)]'
+      className='mx-auto flex w-full max-w-[1200px] flex-col gap-5 rounded-3xl border border-border bg-popover px-7 pt-7 pb-6 shadow-[var(--shadow-xl)]'
       data-slot='mega-panel'
     >
       {sections.length > 0 && (

@@ -225,7 +225,10 @@ export function HeaderClient({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={springTransition}
-              className='absolute inset-x-0 top-full z-50 hidden px-4 sm:px-6 lg:block lg:px-8'
+              // Detached floating panel (Figma option 3.1): 16px gap below the
+              // bar. The gap is outside the wrapper so clicking it counts as
+              // click-away and closes the panel.
+              className='absolute inset-x-0 top-[calc(100%+16px)] z-50 hidden px-4 sm:px-6 lg:block lg:px-8'
             >
               <MegaPanel
                 item={activeItem}
