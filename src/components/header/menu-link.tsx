@@ -19,6 +19,15 @@ export type MenuLinkData = {
   openInNewTab?: boolean | null
 }
 
+/** Small mono badge pill ("NEW") — shared by MenuLink, MegaPanel campaign strip. */
+export function BadgePill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className='rounded-full bg-primary px-1.5 py-0.5 font-mono text-[9px] font-medium uppercase tracking-[0.54px] leading-normal text-primary-foreground'>
+      {children}
+    </span>
+  )
+}
+
 export function MenuLink({
   link,
   onNavigate,
@@ -49,11 +58,7 @@ export function MenuLink({
           <span className='text-sm font-semibold text-foreground'>
             {link.label}
           </span>
-          {link.badge && (
-            <span className='rounded-full bg-primary px-1.5 py-0.5 font-mono text-[9px] font-medium uppercase tracking-[0.54px] leading-normal text-primary-foreground'>
-              {link.badge}
-            </span>
-          )}
+          {link.badge && <BadgePill>{link.badge}</BadgePill>}
         </span>
         {link.description && (
           <span className='text-[12.5px] leading-[1.45] text-foreground-muted'>
