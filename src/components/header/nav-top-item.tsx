@@ -11,7 +11,7 @@ import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const baseClasses =
-  'relative inline-flex h-10 items-center gap-1.5 rounded-lg border border-transparent px-3 text-sm font-medium text-foreground transition-colors'
+  'relative inline-flex h-10 items-center gap-1.5 rounded-lg border border-transparent px-3 text-sm font-medium text-foreground transition-colors outline-none focus-visible:shadow-[var(--shadow-focus)]'
 
 function ActiveUnderline() {
   // Active-page indicator (Figma option 2.2a): 2.5px primary bar inside the item.
