@@ -17,3 +17,16 @@ export function isAnnouncementInWindow(
   if (announcement.endDate && now > Date.parse(announcement.endDate)) return false
   return true
 }
+
+/**
+ * Impure convenience for SERVER callers (plain function, not a component, so
+ * Date.now here satisfies react-hooks/purity): returns the announcement when
+ * it is inside its window, else null.
+ */
+export function visibleAnnouncement<T extends AnnouncementData>(
+  announcement: T,
+): T | null {
+  return announcement && isAnnouncementInWindow(announcement, Date.now())
+    ? announcement
+    : null
+}
