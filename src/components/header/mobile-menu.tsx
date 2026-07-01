@@ -138,6 +138,7 @@ export function MobileMenu({
                                   key={link._key}
                                   link={link}
                                   onNavigate={onClose}
+                                  compact
                                 />
                               ))}
                             </div>

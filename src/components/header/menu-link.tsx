@@ -32,27 +32,34 @@ export function MenuLink({
   link,
   onNavigate,
   className,
+  compact = false,
 }: {
   link: MenuLinkData
   onNavigate?: () => void
   className?: string
+  /** Mobile-menu variant per Figma 259:327 — icon chip + label only, no description. */
+  compact?: boolean
 }) {
   const href = getHref(link)
   const external = isExternalLink(link)
 
   const content = (
     <>
-      <span
-        aria-hidden='true'
-        className='flex size-9 shrink-0 items-center justify-center rounded-md bg-primary-subtle'
-        data-slot='icon-chip'
-      >
-        {/* createElement of a stable registry component — not created during
-            render; keeps react-hooks/static-components satisfied. */}
-        {createElement(resolveNavIcon(link.icon), {
-          className: 'size-[18px] text-primary',
-        })}
-      </span>
+      {/* Chip only when the CMS sets an icon — links without one render text-only
+          rather than a meaningless fallback glyph. */}
+      {link.icon && (
+        <span
+          aria-hidden='true'
+          className='flex size-9 shrink-0 items-center justify-center rounded-md bg-primary-subtle'
+          data-slot='icon-chip'
+        >
+          {/* createElement of a stable registry component — not created during
+              render; keeps react-hooks/static-components satisfied. */}
+          {createElement(resolveNavIcon(link.icon), {
+            className: 'size-[18px] text-primary',
+          })}
+        </span>
+      )}
       <span className='flex min-w-0 flex-1 flex-col gap-0.5'>
         <span className='flex items-center gap-1.5'>
           <span className='text-sm font-semibold text-foreground'>
@@ -60,7 +67,7 @@ export function MenuLink({
           </span>
           {link.badge && <BadgePill>{link.badge}</BadgePill>}
         </span>
-        {link.description && (
+        {!compact && link.description && (
           <span className='text-[12.5px] leading-[1.45] text-foreground-muted'>
             {link.description}
           </span>
