@@ -158,11 +158,14 @@ function HeroFullImage({
 }) {
   const isPhoto = background === "photo"
   return (
-    <div className={cn("flex w-full flex-col gap-3", className)} data-slot="hero-full-image">
+    // @container: all sizing is container-relative (cqw + container variants),
+    // so the panel renders Figma-exact at its 1440 design width and scales
+    // correctly inside narrower surfaces (showcase, builder sections).
+    <div className={cn("@container flex w-full flex-col gap-3", className)} data-slot="hero-full-image">
       <section
         className={cn(
           "relative w-full overflow-hidden rounded-2xl",
-          "min-h-[560px] max-[880px]:min-h-0 max-[880px]:py-16",
+          "min-h-[clamp(380px,38.9cqw,560px)] max-[880px]:min-h-0 max-[880px]:py-16",
           !isPhoto &&
             "bg-[linear-gradient(159deg,var(--color-fcu-primary-800)_14.8%,var(--color-fcu-primary-950)_85.2%)]",
           isPhoto && !image && "bg-surface-sunken",
@@ -196,14 +199,15 @@ function HeroFullImage({
           </>
         )}
 
-        {/* Content column — kit: left 120, width 620, vertically centered */}
-        <div className="relative flex h-full min-h-[inherit] max-w-[740px] flex-col justify-center px-[clamp(24px,8.3vw,120px)] py-10 max-[880px]:py-0">
+        {/* Content column — kit geometry: left inset 120/1440 (8.3cqw), copy width
+            620/1440 (43cqw) — proportional so the panel scales like the Figma frame. */}
+        <div className="relative flex h-full min-h-[inherit] w-full flex-col justify-center px-[clamp(24px,8.3cqw,120px)] py-10 max-[880px]:py-0 @min-[820px]:max-w-[calc(min(43cqw,620px)+clamp(24px,8.3cqw,120px))]">
           {eyebrow ? (
             <span className="inline-flex w-fit items-center rounded-full border border-white/25 bg-white/[0.14] px-3 py-[5px] font-mono text-xs font-medium uppercase tracking-[0.04em] text-white">
               {eyebrow}
             </span>
           ) : null}
-          <h1 className="mt-[18px] text-[clamp(34px,3.9vw,56px)] leading-[1.06] font-semibold tracking-[-0.03em] text-balance text-white">
+          <h1 className="mt-[18px] text-[clamp(30px,3.9cqw,56px)] leading-[1.06] font-semibold tracking-[-0.03em] text-balance text-white">
             {title}
           </h1>
           {lede ? (
@@ -214,9 +218,10 @@ function HeroFullImage({
           {actions ? <div className="mt-7 flex flex-wrap gap-3">{actions}</div> : null}
         </div>
 
-        {/* Feature slot — kit 100:21: right 120, 560 wide, vertically centered */}
+        {/* Feature slot — kit 100:21: right inset 8.3cqw, width 560/1440 (38.9cqw),
+            vertically centered. Proportional scaling keeps it clear of the copy. */}
         {feature ? (
-          <div className="absolute top-1/2 right-[clamp(24px,8.3vw,120px)] hidden w-[clamp(280px,38.9vw,560px)] -translate-y-1/2 xl:block">
+          <div className="absolute top-1/2 right-[clamp(24px,8.3cqw,120px)] hidden w-[clamp(240px,38.9cqw,560px)] -translate-y-1/2 @min-[820px]:block">
             {feature === "placeholder" ? (
               <div className="flex flex-col items-center justify-center gap-2 rounded-[14px] bg-white/[0.08] py-16">
                 <ImageIcon className="size-14 text-white/50" aria-hidden="true" />
