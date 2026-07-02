@@ -4,7 +4,19 @@
 
 ## Gate-1 Summary
 
-*(filled last — Task 6)*
+**Phase 0 executed 2026-07-02 (single session). All audit outputs green; five decisions for Isaac below.**
+
+| Area | Verdict |
+|---|---|
+| **Figma inventory (§1)** | 42/43 nodes OK; 1 stale ledger id fixed (Accordion → `221:2`). Kit **expanded post-ledger** — needs sign-off (Decision 1/2). |
+| **Variables parity (§2)** | **PERFECT** — 69/69 colors, 7/7 radius, 44/44 designTokens, shadows match. Count resolved: 84 primitives + 30 semantic + 5 chart = **119**. Zero fixes needed. |
+| **Dataset census (§3)** | **Zero** loanProductPage/disclaimer docs → **Phase-2 legacy deletion = CLEAN DELETE.** Write token VALID. |
+| **Copy drift (§4)** | Recipes ≈ live pages (shared source) → seed copy settled. FAQ answers ×3 + rates confirmation outstanding (Decisions 4/5). |
+| **Component diff (§5)** | **14 skip / 1 extend (Hero Full-Image) / 1 build (Widget Placeholder)** — Phase 1 is small. |
+| **Refreshed plan** | `docs/superpowers/plans/2026-07-02-page-builder-refreshed.md` (3,020 lines, 12-delta applied, self-checks verified independently; reviewer pass in flight — findings fold in before Phase 2 starts). |
+| **Ledger hygiene** | `phase` field + Accordion id fixed; audit note appended. |
+
+**Decisions needed:** see §6 (5 open — kit-expansion sign-off, kit-vs-doc contradictions, home-page launch framing, FAQ copy, rates confirmation).
 
 ## 1. Figma Inventory vs June Ledger
 
