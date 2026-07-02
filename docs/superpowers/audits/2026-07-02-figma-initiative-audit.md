@@ -120,11 +120,14 @@ Notables: kit "Inline" CTA layout = code layout `default` (naming mismatch to re
 
 **Consequence:** Phase 1 shrinks to: extend Hero (Full Image variants) + build Widget Placeholder + fidelity-probe pass over the 14 skips (spot-check, not rebuild). Gate 2 should be quick.
 
-## 6. Decisions Needed at Gate 1
+## 6. Decisions — RESOLVED at Gate 1 (Isaac, 2026-07-02)
 
-1. **Kit expansion sign-off (§1):** Button Destructive/XS/Icon/States, Badge Solid/Counter, Alert Banner/Inline, Testimonial Ghost/Compact, CTA Slim/Split, Stepper Vertical, Hero/Full Image — confirm these post-ledger additions are approved kit surface (Phase-1 fidelity targets) vs experiments to ignore.
-2. **Kit-vs-doc contradictions (§1):** Button States frame + Badge Solid set contradict their own page doc-text ("states live in code" / "subtle-only"). Which wins?
-3. **Home-page launch framing (§4):** live `/` is a full marketing page, not Coming Soon — re-confirm what production serves and whether Home-publish is still the launch event.
-4. **FAQ answer copy (§4):** 3 of 4 Home-Loan FAQ answers don't exist in the design — marketing to supply before Phase-3 publish.
-5. **Rates confirmation (§4):** 4.85% / 6.45% / 0.10% are hard-typed in design + live — confirm current before publish.
-6. ~~Variables audit scope~~ — **withdrawn**: full audit completed without assistance (frame-level MCP calls); perfect parity, no decisions needed.
+**GATE 1: APPROVED.** Phase 1 unlocked.
+
+1. **Kit expansion — APPROVED as official surface.** Isaac: *"Figma is always the source of truth for components and design."* Phase-1 fidelity targets = the current expanded kit. Follow-up: fix the two contradicting kit doc-notes in Figma.
+2. **Kit-vs-doc contradictions** — resolved by #1: the built variants win; doc-text gets corrected kit-side.
+3. **Home-page launch framing — signed off.** Isaac approves the CMS-driven homepage; publish-before-swap still applies mechanically (Home publishes last), but no separate launch ceremony beyond Gate-4 per-page approval.
+   **NEW instruction:** **swap all illustrations for placeholders** on the CMS-driven pages — seeds attach no illustration assets; renderers show a DS placeholder treatment where an image would appear; marketing uploads real imagery in Studio later.
+4. **FAQ answer copy (§4):** still with marketing — 3 of 4 Home-Loan answers needed before Phase-3 publish.
+5. **Rates confirmation (§4):** still with marketing — confirm 4.85% / 6.45% / 0.10% before publish.
+6. ~~Variables audit scope~~ — withdrawn (perfect parity, nothing to decide).
