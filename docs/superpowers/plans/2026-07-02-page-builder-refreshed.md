@@ -32,6 +32,7 @@ All must print `EXIT=0`; on any non-zero, read the log file. The PowerShell tool
 - All enum fields that drive rendering go through `stegaClean` in renderers.
 - Headings: renderer decides levels — `heroBlock` at index 0 renders `h1`, everything else `h2`.
 - Images: Sanity image with `options.hotspot: true` and required `alt` field; queries expand `asset->{ _id, url, metadata { lqip, dimensions { width, height } } }`.
+- **Placeholders, not illustrations (Isaac, Gate 1 2026-07-02):** seeds attach NO illustration assets — every block image field is omitted. Every renderer with an image slot (hero, split, productTile, ctaBanner media) MUST render a DS placeholder treatment when the image is unset (pattern: the Widget-Placeholder look — `bg-surface-sunken` block, rounded-lg, centered muted icon + optional caption) — never a broken/empty layout. Marketing uploads real imagery in Studio later; when an image IS set, render it normally.
 - **Header/Footer are UNTOUCHABLE.** The rebuilt navbar shipped 2026-07-02; nothing in this plan modifies `src/components/header/` or the footer. The navbar's `link.icon` keys stay exactly as shipped.
 - **Semantic icon keys.** Any icon string field in block schemas uses semantic MEANING keys (what the item is about), never lucide asset names. The renderer owns the meaning→lucide mapping in a registry module (`src/components/page-builder/block-icons.ts`, modeled on the navbar's `src/components/header/nav-icons.ts`). Curated set (11 kit icons): `members` (Users), `rates` (DollarSign), `location` (MapPin), `mobile` (Smartphone), `support` (LifeBuoy), `institution` (Landmark), `card` (CreditCard), `payments` (Send), `time` (Clock), `alerts` (Bell), `insights` (PieChart).
 - **React-compiler lint rules** (eslint react-hooks strict — repo rule, learned 2026-07-02): (1) no impure calls in render — no `Date.now()`/`Math.random()` in component bodies, server components included; move them into plain helper functions or event handlers. (2) no `setState` directly inside `useEffect` bodies — use `useSyncExternalStore` for external stores (scroll, sessionStorage). (3) components must never be created during render — render dynamic components via `createElement(registry[type], props)` or module-level component references; NEVER `const C = map[x]; return <C/>` inline.
@@ -82,7 +83,7 @@ console.log(data)
 | Authoring dry-run (insert-menu-only script) | Figma Initiative · P2 Universal Page Builder | Phase-2 exit steps (initiative-level) | that step |
 | Gate 3: all-blocks preview approved | Figma Initiative · P2 Universal Page Builder | Gate 3 approval | user approval |
 | Seed 3 recipe drafts (Home / Everyday / Home Loan) | Figma Initiative · P3 Recipes & CMS Takeover | Task 13 | Task 13 |
-| Pixel-check drafts vs Figma recipes (draft-mode preview) | Figma Initiative · P3 Recipes & CMS Takeover | Tasks 12, 15 | Task 15 |
+| Pixel-check drafts vs Figma recipes (draft-mode preview) | Figma Initiative · P3 Recipes & CMS Takeover | Tasks 12, 14 (Step 0.1 pre-swap check earns it), 15 (post-swap regression) | Task 15 |
 | Publish-before-swap per page (Home publish = launch go-ahead) | Figma Initiative · P3 Recipes & CMS Takeover | Task 14 | Task 14 |
 | Sitemap extension + 301 redirects + catch-all 404 decision | Figma Initiative · P3 Recipes & CMS Takeover | Task 14 Step 4 informs it; final tick at the initiative's sitemap/redirects step | initiative step |
 | Retire loanProductPage + orphan checks + preview-route cleanup | Figma Initiative · P3 Recipes & CMS Takeover | Task 1 (deletion, P2), Task 15 (orphans + preview-route cleanup) | Task 15 |
@@ -132,7 +133,7 @@ Deletion is safe and frees the block names for fresh use. `disclaimerSnippet` (d
 - Modify: `src/sanity/structure.ts` (remove the Loan Product Pages list item; remove `'loanProductPage'` from `HIDDEN_TYPES`)
 
 - [ ] **Step 1:** Delete the files/directories listed above (`git rm -r` for the dir).
-- [ ] **Step 2:** Strip `index.ts` to: documents `headerNavigation, footerNavigation, siteSettings, designTokens, componentConfig, designSystemUser, disclaimerSnippet` + objects `link, navGroup, mainNavItem, seo, socialLink, address, dayHours, announcementBar, disputeResolutionScheme, footerLink, footerColumn, buttonLink, keyValueRow, featureItem, faqItem, colorPalette, colorToken, variantGuideline`.
+- [ ] **Step 2:** Strip `index.ts` to: documents `headerNavigation, footerNavigation, siteSettings, designTokens, componentConfig, designSystemUser, disclaimerSnippet, brandMolecule` + objects `link, navGroup, mainNavItem, seo, socialLink, address, dayHours, announcementBar, disputeResolutionScheme, footerLink, footerColumn, buttonLink, keyValueRow, featureItem, faqItem, colorPalette, colorToken, variantGuideline`.
 - [ ] **Step 3:** Replace `[...slug]/page.tsx` body so it only renders `ComingSoon` (keep `formatSegment`, breadcrumbs, `generateMetadata` based on the slug; remove `sanityFetch`, the loan import and types). This is temporary until Task 14 (Phase 3 routing swap). **Interim behavior is ACCEPTABLE as-is** — the census confirms zero real loan pages exist to break, so the ComingSoon-only downgrade loses nothing during Phase 2.
 - [ ] **Step 4:** Verify (real exit codes):
 
@@ -152,7 +153,7 @@ git add -A src/sanity src/components/loan-page-builder 'src/app/(frontend)/[...s
 git commit -m 'refactor(sanity): remove unused loan page builder' -m 'Dataset has zero loanProductPage/disclaimer documents (census re-verified 2026-07-02), so the schema types, renderer, seed, queries, and Studio entries are deleted outright. Frees block names for the universal page builder. disclaimerSnippet and shared objects are kept.'
 ```
 
-- [ ] **Step 6 (hub tick):** `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P2 Universal Page Builder' 'Legacy loanPageBuilder deletion (census-gated)' complete 'Task 1 done: legacy builder deleted (census gate CLEAN DELETE, audit §3); gates green'`
+- [ ] **Step 6 (hub tick):** two updates — `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P2 Universal Page Builder' 'Legacy loanPageBuilder deletion (census-gated)' complete 'Task 1 done: legacy builder deleted (census gate CLEAN DELETE, audit §3); gates green'` and `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Retire loanProductPage + orphan checks + preview-route cleanup' in_progress 'legacy builder deleted (Task 1); document-type retirement + cleanup completes in Phase 3'`
 
 ---
 
@@ -1548,7 +1549,7 @@ S.listItem()
   .child(S.documentTypeList('productPage').title('Product Pages')),
 ```
 
-(add `TagIcon` to the icon imports). In `resolve.ts`, replace the locations map — the result gains `page` + `productPage` and (with Task 1's removals) no longer contains `loanProductPage` or the stray `post` type:
+(add `TagIcon` and `DocumentIcon` to the icon imports). In `resolve.ts`, replace the locations map — the result gains `page` + `productPage` and (with Task 1's removals) no longer contains `loanProductPage` or the stray `post` type:
 
 ```typescript
 export const resolve: PresentationPluginOptions['resolve'] = {
@@ -1760,6 +1761,8 @@ export function BlockImage({
   )
 }
 ```
+
+NOTE: BlockImage is currently unused by the 14 renderers (hero/split/tile pass CDN string srcs) — either wire it where responsive next/image treatment is wanted during Task 8-11 implementation, or delete the file in Task 15 cleanup; do not ship it dead.
 
 - [ ] **Step 4:** `action-button.tsx` — the ONLY way blocks render buttonLink fields (DS Button as Link, per the established `render`/`nativeButton` pattern):
 
@@ -2609,7 +2612,9 @@ node .agents/parity-shot.mjs /loans/home        .agents/baseline-homeloan
 
 Expected: six PNGs in `.agents/`. No commit (untracked tooling).
 
-- [ ] **Step 3 (hub tick):** `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Pixel-check drafts vs Figma recipes (draft-mode preview)' in_progress 'Task 12 done: 6 baseline screenshots captured'`
+Note (spec conformance): these hand-coded baselines are the SECONDARY content-completeness check only — the Gate-4 pixel baseline is the Figma recipes (frames 87:2/89:2/90:2 in file `lDlXQhpLRP9GnRLeM31Iec`), checked in draft mode BEFORE any route swap (Task 14 pre-swap pixel-check).
+
+- [ ] **Step 3 (hub tick):** `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Pixel-check drafts vs Figma recipes (draft-mode preview)' in_progress 'Task 12 done: 6 baseline screenshots captured (secondary completeness baseline; Gate-4 pixel baseline = Figma recipes, checked pre-swap in Task 14)'`
 
 ---
 
@@ -2619,7 +2624,7 @@ Expected: six PNGs in `.agents/`. No commit (untracked tooling).
 - Create: `scripts/seed-marketing-pages.mjs`
 - Modify: `package.json` (add script `"seed:pages": "node --env-file=.env.local scripts/seed-marketing-pages.mjs"`)
 
-- [ ] **Step 1:** Script skeleton — `@sanity/client` (7.23.0) with the write token, idempotent asset upload by `originalFilename`, `createOrReplace` for documents, then patch `siteSettings.homepage`:
+- [ ] **Step 1:** Script skeleton — `@sanity/client` (7.23.0) with the write token, idempotent asset upload by `originalFilename`, `createOrReplace` for documents (all three seeded as DRAFTS — `drafts.*` ids; the `siteSettings.homepage` patch and publishing happen in Task 14, after per-page approval):
 
 ```javascript
 import { readFileSync, createReadStream } from 'node:fs'
@@ -2646,7 +2651,7 @@ async function uploadImage(filename) {
   if (existing) return existing
   const asset = await client.assets.upload(
     'image',
-    createReadStream(`illustrations/${filename}`),
+    createReadStream(`public/illustrations/${filename}`),
     { filename }
   )
   return asset._id
@@ -2673,13 +2678,13 @@ function richText(text) {
 }
 ```
 
-Note: the `illustrations/` source directory sits at the repo root; confirm each filename with `ls illustrations` before referencing (known set includes `online-banking.png`, `everyday-account.png`, `home-loan.png`, `car-loan.png`, `kids-account.png`, `debt-consolidation.png`, `travel-account.png`, `community.png`, `bill-pay.png`). If a file exists only under `public/illustrations/`, read it from there instead.
+**⚠ ILLUSTRATIONS SKIPPED (Isaac, Gate 1 2026-07-02): seeds attach NO images.** Omit every block `image` field from the seed documents — renderers show the DS placeholder treatment (see Conventions). The `uploadImage()`/`img()` helpers above are retained ONLY as a reference for a later marketing-scripted upload (files live under `public/illustrations/`, kebab-case; the repo-root `illustrations/` dir holds Title Case originals) — the seed script must NOT call them.
 
 - [ ] **Step 2:** Build the **home** document. Copy is transcribed verbatim from `src/app/(frontend)/page.tsx` (kept intact until Task 14). Block sequence:
 
 ```javascript
 const home = {
-  _id: 'page-home',
+  _id: 'drafts.page-home',
   _type: 'page',
   title: 'Banking that belongs to you',
   slug: { _type: 'slug', current: 'home' },
@@ -2709,7 +2714,7 @@ const home = {
     { _type: 'productTileGridBlock', _key: key('b'), background: 'soft',
       eyebrow: 'Everyday banking', heading: 'Accounts and loans for real life.',
       lede: '…(verbatim)…',
-      items: [ /* 6 productTile objects — kicker/title/description/url verbatim; image via ids map */ ] },
+      items: [ /* 6 productTile objects — kicker/title/description/url verbatim; image OMITTED — placeholder per Gate-1 instruction */ ] },
     { _type: 'featureGridBlock', _key: key('b'), align: 'center',
       eyebrow: 'Why First Credit Union', heading: 'The difference is who we answer to.',
       items: [ /* 6 featureItem objects with semantic icons: members, rates, location, mobile, support, institution */ ] },
@@ -2733,42 +2738,39 @@ const home = {
 
 Every `…(verbatim)…` and items array MUST be transcribed word-for-word from the source page file — open it and copy. No paraphrasing (parity screenshots will catch drift). Note the testimonial quote contains an `<em>` segment in the original; seed it as plain text (accepted minor loss) — flag in the Task 15 parity notes.
 
-- [ ] **Step 3:** Build **accounts/everyday** (`_id: 'product-page-everyday'`, `_type: 'productPage'`, `productType: 'everyday-account'`, slug `accounts/everyday`) from `src/app/(frontend)/accounts/everyday/page.tsx`:
+- [ ] **Step 3:** Build **accounts/everyday** (`_id: 'drafts.page-everyday'`, `_type: 'productPage'`, `productType: 'everyday-account'`, slug `accounts/everyday`) from `src/app/(frontend)/accounts/everyday/page.tsx`:
 
 | Source section | Block | Fields |
 |---|---|---|
-| Hero (compact, breadcrumb auto) | `heroBlock` | emphasis `compact`; eyebrow/heading/lede/meta (3 statItems: `$0` monthly fees, `~3 min` to open, `Instant` FCU transfers)/actions verbatim; image `everyday-account.png` |
+| Hero (compact, breadcrumb auto) | `heroBlock` | emphasis `compact`; eyebrow/heading/lede/meta (3 statItems: `$0` monthly fees, `~3 min` to open, `Instant` FCU transfers)/actions verbatim; image OMITTED (placeholder) |
 | "What's included" feature grid | `featureGridBlock` | background `soft`; 6 items, semantic icons: card, payments, time, alerts, rates, insights |
-| Rates split (illustration right) | `splitBlock` | imageSide `right`; image `bill-pay.png`; eyebrow `Rates & fees`; heading/lede verbatim; rows = the 5 `RATES` entries (term→label, value→value); footnote verbatim |
+| Rates split (illustration right) | `splitBlock` | imageSide `right`; image OMITTED (placeholder); eyebrow `Rates & fees`; heading/lede verbatim; rows = the 5 `RATES` entries (term→label, value→value); footnote verbatim |
 | "Pairs well with" tiles | `productTileGridBlock` | background `soft`; 3 tiles verbatim |
 | CTA (side-by-side) | `ctaBannerBlock` | tone `primary`, layout `inline`; eyebrow/heading/message/actions verbatim |
 
-- [ ] **Step 4:** Build **loans/home** (`_id: 'product-page-home-loan'`, `_type: 'productPage'`, `productType: 'home-loan'`, slug `loans/home`) from `src/app/(frontend)/loans/home/page.tsx`:
+- [ ] **Step 4:** Build **loans/home** (`_id: 'drafts.page-home-loan'`, `_type: 'productPage'`, `productType: 'home-loan'`, slug `loans/home`) from `src/app/(frontend)/loans/home/page.tsx`:
 
 | Source section | Block | Fields |
 |---|---|---|
-| Hero (compact) | `heroBlock` | meta: `6.45%` + unit `p.a.` / `$0` application fee / `Local` lending team; image `home-loan.png`; rest verbatim |
+| Hero (compact) | `heroBlock` | meta: `6.45%` + unit `p.a.` / `$0` application fee / `Local` lending team; image OMITTED (placeholder); rest verbatim |
 | Repayment calculator | `widgetBlock` | background `soft`; widget `repaymentCalculator`; center head: eyebrow `Repayment estimator`, heading + lede verbatim |
 | "How it works" stepper | `stepsBlock` | head: eyebrow `How it works`, heading `From first chat to keys in hand.`; items = the 4 `STEPS` verbatim |
-| "Why borrow with us" split | `splitBlock` | background `soft`; image `debt-consolidation.png`; checklist = the 4 ChecklistItems (title + detail) verbatim |
+| "Why borrow with us" split | `splitBlock` | background `soft`; image OMITTED (placeholder); checklist = the 4 ChecklistItems (title + detail) verbatim |
 | FAQ | `faqBlock` | align `center`; eyebrow `Good to know`, heading verbatim; 4 faqItems — answers via `richText()` with the bold segments seeded as separate spans with `marks: ['strong']` |
 | Apply CTA | `ctaBannerBlock` | background `soft`; tone `primary`, layout `centered`; verbatim |
 
-- [ ] **Step 5:** Finish the script: `createOrReplace` all three docs in one transaction, then
-`client.patch('siteSettings').set({ homepage: { _type: 'reference', _ref: 'page-home' } }).commit()`,
-log created ids. Run it:
+- [ ] **Step 5:** Finish the script: `createOrReplace` all three DRAFT docs in one transaction, log created ids. (No `siteSettings.homepage` patch here — it moved to Task 14, after per-page approval and publish.) Run it:
 
 ```bash
 npm run seed:pages > /tmp/pb-seed.log 2>&1; EXIT=$?; echo "seed EXIT=$EXIT"
 ```
 
-Expected: `EXIT=0`; log shows three document ids + homepage patched.
+Expected: `EXIT=0`; log shows the three draft document ids.
 
-- [ ] **Step 6:** Verify via GROQ (PowerShell, read token from `.env.local` — never print it):
+- [ ] **Step 6:** Verify via GROQ with `perspective: 'raw'` (drafts are invisible to the default published/previewDrafts perspectives; PowerShell, read token from `.env.local` — never print it):
 
 ```
-count(*[_type in ["page","productPage"]]) == 3
-*[_id == "siteSettings"][0].homepage._ref == "page-home"
+count(*[_id in ["drafts.page-home", "drafts.page-everyday", "drafts.page-home-loan"]]) == 3
 ```
 
 - [ ] **Step 7:** Commit:
@@ -2778,7 +2780,7 @@ git add scripts/seed-marketing-pages.mjs package.json
 git commit -m 'feat(content): seed homepage, everyday account, and home loan pages'
 ```
 
-- [ ] **Step 8 (hub tick):** `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Seed 3 recipe drafts (Home / Everyday / Home Loan)' complete 'Task 13 done: page-home + product-page-everyday + product-page-home-loan seeded, homepage assigned'`
+- [ ] **Step 8 (hub tick):** `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Seed 3 recipe drafts (Home / Everyday / Home Loan)' complete 'Task 13 done: drafts.page-home + drafts.page-everyday + drafts.page-home-loan seeded as drafts (publish + homepage assignment happen in Task 14)'`
 
 ---
 
@@ -2789,7 +2791,15 @@ git commit -m 'feat(content): seed homepage, everyday account, and home loan pag
 - Modify: `src/app/(frontend)/[...slug]/page.tsx` (full rewrite)
 - Delete: `src/app/(frontend)/accounts/everyday/page.tsx`, `src/app/(frontend)/loans/home/page.tsx` (and the now-empty dirs)
 
-Per the initiative's publish-before-swap rule: the Home publish is the launch go-ahead — get explicit user approval on the seeded Home draft before executing this task's Step 1.
+Per the initiative's publish-before-swap rule: the Home publish is the launch go-ahead — get explicit user approval on each seeded draft (Step 0.1) and publish it (Step 0.2) before executing this task's route-swap steps.
+
+- [ ] **Step 0.1 (pre-swap pixel-check — Gate-4 baseline):** render each seeded DRAFT via draft-mode/Presentation preview, screenshot at 1440, compare against Figma recipe screenshots (`get_screenshot` on frames `87:2`/`89:2`/`90:2` in file `lDlXQhpLRP9GnRLeM31Iec`); hand-coded pages serve as secondary content-completeness check; present per-page to Isaac for approval.
+
+- [ ] **Step 0.2 (publish + homepage assignment — AFTER per-page approval):** publish each approved page document (`drafts.X` → `X`) — publish order: Everyday, Home Loan, then Home LAST. **Home publish requires Isaac's separate launch go-ahead (spec rule).** After `page-home` is published, patch the homepage reference (moved here from Task 13):
+`client.patch('siteSettings').set({ homepage: { _type: 'reference', _ref: 'page-home' } }).commit()`
+Verify: `*[_id == "siteSettings"][0].homepage._ref == "page-home"`.
+
+**Precondition for the route-swap steps (Steps 1–3): the page document is PUBLISHED (publish-before-swap, spec rule).**
 
 - [ ] **Step 1:** Root `page.tsx` (next-sanity 13 `sanityFetch` — no `tag` option is used anywhere in this plan, so the v13 `requestTag` rename does not affect it):
 
@@ -2829,6 +2839,7 @@ export default async function HomePage() {
 - [ ] **Step 2:** `[...slug]/page.tsx` — Sanity page with auto-breadcrumbs (DS Breadcrumb, same markup as the deleted hand-coded pages), ComingSoon fallback:
 
 ```tsx
+import { Fragment } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -2901,10 +2912,12 @@ export default async function CatchAllPage({ params }: Props) {
               <BreadcrumbLink render={<Link href='/' />}>Home</BreadcrumbLink>
             </BreadcrumbItem>
             {crumbs.map((crumb) => (
-              <BreadcrumbItem key={crumb.href}>
+              <Fragment key={crumb.href}>
                 <BreadcrumbSeparator />
-                <BreadcrumbLink render={<Link href={crumb.href} />}>{crumb.label}</BreadcrumbLink>
-              </BreadcrumbItem>
+                <BreadcrumbItem>
+                  <BreadcrumbLink render={<Link href={crumb.href} />}>{crumb.label}</BreadcrumbLink>
+                </BreadcrumbItem>
+              </Fragment>
             ))}
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -2943,7 +2956,7 @@ git commit -m 'feat(routes): serve homepage and pages from Sanity, retire hand-c
 
 **Files:** renderer fixes as needed; no new files committed
 
-- [ ] **Step 1:** Re-run the Task 12 script against the SAME three URLs (now Sanity-rendered) with `sanity-` prefixes. Open each baseline/sanity pair and compare section-by-section (band backgrounds, spacing, type scale, icons, button variants, breadcrumbs, calculator presence).
+- [ ] **Step 1 (post-swap regression check — secondary):** The Gate-4 pixel baseline was already earned pre-swap in Task 14 Step 0.1 (seeded drafts vs the Figma recipes, draft-mode preview). This step is the secondary, post-swap regression check against the hand-coded baselines: re-run the Task 12 script against the SAME three URLs (now Sanity-rendered) with `sanity-` prefixes. Open each baseline/sanity pair and compare section-by-section (band backgrounds, spacing, type scale, icons, button variants, breadcrumbs, calculator presence) for content completeness and regressions.
 - [ ] **Step 2:** Fix renderer (not content) diffs; re-shoot until equivalent. Known accepted deltas: testimonial `<em>` styling; hero illustration art direction (3:2 source preserved).
 - [ ] **Step 3:** Console check: run the established console-capture pattern (`.agents/billpay-console.mjs` adapted to the three URLs). Expected: zero NEW errors/warnings from page code (pre-existing environmental noise: Intercom, Clerk dev keys, fcu-logo warning, a11y-dev init).
 - [ ] **Step 4:** Presentation smoke test: open `http://localhost:3001/studio`, Presentation tool → the homepage document → confirm overlays appear and a text edit live-updates.
@@ -2959,7 +2972,7 @@ Verify `count(*[_type in ["homePage","sitemapPage"]]) == 0`.
 
 - [ ] **Step 6:** Preview-route cleanup — delete the temporary Phase-2 route `src/app/blocks-preview/` (if it still exists) and its fixtures; commit the removal.
 - [ ] **Step 7:** Commit any parity fixes: `git add src/components/page-builder && git commit -m 'fix(page-builder): visual parity adjustments against hand-coded baselines'` (skip if no diffs).
-- [ ] **Step 8 (hub tick):** two updates — `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Pixel-check drafts vs Figma recipes (draft-mode preview)' complete 'Task 15 done: parity confirmed vs baselines (Tasks 12+15); accepted deltas noted'` and `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Retire loanProductPage + orphan checks + preview-route cleanup' complete 'Task 15 done: loanProductPage retired in Task 1; homePage/sitemapPage orphans deleted; blocks-preview route removed'`
+- [ ] **Step 8 (hub tick):** two updates — `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Pixel-check drafts vs Figma recipes (draft-mode preview)' complete 'Pixel-check earned pre-swap at Task 14 Step 0.1 (seeded drafts vs Figma recipes 87:2/89:2/90:2, draft-mode preview); Task 15 post-swap regression vs hand-coded baselines clean; accepted deltas noted'` and `node --env-file=.env.local .agents/hub-tick.mjs 'Figma Initiative · P3 Recipes & CMS Takeover' 'Retire loanProductPage + orphan checks + preview-route cleanup' complete 'Task 15 done: loanProductPage retired in Task 1; homePage/sitemapPage orphans deleted; blocks-preview route removed'`
 
 ---
 
@@ -3016,5 +3029,8 @@ git branch -d feat/page-builder
 10. **Real exit codes in gates — APPLIED.** Every verification step now uses `cmd > /tmp/x 2>&1; EXIT=$?` (no piping to tail/head), and schema tasks (0–7, 16) gate on typegen → tsc → lint → vitest (vitest was added to the repo with the Project Hub work; the June "no unit-test framework" note is superseded). Renderer tasks (8–11) gate tsc + eslint with the same pattern; Task 13's seed run and Task 16's build also capture real exit codes.
 11. **Hub ticks — APPLIED.** Every task (0–16) ends with a hub-tick step. Canonical recipe added to conventions: `.agents/hub-tick.mjs` (untracked) using `@supabase/supabase-js` `createClient(SUPABASE_URL, SUPABASE_SECRET_KEY, { db: { schema: 'api' } })` from `.env.local`, updating `api.pt_tasks` (matched via `pt_task_groups.name` + task `name`) with `status`/`notes` + `updated_by_id='user_3ArZtSswVUVOky8mIUXr3kZDCOE'`/`updated_by_name='isaac.vicliph@firstcu.co.nz'`, never setting `updated_at`. Full mapping table added (all 13 hub task names verbatim, both groups). Multi-contributor ticks: '14 block schemas…' completes at Task 7; 'Insert menu…' at Task 6; 'Renderer registry…' at Task 11; 'Pixel-check…' at Task 15; 'Retire loanProductPage…' at Task 15; 'Legacy loanPageBuilder deletion…' at Task 1; 'Seed 3 recipe drafts' at Task 13; 'Publish-before-swap…' at Task 14; 'Gate 4' at Task 16. Three hub tasks ('All-blocks preview + behavioral probes', 'Authoring dry-run (insert-menu-only script)', 'Gate 3: all-blocks preview approved') have no June contributor — they tick at the initiative-level Phase 2 exit steps, documented in that section. 'Sitemap extension + 301 redirects + catch-all 404 decision' is informed by Task 14 Step 4 but ticks at the initiative's own sitemap/redirects step.
 12. **Dep majors — APPLIED (mostly N/A).** lucide-react: Task 10's June imports used the `UsersIcon`-suffix style; updated to the plain lucide-react 1.22 export names (`Users`, `DollarSign`, `PieChart`, …) matching the shipped `nav-icons.ts`, inside the new `block-icons.ts`. recharts: the plan's only contact is the repayment calculator moved verbatim in Task 11 — it already runs on recharts 3.9.1 in-repo; a "do not touch its chart code" note added; no plan text referenced recharts APIs → otherwise N/A. react-day-picker: no references anywhere in the June plan → N/A.
+
+13. **Post-review fixes (2026-07-02, plan-reviewer pass):** brandMolecule added to the Task 1 keep-list (live singleton); Task 13 seeds are DRAFTS (drafts.page-*) with raw-perspective verification; siteSettings.homepage patch + publish steps moved to Task 14 (publish-before-swap; Home last, Isaac's go-ahead); illustration paths corrected to public/illustrations/; Gate-4 pixel baseline = Figma recipes pre-swap (Task 14 Step 0.1); breadcrumb Fragment fix; Task 1 dual hub tick; DocumentIcon import note; BlockImage wire-or-drop note.
+14. **Illustrations → placeholders (Isaac, Gate 1 2026-07-02):** seeds attach NO illustration assets (all image fields omitted); every image-slot renderer MUST show the DS placeholder treatment when unset (Conventions); uploadImage/img helpers retained as reference only. Marketing uploads real imagery in Studio later.
 
 **Self-check (run before finishing):** no "sanity v5" outside this log; no `revalidateSyncTags` anywhere; no `tag:` option on any `sanityFetch` call; no underscore-prefixed route paths (the underscore-folder mentions are the ban itself); no lucide asset names inside schema `options.list` values (the only icon options list uses semantic keys; `@sanity/icons` imports and the renderer-side lucide imports are not schema options). All 17 June task headings appear exactly once.
