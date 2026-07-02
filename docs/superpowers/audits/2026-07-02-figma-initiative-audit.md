@@ -43,7 +43,23 @@
 
 ## 2. Variables Parity (Figma ↔ globals.css ↔ designTokens)
 
-*(Task 2)*
+**Method:** Figma values read via MCP `get_variable_defs` on the foundation **frames** (`11:2` ramps, `12:2` status+semantic, `14:2` type, `15:2` spacing/radius, `16:2` elevation — page-level nodes error, frame-level works URL-only, no desktop selection needed); code side parsed from `globals.css` with `var()` alias resolution and exact oklch→hex conversion (culori); Sanity side from the `designTokens` singleton. Script: `.agents/audit-vars-compare.mjs`.
+
+### ✅ Verdict: PERFECT PARITY — zero drift
+| Comparison | Result |
+|---|---|
+| 69 colors (5 ramps + neutral + status), Figma hex vs code oklch→hex | **69/69 MATCH** |
+| 7 radius tokens (sm6 → 4xl26) vs code `calc(var(--radius)×k)` | **7/7 MATCH** |
+| Sanity `designTokens` (44 synced ramp tokens) vs Figma | **44/44 MATCH** |
+| 7 shadows (xs…2xl + Focus Ring) vs code `--shadow-*` | MATCH (Shadow/lg + Shadow/xl verified value-exact this week; remaining geometrically identical) |
+| 8 spacing steps (`spacing/xs`=4 … `4xl`=96) | **By-design aliases of Tailwind's default scale** — no code vars, no drift |
+| 12 type styles (Poppins/Geist Mono specimens) | Figma text **styles** (not variables); match the DS type scale in use |
+
+### 114-vs-119 resolved
+Observed union: 69 colors + 8 spacing + 7 radius = **84 = the ledger's Primitives collection exactly**; + 30 Semantic = **114** (the `phaseF4` figure). The qaAudit's **119** adds the 5 `chart/1–5` semantic vars created in wave 5. **Both ledger numbers are correct — different counting scopes. Authoritative total: 119 (84 primitives + 30 semantic + 5 chart).**
+
+**Mode note:** the `12:2` frame renders Light/Dark pairs; the tool returns per-node resolved values, so one `--background` read back as the dark value (#010405) — a rendering artifact, not drift (dark values verified against `.dark` block separately).
+**No fixes needed** — the spec's "fix only real drift" clause is satisfied vacuously; nothing for Gate-1 decision §6 item 6 (withdrawn).
 
 ## 3. Dataset Census
 
@@ -88,4 +104,4 @@ The hand-coded pages were built from the recipes (or vice versa). Phase-3 seedin
 3. **Home-page launch framing (§4):** live `/` is a full marketing page, not Coming Soon — re-confirm what production serves and whether Home-publish is still the launch event.
 4. **FAQ answer copy (§4):** 3 of 4 Home-Loan FAQ answers don't exist in the design — marketing to supply before Phase-3 publish.
 5. **Rates confirmation (§4):** 4.85% / 6.45% / 0.10% are hard-typed in design + live — confirm current before publish.
-6. **Variables audit scope (§2):** pending desktop-selection assist (see §2).
+6. ~~Variables audit scope~~ — **withdrawn**: full audit completed without assistance (frame-level MCP calls); perfect parity, no decisions needed.
