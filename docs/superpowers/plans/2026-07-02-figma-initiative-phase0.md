@@ -9,7 +9,9 @@
 **Tech Stack:** Figma MCP (`get_metadata`, `get_variable_defs`, `get_design_context`), `@sanity/client` via repo `SANITY_API_READ_TOKEN`, Node scripts in `.agents/` (never committed), supabase-fcu MCP for hub reads + Node script for hub writes.
 
 **Spec:** `docs/superpowers/specs/2026-07-02-figma-to-project-initiative-design.md`
-**Adopted plan being refreshed:** `docs/superpowers/plans/2026-06-10-sanity-page-builder.md` (2,997 lines — READ IT FULLY in Task 4)
+**Adopted plan being refreshed:** `docs/superpowers/plans/2026-06-10-sanity-page-builder.md` (2,861 lines — READ IT FULLY in Task 4)
+
+**Hub names (verbatim — tick scripts match by exact equality):** groups `Figma Initiative · P0 Refresh & Audit` (phase 2), `Figma Initiative · P1 Component Gap-Fill` (phase 3), `Figma Initiative · P2 Universal Page Builder` (phase 3), `Figma Initiative · P3 Recipes & CMS Takeover` (phase 4). P0 task names: `Figma re-inventory + diff vs June ledger` · `Refresh June builder plan into new dated file (re-sequenced)` · `Variables parity audit (Figma vars ↔ globals.css ↔ designTokens)` · `loanProductPage + orphan-docs census; recipe copy-drift audit` · `Gate 1: audit report approved`. P1 group's first task (referenced in Task 6): `Component diff: 16 kit components vs code (from Gate 1)`.
 **Ledger:** `.agents/figma-kit-state.json` (trust `phaseF4`; top-level `phase` field is stale — fixed in Task 6)
 
 **Facts already verified (do not re-derive):** Figma file `lDlXQhpLRP9GnRLeM31Iec`; MCP page-listing returns only "Cover" (broken) — use the ledger's node-ids below; block thumbnails committed at `53073fc` under `public/block-previews/`; Sanity writes only via repo tokens (hosted Sanity MCP has no project access); hub write recipe in memory `project-hub-tracking` (stamp `updated_by_id='agent:claude'`, `updated_by_name='Claude (agent)'`).
@@ -41,7 +43,7 @@ npx tsc --noEmit && npm run lint                  # both exit 0 — else STOP
 **Files:** Modify: audit doc §1
 
 - [ ] **Step 1:** Probe every ledger PAGE id with `get_metadata` (fileKey `lDlXQhpLRP9GnRLeM31Iec`, nodeId per list above). For each record: exists? name matches ledger? child-count. Batch 4–6 calls per message.
-- [ ] **Step 2:** Probe every COMPONENT SET id the same way (read the full `components` map from the ledger first: `node -e "console.log(JSON.stringify(JSON.parse(require('fs').readFileSync('.agents/figma-kit-state.json','utf8')).components,null,1))"`).
+- [ ] **Step 2:** Probe every COMPONENT SET id the same way (read the full `components` map from the ledger first: `node -e "console.log(JSON.stringify(JSON.parse(require('fs').readFileSync('.agents/figma-kit-state.json','utf8')).components,null,1))"`). The map includes two `(PROPOSED)` CTA entries (`78:26`, `78:62`) — tag them BACKLOG/PROPOSED in §1, never counted against the 16.
 - [ ] **Step 3:** Drift hunt beyond the ledger: `get_metadata` each RECIPE page (`7:25`,`7:26`,`7:27`) and compare frame inventory vs ledger `phaseF4`/`parityBuild` notes; anything unrecognized → drift table.
 - [ ] **Step 4:** Write §1: per-node table (id · ledger name · status OK/RENAMED/MISSING/NEW) + a "needs Isaac visual confirm" list (page-listing is broken, so unknown NEW pages can only be confirmed by Isaac in the desktop app — collect for Gate 1, do not block).
 - [ ] **Step 5:** Commit `docs(audit): Figma inventory vs ledger`. Hub tick: `Figma re-inventory + diff vs June ledger` → `complete` (script pattern: `.agents/hub-tick-2026-07-02b.mjs`).
@@ -53,8 +55,9 @@ npx tsc --noEmit && npm run lint                  # both exit 0 — else STOP
 - [ ] **Step 1:** Figma side: `get_variable_defs` on foundation pages `7:3`,`7:4`,`7:5`,`7:6` + `get_metadata`-discovered doc frames if defs come back sparse (tool returns per-node USED vars — union the results; if union < 100, fall back to asking Isaac to select the collections in desktop at Gate 1 and note the limitation). Record: name → resolved value per mode where visible.
 - [ ] **Step 2:** Code side: `.agents/audit-vars.mjs` parses `src/app/globals.css` custom properties — extract `--color-*`, `--radius*`, `--shadow-*`, semantic `:root`/`.dark` vars into JSON (`grep -oE '^\s*--[a-z0-9-]+:' + value capture`; print name+value pairs).
 - [ ] **Step 3:** Sanity side: read the `designTokens` singleton via a `.agents` script using `createClient` + `SANITY_API_READ_TOKEN` (pattern: `.agents/seed-nav-draft.mjs` but read-only; GROQ `*[_id=="designTokens"][0]`).
-- [ ] **Step 4:** Write §2: three-way table (token · Figma · code · Sanity · verdict MATCH/DRIFT/ONLY-IN-X), the authoritative var count (resolves 114-vs-119), and a drift list. **Report only — no fixes in Phase 0** unless a drift is trivially a typo (then list it under §6 Decisions).
-- [ ] **Step 5:** Commit `docs(audit): variables parity`. Hub tick: `Variables parity audit …` → `complete`.
+- [ ] **Step 4:** Write §2: three-way table (token · Figma · code · Sanity · verdict MATCH/DRIFT/ONLY-IN-X), the authoritative var count (resolves 114-vs-119), and a drift list. **Report only — no fixes in Phase 0** unless a drift is trivially a typo (then list it under §6 Decisions). *NB: this deviates from the spec's "fix only real drift" — fixes are deferred to the Gate-1 decision for audit purity; Isaac ratifies at Gate 1.*
+- [ ] **Step 4b:** Write-token validity check (spec cross-cutting): zero-mutation call with `SANITY_API_WRITE_TOKEN` (e.g. `client.request({uri:'/users/me'})`) — record VALID/INVALID in the Gate-1 summary (Phase 3 depends on it).
+- [ ] **Step 5:** Commit `docs(audit): variables parity`. Hub tick: `Variables parity audit (Figma vars ↔ globals.css ↔ designTokens)` → `complete`.
 
 ### Task 3: Dataset census + copy drift
 
@@ -62,7 +65,7 @@ npx tsc --noEmit && npm run lint                  # both exit 0 — else STOP
 
 - [ ] **Step 1:** Census script (read client, `perspective:'raw'` so drafts count): counts + slugs/titles for `loanProductPage` (published AND `drafts.*`), any `homePage`/`sitemapPage` orphan types, `disclaimerSnippet` usage (referenced by legacy noticeBlock). Output verbatim into §3 with the verdict line: **"Phase-2 legacy deletion = clean delete"** (if zero real docs) **or "migrate first"** (list what must move).
 - [ ] **Step 2:** Copy extraction, Figma side: `get_metadata` on `87:2`, `89:2`, `90:2` — text-node names/content give the recipe copy skeleton (headlines, section titles, CTAs).
-- [ ] **Step 3:** Copy extraction, live side: `curl -s http://localhost:3300/ , /accounts/everyday , /loans/home` from a `next start -p 3300` of the current build; strip tags (`node` + a 5-line text extractor); if the dev/start server can't run, use the production Vercel URL.
+- [ ] **Step 3:** Copy extraction, live side: `npm run build` first (prebuild typegen re-dirties `schema.json`/`src/sanity/types.ts` with CRLF noise — re-run `git checkout --` on both after), then `next start -p 3300`; `curl -s http://localhost:3300/{,accounts/everyday,loans/home}`; strip tags (`node` + a 5-line text extractor). Fallback if the server can't run: `https://fcu-website-dev.vercel.app`. **Expectation:** live `/` is the Coming-Soon page, so the Home row is expected-total-drift — default verdict "seed from recipe"; compare the Home recipe against the hand-coded route source only for any reusable copy fragments.
 - [ ] **Step 4:** Write §4: per-page drift table (recipe copy vs live copy · divergence noted) + recommendation ("seed from recipe" vs "seed from live copy") per page — this settles the Gate-4 copy source per the spec.
 - [ ] **Step 5:** Commit `docs(audit): census + copy drift`. Hub tick: `loanProductPage + orphan-docs census; recipe copy-drift audit` → `complete`.
 
@@ -70,7 +73,7 @@ npx tsc --noEmit && npm run lint                  # both exit 0 — else STOP
 
 **Files:** Create: `docs/superpowers/plans/2026-07-02-page-builder-refreshed.md` (June file stays untouched)
 
-- [ ] **Step 1:** Read `docs/superpowers/plans/2026-06-10-sanity-page-builder.md` END TO END (2,997 lines — multiple Reads with offsets; do not skim).
+- [ ] **Step 1:** Read `docs/superpowers/plans/2026-06-10-sanity-page-builder.md` END TO END (2,861 lines — multiple Reads with offsets; do not skim).
 - [ ] **Step 2:** Write the refreshed plan applying this delta checklist — every item either applied or explicitly noted N/A:
   1. Header: same 14 block names; goal unchanged; reference the initiative spec.
   2. **Re-sequence:** June Tasks 0–11 stay (Phase 2 of the initiative, in order, legacy-deletion Task 1 FIRST but now **census-gated**: prepend "verify §3 census verdict = clean delete; else run the migration mini-task"); June Tasks 12–16 move under a `## PHASE 3 (initiative) — execute only after Gate 3` heading.
@@ -82,7 +85,8 @@ npx tsc --noEmit && npm run lint                  # both exit 0 — else STOP
   8. Header/Footer untouchable; Presentation `resolve.locations` gains `page`/`productPage` and drops the stray `post`.
   9. `[...slug]` interim behavior during Phase 2 per census verdict.
   10. Verification gates: real-exit-code pattern (`cmd > /tmp/x 2>&1; echo EXIT=$?` — never pipe-masked), `typegen → tsc → lint → vitest` per schema task.
-  11. Hub ticks: add a "tick hub task X" step to every task, mapping to the four initiative groups created 2026-07-02.
+  11. Hub ticks: add a "tick hub task X" step to every task, mapping to the four initiative groups created 2026-07-02 (verbatim names in this plan's header).
+  12. Dep majors: grep the June plan for `recharts`, `react-day-picker`, `lucide` API references and update to the installed majors (recharts 3.9, react-day-picker 10, lucide 1) — June Task 11 moves the repayment calculator, which plausibly touches recharts-3 breaking changes; mark N/A per section where no reference exists.
 - [ ] **Step 3:** Self-check: grep the refreshed plan for `sanity v5`, `revalidateSyncTags`, `_nav-preview`-style underscore routes, lucide icon names in schema definitions — all must be absent. Confirm every June task number appears exactly once (re-sequenced, none dropped silently).
 - [ ] **Step 4:** Commit `docs(plan): refreshed page-builder plan (v6 + resequenced + initiative rules)`. Hub tick: `Refresh June builder plan into new dated file (re-sequenced)` → `complete`.
 
