@@ -95,7 +95,18 @@ The hand-coded pages were built from the recipes (or vice versa). Phase-3 seedin
 
 ## 5. Component-vs-Code Diff (seeds Phase 1)
 
-*(Task 5)*
+**Method:** all 16 kit components judged against their code counterparts, using the **current expanded kit surface** from §1 (not the ledger's stale variant lists). Verdicts from direct file reads, 2026-07-02.
+
+### ⚖️ Verdict: **14 skip · 0 fidelity-check · 1 extend · 1 build** — Phase 1 is small
+| Component | Verdict | Phase-1 action | Note |
+|---|---|---|---|
+| Button, Badge, Stat, Testimonial, Alert, Description Row/List, Accordion, Stepper, CTA Banner, Section Head, Product Tile, Feature Item, Checklist Item, Split | **EXISTS** | **skip** | Full parity with the expanded kit — incl. Button's 8v×4s+states, Badge Solid+Counter, Alert 5×3 displays, Testimonial 4 variants, Stepper vertical, CTA 4 layouts. The kit was built FROM code and the post-ledger kit expansion mirrored code features that already existed. |
+| **Hero** | PARTIAL | **extend** | `hero.tsx` lacks the **Hero / Full Image** variants (Background=Photo/Gradient, set `100:74`) — the one real component gap. |
+| **Widget Placeholder** | MISSING | **build** | No code counterpart (globs empty) — needed by `widgetBlock`'s empty/placeholder state in the builder. Small. |
+
+Notables: kit "Inline" CTA layout = code layout `default` (naming mismatch to record for Code Connect); Checklist stays on the disliked-but-current design per Decision 3; Feature Item's 11-icon curation is kit-side only (code accepts any icon — the builder's semantic-key registry will constrain it).
+
+**Consequence:** Phase 1 shrinks to: extend Hero (Full Image variants) + build Widget Placeholder + fidelity-probe pass over the 14 skips (spot-check, not rebuild). Gate 2 should be quick.
 
 ## 6. Decisions Needed at Gate 1
 
