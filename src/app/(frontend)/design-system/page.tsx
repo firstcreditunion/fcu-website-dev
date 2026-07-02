@@ -32,6 +32,8 @@ import { TimelineSection } from './_sections/timeline'
 import { DescriptionListSection } from './_sections/description-list'
 import { ChartsSection } from './_sections/charts'
 import { CarouselSection } from './_sections/carousel'
+import { HeroFullImageSection } from './_sections/hero-full-image'
+import { WidgetPlaceholderSection } from './_sections/widget-placeholder'
 
 export const metadata: Metadata = {
   title: 'Design System',
@@ -90,6 +92,8 @@ export default function DesignSystemPage() {
       <DescriptionListSection />
       <ChartsSection />
       <CarouselSection />
+      <HeroFullImageSection />
+      <WidgetPlaceholderSection />
     </>
   )
 }

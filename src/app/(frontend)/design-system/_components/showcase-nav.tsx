@@ -34,6 +34,8 @@ const SECTIONS = [
   { id: 'description-list', label: 'Description list' },
   { id: 'charts', label: 'Charts' },
   { id: 'carousel', label: 'Carousel' },
+  { id: 'hero-full-image', label: 'Hero — full image' },
+  { id: 'widget-placeholder', label: 'Widget placeholder' },
 ] as const
 
 export function ShowcaseNav() {

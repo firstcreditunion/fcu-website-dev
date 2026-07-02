@@ -1,5 +1,6 @@
 export { Wrap, Section, SectionHead, sectionVariants } from "./section"
-export { Hero } from "./hero"
+export { Hero, HeroFullImage, JumpTo } from "./hero"
+export { WidgetPlaceholder } from "./widget-placeholder"
 export { ProductTile } from "./product-tile"
 export { FeatureItem } from "./feature-item"
 export { Split } from "./split"
